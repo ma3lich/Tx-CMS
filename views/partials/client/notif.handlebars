@@ -1,0 +1,21 @@
+{{#if success_message}}
+
+<div class="notif success" role="alert">
+    <strong>{{success_message}}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span>$times;</span>
+    </button>
+</div>
+
+{{/if}}
+
+{{#if error_message}}
+
+<div class="notif error" role="alert">
+    <strong>{{error_message}}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span>$times;</span>
+    </button>
+</div>
+
+{{/if}}

@@ -1,0 +1,97 @@
+    <nav class="">
+        <div class="logo">
+            <img src="/images/logo.png" alt="">
+        </div>
+        <ul class="menu">
+            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
+            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
+            <li  class="active"><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+        </ul>
+
+        <ul class="menu">
+            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        </ul>
+    </nav>
+
+    
+    
+    <section class="container">
+
+        <div class="tables">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nom du Serveur</th>
+                            <th>Lien</th>
+                            <th>Loaclisation</th>
+                            <th>Cout mensuel</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each server}}
+                            <tr>
+                                <td>{{id}}</td>
+                                <td style="text-transform:capitalize;">{{name}}</td>
+                                <td>{{fqdn}}</td>
+                                <td>France</td>
+                                <td>0.00€</td>
+                                <td>
+                                    <a href="/admin/plans/edit/{{id}}">Gérer</a>
+                                </td>
+                            </tr>
+
+                            {{else}}
+
+                            <tr>
+                                <td colspan="6">Aucun serveur n'a était relié sur votre TxCMS</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            <span>Copyright © {{app.config.company.name}}</span>
+            <span>TxCMS - {{system.version}}</span>
+        </footer>
+
+    </section>
+
+    <section class="profile">
+
+        {{#if success_message}}
+
+            <div class="notif success" role="alert">
+                <h2>Succès</h2>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
+                <p class="content">{{success_message}}</p>
+            </div>
+
+        {{/if}}
+
+
+        {{#if error_message}}
+
+            <div class="notif error" role="alert">
+                <h2>Erreur</h2>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
+                <p class="content">{{error_message}}</p>
+            </div>
+
+        {{/if}}
+
+
+    </section>

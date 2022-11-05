@@ -1,0 +1,65 @@
+    <nav class="">
+        <div class="logo">
+            <img src="/images/logo.png" alt="">
+        </div>
+        <ul class="menu">
+            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
+            <li  class="active"><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
+            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+        </ul>
+
+        <ul class="menu">
+            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        </ul>
+    </nav>
+
+
+    
+    <section class="container">
+
+
+    </section>
+
+    <section class="profile register">
+        <div class="logoText">
+            <img src="/images/logo-text.png" classe=""alt="">
+            <h2>Crée une offre</h2>
+        </div>
+        <form  action="/admin/categories/create" method="post">
+                <section class="formInput">
+                    <div>
+                        <label for="name">Nom de la catégorie</label>
+                        <br>
+                        <input type="text" name="name" id="name" required>
+                    </div>
+                    <div>
+                        <label for="categorie">Serveur</label>
+                        <br>
+                        <select style="text-transform:capitalize;" name="server" id="server"> 
+                        {{#each server}}
+                                <option value={{name}}>{{name}}</option>
+                        {{/each}}
+                        </select>
+                    </div>
+                </section>
+
+                <section class="formInput">
+                    <div>
+                        <label for="auto">Livraison</label>
+                        <br>
+                        <select name="auto" id="auto">
+                            <option value="1">Automatique</option>
+                            <option value="0">Manuelle</option>
+                        </select>
+                    </div>
+                </section>
+
+                <button type="submit">Creé</button>
+        </form>
+    </section>

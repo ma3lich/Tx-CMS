@@ -1,0 +1,77 @@
+    <nav class="">
+        <div class="logo">
+            <img src="/images/logo.png" alt="">
+        </div>
+        <ul class="menu">
+            <li class="active"><a href="/"><ion-icon name="home-outline"></ion-icon></a></li>
+            <li><a href="/shop"><ion-icon name="storefront-outline"></ion-icon></a></li>
+        </ul>
+
+        <ul class="menu">
+            <li><a href="/admin"><ion-icon name="settings-outline"></ion-icon></a></li>
+        </ul>
+    </nav>
+    
+    <section class="container">
+
+
+    </section>
+
+    <form class="profile register" action="/register" method="post">
+            <div class="logoText">
+                 <img src="/images/logo-text.png" classe=""alt="">
+                 <h2>Inscription </h2>
+            </div>
+            <section class="formInput">
+                <div>
+                    <label for="name">Prénom</label>
+                    <br>
+                    <input type="text" name="name" id="name" required>
+                </div>
+                <div>
+                    <label for="lastname">Nom de famille</label>
+                    <br>
+                    <input type="text" name="lastname" id="lastname" required>
+                </div>
+            </section>
+
+            <section class="formInput">
+                <div>
+                    <label for="sexe">Sexe</label>
+                    <br>
+                    <select name="sexe" id="sexe" required>
+                        <option value="male">Homme</option>
+                        <option value="female">Femme</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="birthday">Date de naissance</label>
+                    <br>
+                    <input type="date" name="birthday" id="birthday" max="2012-12-31" required>
+                </div>
+            </section>
+
+
+            <section class="mail">
+                <div>
+                    <label for="email">Adresse E-Mail</label>
+                    <br>
+                    <input type="email" name="email" id="email" required>
+                </div>
+            </section>
+
+            <section class="password">
+                <div>
+                    <label for="password">Mot de passe</label>
+                    <br>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <div>
+                    <label for="password2">Confirmation</label>
+                    <br>
+                    <input type="password" name="password2" id="password2" required>
+                </div>
+            </section>
+            
+            <button type="submit">S'inscrire</button>
+    </form>

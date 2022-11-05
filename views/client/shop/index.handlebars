@@ -1,0 +1,130 @@
+
+    <nav class="">
+        <div class="logo">
+            <img src="/images/logo.png" alt="">
+        </div>
+        <ul class="menu">
+            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+            <li class="active"><a href="/client/shop"><ion-icon name="cart-outline"></ion-icon></a></li>
+        </ul>
+
+        <ul class="menu">
+            <li style="visibility:hidden;"><a href="/admin"><ion-icon name="settings-outline"></ion-icon></a></li>
+        </ul>
+    </nav>
+
+    <section class="navShop">
+        <span class="title">Catégories</span>
+        <ul>
+            <script>console.log( "{{categories}}" )</script>
+            {{#each categories}}
+            <li><a href="/client/shop/products/{{name}}"> <ion-icon name="cube-outline"></ion-icon><span> {{name}}</span></a> </a><li>
+            {{/each}}
+        </ul>
+
+    </section>
+    
+    <section class="container shop">
+        <span class="title">Nos offres populaire :</span>
+        <div class="plans">
+            <script> console.log({{plans.price}})</script>
+            {{#each plans}}
+                <div class="card">
+                    <div class="cardHead">
+                        <span class="name">{{name}}</span>
+                        <span class="price"> {{price}}€<label for=""> /mois</label></span>
+                        <hr>
+                    </div>
+                    <div class="cardBoddy">
+                        <ul>
+                            <li><ion-icon name="checkmark-done-outline"></ion-icon> <span>1vC x5675 @3.46Ghz</span></li>
+                            <li><ion-icon name="checkmark-done-outline"></ion-icon> <span>4Go DDR3-ECC</span></li>
+                            <li><ion-icon name="checkmark-done-outline"></ion-icon> <span>32Go SSD SATA</span></li>
+                            <li><ion-icon name="checkmark-done-outline"></ion-icon> <span>1 Gbit/s Mutualisés</span></li>
+                            <li><ion-icon name="checkmark-done-outline"></ion-icon> <span>Anti DdoS OVH Game</span></li>
+
+                        </ul>
+                    </div>
+                    <div class="cardFotter">
+                        <button>Commander</button>
+                    </div>
+                </div>
+            {{/each}}
+
+        </div>
+
+        <footer>
+            <span>Copyright © {{app.config.company.name}}</span>
+            <span>TxCMS - {{system.version}}</span>
+        </footer>
+    </section>
+
+    <section class="profile">
+        <div class="user">
+            <a class="logo" href="/client/profile">
+                <img id="userlogo" src="" alt="">
+                <script>
+                    if("{{user.logo}}" == ""){
+                        
+                        if("{{user.sexe}}" == "male"){
+                            document.getElementById('userlogo').src = "/images/male-logo.png"
+                        } 
+
+                        if("{{user.sexe}}" == "female"){
+                            document.getElementById('userlogo').src = "/images/female-logo.png"
+                        }
+
+                    }else{
+                        document.getElementById('userlogo').src = "{{user.logo}}"
+                    }
+                </script>
+                <span class="username">{{user.lastname}} {{user.name}}</span>
+            </a>
+            <div>
+                <span class="email">{{user.email}}</span>
+                <br>
+                <span class="id">tx-{{user.id}}</span>
+            </div>
+
+            <form action="/client/logout" method="post">
+                <button type="submit">Me déconnecter</button>
+            </form>
+            
+        </div>
+        <div class="menu">
+            <span class="title">Raccourcis</span>
+            <ul>
+                <li>
+                    <a href="">
+                        <div class="icon">
+                            <ion-icon name="card-outline"></ion-icon>
+                        </div>
+                        <div class="text">
+                            <span>Moyen de paiment </span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="icon">
+                            <ion-icon name="mail-outline"></ion-icon>
+                        </div>
+                        <div class="text">
+                            <span>Emails reçus</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="icon">
+                            <ion-icon name="help-buoy-outline"></ion-icon>
+                        </div>
+                        <div class="text">
+                            <span>Centre d'aide</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+

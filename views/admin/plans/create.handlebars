@@ -1,0 +1,83 @@
+    <nav class="">
+        <div class="logo">
+            <img src="/images/logo.png" alt="">
+        </div>
+        <ul class="menu">
+            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+            <hr>
+            <li  class="active"><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
+            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
+            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+        </ul>
+
+        <ul class="menu">
+            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        </ul>
+    </nav>
+
+    
+    <section class="container">
+
+
+    </section>
+
+    <section class="profile register">
+        <div class="logoText">
+            <img src="/images/logo-text.png" classe=""alt="">
+            <h2>Crée une offre</h2>
+        </div>
+        <form  action="/admin/plans/create" method="post">
+                <section class="formInput">
+                    <div>
+                        <label for="name">Nom de l'offre</label>
+                        <br>
+                        <input type="text" name="name" id="name" required>
+                    </div>
+                    <div>
+                        <label for="categorie">Catégorie</label>
+                        <br>
+                        <select style="text-transform:capitalize;" name="categorie" id="categorie">
+                        {{#each categorie}}
+                                <option value={{name}}>{{name}}</option>
+                        {{/each}}
+                        </select>
+                        <script>
+                            console.log(document.getElementById('categorie').value)
+                        </script>
+                    </div>
+                </section>
+
+                <section class="formInput">
+                    <div>
+                        <label for="price">Prix de l'offre (€)</label>
+                        <br>
+                        <input type="number" name="price" id="price" max="999" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" required>
+                    </div>
+                    <div>
+                        <label for="stock">État du stock</label>
+                        <br>
+                        <select name="stock" id="stock">
+                            <option value="1">En stock</option>
+                            <option value="0">Repture de stock</option>
+                        </select>
+                    </div>
+                </section>
+
+                <section class="formInput">
+                    <div>
+                        <label for="state">Statut</label>
+                        <br>
+                        <select name="state" id="state">
+                            <option value="public">Public</option>
+                            <option value="private">Privé</option>
+                        </select>
+                    </div>
+                </section>
+
+                <button type="submit">Creé</button>
+        </form>
+    </section>

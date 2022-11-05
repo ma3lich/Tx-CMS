@@ -1,0 +1,109 @@
+    <nav class="">
+        <div class="logo">
+            <img src="/images/logo.png" alt="">
+        </div>
+        <ul class="menu">
+            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+            <hr>
+            <li  class="active"><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
+            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
+            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+        </ul>
+
+        <ul class="menu">
+            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        </ul>
+    </nav>
+
+    
+    
+    <section class="container">
+        <span class="title">Liste de vos produits : </span>
+        <div class="tables">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nom du produit</th>
+                            <th>Catégorie</th>
+                            <th>Prix</th>
+                            <th>État</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each plans}}
+                            <tr>
+                                <td>{{id}}</td>
+                                <td>{{name}}</td>
+                                <td style="text-transform:capitalize;">{{categorie}}</td>
+                                <td>{{price}}€</td>
+                                {{#if stock}}
+                                <td class="state actif"> <label for="">En stock</label></td>
+                                {{else}}
+                                <td class="state inactif"> <label for="">Repture de stock</label></td>
+                                {{/if}}
+
+                                <td>
+                                    <a href="/admin/plans/edit/{{id}}">Gérer</a>
+                                    <form action="/admin/plans/delete/{{id}}" method="post">
+                                        <button class="danger" type="submit">Suprimé</button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            {{else}}
+
+                            <tr>
+                                <td colspan="6">Aucun offre n'a était créé sur votre TxCMS</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="createButtons">
+            <a href="/admin/plans/create">Crée une offre</a>
+        </div>
+
+        <footer>
+            <span>Copyright © {{app.config.company.name}}</span>
+            <span>TxCMS - {{system.version}}</span>
+        </footer>
+
+    </section>
+
+    <section class="profile">
+
+        {{#if success_message}}
+
+            <div class="notif success" role="alert">
+                <h2>Succès</h2>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
+                <p class="content">{{success_message}}</p>
+            </div>
+
+        {{/if}}
+
+
+        {{#if error_message}}
+
+            <div class="notif error" role="alert">
+                <h2>Erreur</h2>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
+                <p class="content">{{error_message}}</p>
+            </div>
+
+        {{/if}}
+
+
+    </section>

@@ -1,0 +1,127 @@
+    <nav class="">
+        <div class="logo">
+            <img src="/images/logo.png" alt="">
+        </div>
+        <ul class="menu">
+            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+            <hr>
+            <li  class="active"><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
+            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
+            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+
+        </ul>
+
+        <ul class="menu">
+            <li style="visibility: hidden;"></li>
+        </ul>
+    </nav>
+
+    
+    <section class="container">
+
+
+    </section>
+
+    <section class="profile register">
+        <div class="logoText">
+            <img src="/images/logo-text.png" classe=""alt="">
+            <h2>Gérer l'utilisateur : {{user.name}} {{user.lastname}}</h2>
+        </div>
+        <form  action="/admin/users/edit/:id" method="post">
+                <input style="display:none" type="text" name="id" id="id" value={{user.id}}>
+                <section class="formInput">
+                    <div>
+                        <label for="lastname">Nom</label>
+                        <br>
+                        <input required type="text" name="lastname" id="lastname" maxlength="25">
+                        <script>
+                            document.getElementById('lastname').value = `{{user.lastname}}` 
+                        </script>
+                    </div>
+                    <div>
+                        <label for="name">Prénom</label>
+                        <br>
+                        <input required type="text" name="name" id="name" maxlength="25">
+                        <script>
+                            document.getElementById('name').value = `{{user.name}}` 
+                        </script>
+                    </div>
+                </section>
+
+                <section class="formInput">
+                    <div>
+                        <label for="name">Email</label>
+                        <br>
+                        <input required type="email" name="email" id="email" maxlength="25"  disabled>
+                        <script>
+                            document.getElementById('email').value = `{{user.email}}` 
+                        </script>
+                    </div>
+                    <div>
+                        <label for="lastname">Nouveau Mot De Passe</label>
+                        <br>
+                        <input required type="password" name="password" id="password" maxlength="25">
+                    </div>
+                </section>
+                <section class="formInput">
+                    <div>
+                        <label for="sexe">Sexe</label>
+                        <br>
+                        <select name="sexe" id="sexe" required>
+                            <option value="male">Homme</option>
+                            <option value="female">Femme</option>
+                        </select>
+                        <script>
+                            document.getElementById('sexe').value = `{{user.sexe}}` 
+                        </script>
+                    </div>
+                    <div>
+                        <label for="birthday">Date de naissance</label>
+                        <br>
+                        <input type="date" name="birthday" id="birthday" max="2012-12-31" required>
+                        <script>
+                            document.getElementById('birthday').value = `{{user.birthday}}` 
+                        </script>
+                    </div>
+                </section>
+
+                <section class="formInput">
+                    <div>
+                        <label for="logo">Photo De Profile</label>
+                        <br>
+                        <input type="logo" name="logo" id="logo" maxlength="25" value="null">
+                        <script>
+                            document.getElementById('logo').value = `{{user.logo}}` 
+                        </script>
+                    </div>
+                </section>
+
+                <section class="formInput">
+                    <div>
+                        <label for="role">Role</label>
+                        <br>
+                        <select name="role" id="role" required>
+                            <option value="user">Utilisateur</option>
+                            <option value="admin">Administrateur</option>
+                        </select>
+                        <script>
+                            document.getElementById('role').value = `{{user.role}}` 
+                        </script>
+                    </div>
+                    <div>
+                        <label for="wallet">Crédits</label>
+                        <br>
+                        <input type="number" name="wallet" id="wallet" max="999" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" required>
+                        <script>
+                            document.getElementById('wallet').value = `{{user.wallet}}` 
+                        </script>
+                    </div>
+                </section>
+                    <button type="submit">Sauvegarder</button>
+        </form>
+    </section>
+

@@ -1,0 +1,129 @@
+    <nav class="">
+        <div class="logo">
+            <img src="/images/logo.png" alt="">
+        </div>
+        <ul class="menu">
+            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+            <hr>
+            <li  class="active"><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
+            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
+            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+
+        </ul>
+
+        <ul class="menu">
+            <li style="visibility: hidden;"></li>
+        </ul>
+    </nav>
+    
+    
+    <section class="container">
+
+        <div class="tables">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Sexe</th>
+                            <th>Date de naissance</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <style>
+
+                            table {
+                                 page-break-before:always; 
+                                 align-content: center;
+                            }
+
+                            td {
+                                text-transform: capitalize;
+                                width: auto;
+                            }
+
+                            td.logo {
+                                width: 10%;
+                                margin: auto;
+                            }
+
+                            td.logo img {
+                                width: 40%;
+                                border-radius: 100%;
+                            }
+
+                        </style>
+                        {{#each users}}
+                            <tr>
+                                <td>{{id}}</td>
+                                <td>{{name}} {{lastname}}</td>
+                                <td style="text-transform:inherit;">{{email}}</td>
+                                <td>{{sexe}}</td>
+                                <td>{{birthday}}</td>
+                                <td>{{role}}</td>
+                                <td>
+                                    <a href="/admin/users/edit/{{id}}">Gérer</a>
+                                    <a class="normal" href="/admin/users/mail/{{email}}">Mail</a>
+                                    <form action="/admin/users/delete/{{id}}" method="post">
+                                        <button class="danger" type="submit">Suprimé</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {{else}}
+
+                            <tr>
+                                <td colspan="7">Aucun utilisateurs n'est inscrit sur votre TxCMS</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="createButtons">
+            <a href="/admin/users/create">Crée un utilisateur</a>
+        </div>
+
+        <footer>
+            <span>Copyright © {{app.config.company.name}}</span>
+            <span>TxCMS - {{system.version}}</span>
+        </footer>
+
+    </section>
+
+    <section class="profile">
+
+        {{#if success_message}}
+
+            <div class="notif success" role="alert">
+                <h2>Succès</h2>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
+                <p class="content">{{success_message}}</p>
+            </div>
+
+        {{/if}}
+
+
+        {{#if error_message}}
+
+            <div class="notif error" role="alert">
+                <h2>Erreur</h2>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
+                <p class="content">{{error_message}}</p>
+            </div>
+
+        {{/if}}
+
+
+    </section>

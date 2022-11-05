@@ -1,0 +1,117 @@
+    <nav class="">
+        <div class="logo">
+            <img src="/images/logo.png" alt="">
+        </div>
+        <ul class="menu">
+            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
+            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
+            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+            <hr>
+            <li  class="active"><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+
+        </ul>
+
+        <ul class="menu">
+            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        </ul>
+    </nav>
+    
+    <section class="container">
+
+
+    </section>
+
+    <section class="profile register">
+        <div class="logoText">
+            <img src="/images/logo-text.png" classe=""alt="">
+            <h2>Gérer les moyens de paiements</h2>
+        </div>
+        <form  action="/admin/settings/payments-gateways" method="post">
+                <h2>Paypal :</h2>
+
+                <section class="formInput">
+                    <div>
+                        <label for="PaypalPublicKey">Clé public</label>
+                        <br>
+                        <input type="text" name="PaypalPublicKey" id="PaypalPublicKey" value={{paymentsGateways.config.paypal.publicKey}}>
+                    </div>
+                </section>
+
+                <section class="formInput">
+                    <div>
+                        <label for="PaypalSecretKey">Clé Privé</label>
+                        <br>
+                        <input type="text" name="PaypalSecretKey" id="PaypalSecretKey" value="{{paymentsGateways.config.paypal.secretKey}}">
+                    </div>
+                </section>
+
+
+                <section class="formInput">
+                    <div>
+                        <div class="switchInput">
+                            <label class="toggler-wrapper style-1">
+                                <input type="checkbox" id="PaypalEnabled" name="PaypalEnabled" >
+                                <div class="toggler-slider">
+                                    <div class="toggler-knob"></div>
+                                </div>
+                            </label>
+                            <label for="paypal">Autoriser les paiements Paypal</label>
+                        </div>
+                        <script>
+                                if({{paymentsGateways.config.stripe.enabled}} == true) {
+                                    document.getElementById('PaypalEnabled').checked = true
+                                }else{
+                                    document.getElementById('PaypalEnabled').checked = false
+                                }
+                        </script>
+                    </div>
+                </section>  
+
+                <hr>
+
+                <h2>Stripe (carte bancaire) :</h2>
+
+                <section class="formInput">
+                    <div>
+                        <label for="StripePublicKey">Clé public</label>
+                        <br>
+                        <input type="text" name="StripePublicKey" id="StripePublicKey" value="{{paymentsGateways.config.stripe.publicKey}}">
+                    </div>
+                </section>
+
+                <section class="formInput">
+                    <div>
+                        <label for="StripeSecretKey">Clé Privé</label>
+                        <br>
+                        <input type="text" name="StripeSecretKey" id="StripeSecretKey" value="{{paymentsGateways.config.stripe.secretKey}}">
+                    </div>
+                </section>
+
+                <section class="formInput">
+                    <div>
+                        <div class="switchInput">
+                            <label class="toggler-wrapper style-1">
+                                <input type="checkbox" id="StripeEnabled" name="StripeEnabled" >
+                                <div class="toggler-slider">
+                                    <div class="toggler-knob"></div>
+                                </div>
+                            </label>
+                            <label for="paypal">Autoriser les paiements Stripe</label>
+                        </div>
+                        <script>
+                                if({{paymentsGateways.config.stripe.enabled}} == true) {
+                                    document.getElementById('StripeEnabled').checked = true
+                                }else{
+                                    document.getElementById('StripeEnabled').checked = false
+                                }
+                        </script>
+                    </div>
+                </section>
+                
+                <button type="submit">Sauvegarder</button>
+        </form>
+    </section>

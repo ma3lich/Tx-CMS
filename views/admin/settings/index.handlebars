@@ -1,0 +1,214 @@
+    <nav class="">
+        <div class="logo">
+            <img src="/images/logo.png" alt="">
+        </div>
+        <ul class="menu">
+            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+            <hr>
+            <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
+            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
+            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+            <hr>
+            <li  class="active"><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+
+        </ul>
+
+        <ul class="menu">
+            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        </ul>
+    </nav>
+    
+    <section class="container">
+
+        <form class="profile"  action="/admin/settings" method="post">           
+            <div class="userLogo">
+                <img id="pp" src="{{app.config.company.logo}}" alt="">
+
+                <section class="formInput">
+                    <div>
+                        <label style="padding: 0 5px;" for="name">Nom de l'hébergeur</label>
+                        <br>
+                        <input type="text" name="name" id="name" maxlength="25" value={{app.config.company.name}} >
+                    </div>
+                </section>
+
+                <section style="margin-top: 20px;"  class="formInput">
+                    <div>
+                        <label for="description">Description</label>
+                        <br>
+                        <textarea name="description" id="description" cols="50" rows="5">{{app.config.company.description}}</textarea>
+                    </div>
+                </section>
+
+                <section style="margin-top: 20px;"  class="formInput">
+                    <div>
+                        <label for="adresse">Adresse</label>
+                        <br>
+                        <textarea name="adresse" id="adresse" cols="50" rows="5">{{app.config.company.adresse}}</textarea>
+                    </div>
+                </section>
+
+                <button type="submit">Sauvegarder</button>
+            </div>
+
+            <div class="userInfo">
+
+                <span class="title">Information Systeme :</span>
+                <section class="formInput">
+                    <div>
+                        <label for="hostname">Nom d'hôte</label>
+                        <br>
+                        <input type="text" name="hostname" id="hostname" maxlength="25" value={{app.config.system.hostname}} disabled>
+                    </div>
+                    <div>
+                        <label for="port">Port</label>
+                        <br>
+                        <input type="text" name="port" id="port" maxlength="25" value={{app.config.system.port}} disabled>
+                    </div>
+                    <div>
+                        <label for="license">Clé de license</label>
+                        <br>
+                        <input type="text" name="license" id="license" maxlength="25" value={{app.config.system.license}}>
+                    </div>
+                </section>
+
+                <span class="title">Information Hébergeur :</span>
+                <section class="formInput">
+                    <div style="width: 30%;">
+                        <label for="domaine">Nom de domaine</label>
+                        <br>
+                        <input type="text" name="domaine" id="domaine" maxlength="25" value={{app.config.company.domaine}}>
+                    </div>
+                    <div style="width: 70%;">
+                        <label for="logo">Logo  de l'hébergeur</label>
+                        <br>
+                        <input type="url" name="logo" id="logo" maxlength="25" value={{app.config.company.logo}}>
+                    </div>
+                </section>
+
+                <section class="formInput">
+
+                </section>
+
+
+                <span class="title">Information Légales :</span>
+                <section class="formInput">
+                    <div>
+                        <label for="mentions">Mentions Légales</label>
+                        <br>
+                        <input type="url" name="mentions" id="mentions" maxlength="25" value={{app.config.company.legale.mentions}}>
+                    </div>
+                </section>
+
+                <section class="formInput">
+                    <div>
+                        <label for="privacy">CGV - CGU</label>
+                        <br>
+                        <input type="url" name="privacy" id="privacy" maxlength="25" value={{app.config.company.legale.privacy}}>
+                    </div>
+                </section>
+
+                <span class="title">Autre Parmètres :</span>
+                <section class="formInput" style="margin-top: 2%;">
+                    <div>
+                        <a href="/admin/settings/payments-gateways">Moyens de paiements</a>
+                    </div>
+                    <div>
+                        <a href="/admin/settings/database">Base de données</a>
+                    </div>
+                    <div>
+                        <a href="/admin/settings/e-mail">Serveur mail</a>
+                    </div>
+                </section>
+                <section class="formInput" style="margin-top: 2%;">
+                    <div>
+                        <a href="/admin/settings/payments-gateways">Réseaux sociaux</a>
+                    </div>
+                    <div>
+                        <a href="/admin/settings/database">Base de données</a>
+                    </div>
+                    <div>
+                        <a href="/admin/settings/e-mail">Serveur mail</a>
+                    </div>
+                </section>
+            </div>
+        </form>
+        
+        <footer>
+            <span>Copyright © {{app.config.company.name}}</span>
+            <span>TxCMS - {{system.version}}</span>
+        </footer>
+    </section>
+
+    <section class="profile">
+
+        <div class="user">
+            <a class="logo" href="/client/profile">
+                <img id="userlogo" src="" alt="">
+                <script>
+                    if("{{user.logo}}" == ""){
+                        
+                        if("{{user.sexe}}" == "male"){
+                            document.getElementById('userlogo').src = "/images/male-logo.png"
+                        } 
+
+                        if("{{user.sexe}}" == "female"){
+                            document.getElementById('userlogo').src = "/images/female-logo.png"
+                        }
+
+                    }else{
+                        document.getElementById('userlogo').src = "{{user.logo}}"
+                    }
+                </script>
+                <span class="username">{{user.lastname}} {{user.name}}</span>
+            </a>
+            <div>
+                <span class="email">{{user.email}}</span>
+                <br>
+                <span class="id">tx-{{user.id}}</span>
+            </div>
+
+            <form action="/client/logout" method="post">
+                <button type="submit">Me déconnecter</button>
+            </form>
+            
+        </div>
+        <div class="menu">
+            <span class="title">Raccourcis</span>
+            <ul>
+                <li>
+                    <a href="/client">
+                        <div class="icon">
+                            <ion-icon name="card-outline"></ion-icon>
+                        </div>
+                        <div class="text">
+                            <span>Revenir a l'espace client</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="icon">
+                            <ion-icon name="mail-outline"></ion-icon>
+                        </div>
+                        <div class="text">
+                            <span>Emails reçus</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="icon">
+                            <ion-icon name="help-buoy-outline"></ion-icon>
+                        </div>
+                        <div class="text">
+                            <span>Centre d'aide</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
