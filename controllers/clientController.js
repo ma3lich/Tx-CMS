@@ -140,7 +140,6 @@ module.exports = {
                         amount: plans.amount,
                       });
 
-                      console.log(products);
                     });
                   }
                   res.render("client/shop/cart/", {
@@ -158,5 +157,9 @@ module.exports = {
         }
       }
     );
+  },
+
+  checkoutCart:(req, res) => {
+    console.log(req.body)
   },
 };

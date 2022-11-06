@@ -38,10 +38,11 @@
     </nav>
 
 
+    <form enctype="multipart/form-data" action="/client/shop/cart" method="post">
     
     <section class="container cart">
 
-        <form class="profile"  action="/client/profile" method="post">           
+        <div class="profile">           
             <div class="userInfo">
                 <span class="title">Informations personnelles</span>
                 <section class="formInput">
@@ -375,7 +376,7 @@
                     </div>
                 </section>
             </div>
-        </form>
+        </div>
 
         <footer>
             <span>Copyright © {{app.config.company.name}}</span>
@@ -431,7 +432,7 @@
             <div class="total">
                 <div>
                     <span>Total :</span>
-                    <span id="total">15,00 €</span>
+                    <span id="total" name="total">15,00 €</span>
                 </div>
             </div>
 
@@ -452,3 +453,4 @@
 
     </section>
 
+</form>

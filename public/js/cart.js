@@ -36,6 +36,5 @@ let total = document.getElementById('total')
 
 if(subTotal + totalFees >= 0){
   let totalAll = (subTotal + totalFees);
-  console.log(totalAll)
   total.innerHTML = (subTotal + totalFees) + " €"
 }

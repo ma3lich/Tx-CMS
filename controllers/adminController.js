@@ -32,7 +32,6 @@ module.exports = {
             if(err) throw err
             else{
                 res.render('admin/users/edit',{title:"TxCMS - Gestion d'utilisateur", action:'edit', user:JSON.parse(JSON.stringify(data))[0]});
-                console.log(JSON.parse(JSON.stringify(data))[0])
             }
         })
     },
@@ -147,7 +146,6 @@ module.exports = {
 
     /* Méthode Post pour la page admin/plans/create */
     submitCreatedPlan: (req, res) => {
-        console.log(req.body)
         db.query(`INSERT INTO plans ( name, categorie, price, stock, state) VALUES ('${req.body.name}', '${req.body.categorie}', '${req.body.price}', '${req.body.stock}', '${req.body.state}')`, function(success, err){
             if (err){
                 req.flash('error-message', err)
@@ -225,7 +223,6 @@ module.exports = {
 
     /* Méthode Post pour la page admin/categories/create */
     submitCreatedCategorie: (req, res) => {
-        console.log(req.body)
         db.query(`INSERT INTO categories ( name, server, auto) VALUES ('${req.body.name}', '${req.body.server}', '${req.body.auto}')`, function(success, err){
             if (err){
                 req.flash('error-message', err)
@@ -248,7 +245,6 @@ module.exports = {
                     if(err) req.flash('error-message', err)
                     else{
                         res.render('admin/categories/edit',{title:app.config.company.name + ' Plans Edit', action:'edit', server:results ,categorie:JSON.parse(JSON.stringify(data))[0] });
-                        console.log(JSON.parse(JSON.stringify(data))[0])
                     }
                 })
             }
@@ -266,7 +262,6 @@ module.exports = {
             }else{
                 req.flash('success-message', 'Catégorie mise a jour !'),
                 res.redirect('/admin/categories')
-                console.log(success)
             }
         })
     },

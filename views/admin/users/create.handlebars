@@ -31,7 +31,7 @@
             <img src="/images/logo-text.png" classe=""alt="">
             <h2>Crée une offre Proxmox/Pterodactyl</h2>
         </div>
-        <form  action="/admin/users/create" method="post">
+        <form enctype="multipart/form-data"  action="/admin/users/create" method="post">
                 <input style="display:none" type="text" name="id" id="id" value={{user.id}}>
                 <section class="formInput">
                     <div>

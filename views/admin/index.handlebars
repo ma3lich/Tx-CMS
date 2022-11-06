@@ -22,7 +22,7 @@
     </nav>
 
     <section class="container">
-        <form method="get" action="/" class="info">
+        <form enctype="multipart/form-data" method="get" action="/" class="info">
             <a href="" class="card">
                 <div class="icon">
                     <ion-icon name="hand-right-outline"></ion-icon>                
@@ -112,7 +112,7 @@
                 <span class="id">tx-{{user.id}}</span>
             </div>
 
-            <form action="/client/logout" method="post">
+            <form enctype="multipart/form-data" action="/client/logout" method="post">
                 <button type="submit">Me déconnecter</button>
             </form>
             
