@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const db = require("../config/database");
 const app = require("../config/app.json");
 const package_json = require("../package.json");
-// const { json } = require('express');
+const adminLogs = require('logger').createLogger('./logs/admin_logs.log');
 // const stripe = require('stripe')('sk_test_51LaQfvH8EjxIHb36wkTV1HpLCKgWqbjff1oTa3QUvGGtltNEd1mEMhXcY4bowjGVbGbowstzLdT1cT2eEXiiArv000Y6m07ixd');
 
 module.exports = {
@@ -157,6 +157,27 @@ module.exports = {
         }
       }
     );
+  },
+
+  addToCart:(req, res) => {
+    id = req.params.id
+    db.query(`SELECT * FROM carts WHERE planID = ${id}`, function(err, results) {
+      if(results !== []){
+        console.log("new")
+        db.query(
+          `INSERT INTO carts (owner, planID, amount) VALUES ('${req.user[0].id}', '${id}', '${req.body.amount}')`, function(err, sucess) {
+            res.redirect("/client/shop/cart");
+          }
+        );
+      } else{
+        console.log("update")
+        let newAmount = JSON.parse(JSON.stringify(results))[0].amount + Number(req.body.amount)
+        console.log(newAmount)
+        db.query(`UPDATE carts SET amount = ${newAmount}`, function(err) {
+          res.redirect("/client/shop/cart");
+        })
+      }
+    })
   },
 
   checkoutCart:(req, res) => {

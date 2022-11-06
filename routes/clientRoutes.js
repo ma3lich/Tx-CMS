@@ -9,6 +9,7 @@ const {
   getShop,
   getShopByCategorie,
   getCart,
+  addToCart,
   checkoutCart
 } = require("../controllers/clientController.js");
 
@@ -27,6 +28,9 @@ router.route("/shop").get(getShop);
 
 router.route("/shop/products/:name").get(getShopByCategorie);
 
+router.route("/shop/cart/add/:id").post(addToCart)
+
 router.route("/shop/cart").get(getCart).post(checkoutCart);
+
 
 module.exports = router;

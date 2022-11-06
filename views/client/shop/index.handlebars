@@ -29,7 +29,7 @@
         <div class="plans">
             <script> console.log({{plans.price}})</script>
             {{#each plans}}
-                <form class="card">
+                <form class="card" action="/client/shop/cart/add/{{id}}" method="post">
                     <div class="cardHead">
                         <span class="name">{{name}}</span>
                         <span class="price"> {{price}}€<label for=""> /mois</label></span>
@@ -46,8 +46,9 @@
                         </ul>
                     </div>
                         <div class="cardFotter">
+                            <input type="number" max="9" min="1" value="1" id="amount"  name="amount">
+                            <br>
                             <button type="submit">Commander</button>
-                            <input type="text">
                         </div>
                 </form>
             {{/each}}
