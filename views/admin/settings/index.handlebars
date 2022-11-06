@@ -22,7 +22,7 @@
     
     <section class="container">
 
-        <form enctype="multipart/form-data" class="profile"  action="/admin/settings" method="post">           
+        <form  class="profile"  action="/admin/settings" method="post">           
             <div class="userLogo">
                 <img id="pp" src="{{app.config.company.logo}}" alt="">
 
@@ -170,7 +170,7 @@
                 <span class="id">tx-{{user.id}}</span>
             </div>
 
-            <form enctype="multipart/form-data" action="/client/logout" method="post">
+            <form  action="/client/logout" method="post">
                 <button type="submit">Me déconnecter</button>
             </form>
             

@@ -31,7 +31,7 @@
             <img src="/images/logo-text.png" classe=""alt="">
             <h2>Gérer l'utilisateur : {{user.name}} {{user.lastname}}</h2>
         </div>
-        <form enctype="multipart/form-data"  action="/admin/users/edit/:id" method="post">
+        <form   action="/admin/users/edit/:id" method="post">
                 <input style="display:none" type="text" name="id" id="id" value={{user.id}}>
                 <section class="formInput">
                     <div>

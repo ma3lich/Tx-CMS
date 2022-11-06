@@ -32,7 +32,7 @@
             <img src="/images/logo-text.png" classe=""alt="">
             <h2>Envoyer un E-Mail a un utilisateur</h2>
         </div>
-        <form enctype="multipart/form-data"  action="/admin/users/mail/{{user.email}}" method="post">
+        <form   action="/admin/users/mail/{{user.email}}" method="post">
                 <input style="display:none" type="text" name="id" id="id" value={{user.id}}>
                 <section class="formInput">
                     <div>

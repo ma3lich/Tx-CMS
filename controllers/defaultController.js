@@ -8,6 +8,8 @@ const mailserver = require("../config/mail");
 const app = require("../config/app.json");
 const social = require("../config/social.json");
 const package_json = require("../package.json");
+const adminLogs = require('logger').createLogger('./logs/admin_logs.log');
+
 
 /* Configuration passport par email */
 
@@ -97,13 +99,16 @@ module.exports = {
                 `INSERT INTO users ( name, lastname, email, password, sexe, birthday) VALUES ('${req.body.name}', '${req.body.lastname}', '${req.body.email}', '${hash}', '${req.body.sexe}', '${req.body.birthday}')`,
                 async function (success, err) {
                   req.flash("success-message", "Votre compte a était creé"),
-                    res.redirect("/");
+                  res.redirect("/");
+
+                  adminLogs.setLevel('debug');
+                  adminLogs.debug(` : l'utilisateur : ${userData.email}, vien de crée son compte !`);
 
                   const mail = req.body.email;
                   const mailMsg =
-                    `Bienvenu, ${req.body.name} sur TxCMS ✔ ` +
-                    ` Votre Email : ${req.body.email} ` +
-                    ` Votre Mot De Passe : ${req.body.password} `;
+                    `\n Bienvenu, ${req.body.name} sur TxCMS ✔ ` +
+                    `\n Votre Email : ${req.body.email} ` +
+                    `\n Votre Mot De Passe : ${req.body.password} `;
 
                   let info = await mailserver.sendMail({
                     from: '"TxCMS 👻" <txcms@ma3lich.fr>',

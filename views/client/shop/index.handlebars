@@ -29,7 +29,7 @@
         <div class="plans">
             <script> console.log({{plans.price}})</script>
             {{#each plans}}
-                <div class="card">
+                <form class="card">
                     <div class="cardHead">
                         <span class="name">{{name}}</span>
                         <span class="price"> {{price}}€<label for=""> /mois</label></span>
@@ -45,10 +45,11 @@
 
                         </ul>
                     </div>
-                    <div class="cardFotter">
-                        <button>Commander</button>
-                    </div>
-                </div>
+                        <div class="cardFotter">
+                            <button type="submit">Commander</button>
+                            <input type="text">
+                        </div>
+                </form>
             {{/each}}
 
         </div>
@@ -86,7 +87,7 @@
                 <span class="id">tx-{{user.id}}</span>
             </div>
 
-            <form enctype="multipart/form-data" action="/client/logout" method="post">
+            <form  action="/client/logout" method="post">
                 <button type="submit">Me déconnecter</button>
             </form>
             

@@ -1,4 +1,6 @@
 const express = require("express");
+const adminLogs = require('logger').createLogger('./logs/admin_logs.log');
+
 const {
   loginGet,
   registerGet,
@@ -23,8 +25,7 @@ passport.use(
     },
     (req, email, password, done) => {
       db.query(
-        "SELECT * FROM users WHERE email = ?",
-        [email],
+        `SELECT * FROM users WHERE email = "${email}"`,
         async function (error, user, fields) {
           if (!user) return done(null, false);
 
@@ -37,6 +38,8 @@ passport.use(
               if (err) return err;
 
               if (!passwordMatched) return done(null, false);
+              adminLogs.setLevel('debug');
+              adminLogs.debug(` : l'utilisateur : ${userData.email}, vien de se connecter !`);
 
               return done(null, user);
             }
@@ -48,11 +51,11 @@ passport.use(
 );
 
 passport.serializeUser(function (userData, done) {
-  done(null, userData.email);
+  done(null, userData.id);
 });
 
 passport.deserializeUser(function (userData, cb) {
-  done(null, userData.email);
+  done(null, userData.id);
 });
 
 router
@@ -61,7 +64,7 @@ router
   .post(
     passport.authenticate("local", {
       successRedirect: "/client",
-      failureRedirect: "/",
+      failureRedirect: "/error",
       failureFlash: true,
       successFlash: true,
     })
