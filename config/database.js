@@ -2,7 +2,7 @@ const { createConnection } = require("mysql");
 const database = require("./database.json");
 
 const db = createConnection({
-  /* It's a property of the database.json file. */ host: database.config.host,
+  host: database.config.host,
   port: database.config.port,
   user: database.config.user,
   password: database.config.password,

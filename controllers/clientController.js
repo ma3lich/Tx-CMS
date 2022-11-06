@@ -114,7 +114,7 @@ module.exports = {
     );
   },
 
-  checkout: (req, res) => {
+  getCart: (req, res) => {
     let id = req.user[0].id;
     let products = [];
 
@@ -136,13 +136,14 @@ module.exports = {
                         name: plan.name,
                         categorie: plan.categorie,
                         price: plan.price,
+                        fee: plan.fee,
                         amount: plans.amount,
                       });
 
                       console.log(products);
                     });
                   }
-                  res.render("client/shop/cart/checkout", {
+                  res.render("client/shop/cart/", {
                     title: app.config.company.name + " - Panier",
                     user: req.user[0],
                     app: app,

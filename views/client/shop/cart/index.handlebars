@@ -41,7 +41,7 @@
     
     <section class="container cart">
 
-    <form class="profile"  action="/client/profile" method="post">           
+        <form class="profile"  action="/client/profile" method="post">           
             <div class="userInfo">
                 <span class="title">Informations personnelles</span>
                 <section class="formInput">
@@ -383,17 +383,14 @@
         </footer>
     </section>
 
-    <section class="profile cart">
+    <section class="profile_bar cart">
         <div class="user">
-            <script>
-
-            </script>
             <div class="items">
             {{#each cartPlans}}
                 <div class="item">
                     <div class="logo">
                         <ion-icon name="cube-outline"></ion-icon>
-                        <div class="badge">{{amount}}</div>
+                        <div class="badge" id="amount">{{amount}}</div>
                     </div>
                     <div class="text">
                             <div class="name">
@@ -401,6 +398,7 @@
                             </div>
                             <div class="price">
                                 <span id="price">{{price}}</span>
+                                <span style="display: none;" id="fee">{{fee}}</span>
                             </div>
                     </div>
                 </div>
@@ -414,7 +412,7 @@
             <div class="prices">
                 <div>
                     <span>Frais d'installation :</span>
-                    <span id="installFee">2,00 €</span>
+                    <span id="totalfees">2,00 €</span>
                 </div>
 
                 <div>
@@ -424,7 +422,7 @@
 
                 <div>
                     <span>Réduction :</span>
-                    <span id="reduct">5,00 €</span>
+                    <span id="reduct">0,00 €</span>
                 </div>
             </div>
 

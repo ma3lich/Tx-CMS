@@ -941,7 +941,7 @@ nav .menu li.active {
   margin: 3% 0;
 }
 
-.profile {
+.profile_bar {
   display: flex;
   text-align: center;
   flex-direction: column;
@@ -957,7 +957,7 @@ nav .menu li.active {
   -webkit-animation: right 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.2s forwards;
           animation: right 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.2s forwards;
 }
-.profile .user {
+.profile_bar .user {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -967,7 +967,7 @@ nav .menu li.active {
   margin-top: 20%;
   margin-bottom: 5%;
 }
-.profile .user form {
+.profile_bar .user form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -975,7 +975,7 @@ nav .menu li.active {
   border-radius: 20px;
   background: rgb(255, 255, 255);
 }
-.profil .user .logo {
+.profile_bar .user .logo {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -984,7 +984,7 @@ nav .menu li.active {
   top: -20%;
   margin-bottom: -5%;
 }
-.profil .user .logo .username {
+.profile_bar .user .logo .username {
   position: absolute;
   background: linear-gradient(145deg, rgb(109, 120, 233), rgb(92, 101, 196));
   font-size: 0.8rem;
@@ -993,24 +993,24 @@ nav .menu li.active {
   bottom: -15%;
   border-radius: 12px;
 }
-.profil .user .logo img {
+.profile_bar .user .logo img {
   width: 50%;
   background: rgb(255, 255, 255);
   border-radius: 100%;
 }
-.profil .user span {
+.profile_bar .user span {
   position: relative;
   font-size: 0.8rem;
   color: rgb(12, 22, 105);
   height: auto;
   margin-bottom: 2%;
 }
-.profil .user span.inputTitle {
+.profile_bar .user span.inputTitle {
   text-align: left;
   padding-left: 10%;
   margin-top: 5%;
 }
-.profil .user button {
+.profile_bar .user button {
   color: rgb(12, 22, 105);
   background-color: transparent;
   border-top: 1px solid rgba(12, 22, 105, 0.3) !important;
@@ -1021,13 +1021,13 @@ nav .menu li.active {
   font-weight: 600;
   cursor: pointer;
 }
-.profil .user button:hover {
+.profile_bar .user button:hover {
   color: rgb(12, 22, 105);
 }
-.profil .user input#password {
+.profile_bar .user input#password {
   margin-bottom: 5%;
 }
-.profil .user input {
+.profile_bar .user input {
   padding: 3% 4%;
   border: none;
   border-radius: 8px;
@@ -1039,13 +1039,13 @@ nav .menu li.active {
   border: 1px solid rgb(12, 22, 105);
   font-weight: 600;
 }
-.profil .user input:focus {
+.profile_bar .user input:focus {
   padding: 5%;
   border: 1px solid rgb(12, 22, 105);
   outline-offset: 0px;
   outline: none;
 }
-.profil .server {
+.profile_bar .server {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -1056,7 +1056,7 @@ nav .menu li.active {
   margin: 10% 0;
   padding: 10%;
 }
-.profil .server span {
+.profile_bar .server span {
   text-align: left;
   font-size: 0.8rem;
   color: rgb(12, 22, 105);
@@ -1065,7 +1065,7 @@ nav .menu li.active {
   font-weight: 600;
   white-space: nowrap;
 }
-.profil .server span input {
+.profile_bar .server span input {
   padding: 0 5%;
   border: none;
   border-radius: 8px;
@@ -1076,30 +1076,30 @@ nav .menu li.active {
   border: 0px solid transparent;
   font-weight: 600;
 }
-.profil .server span input:focus {
+.profile_bar .server span input:focus {
   padding: 2.5% 5%;
   border: 1px solid rgb(12, 22, 105);
   outline-offset: 0px;
   outline: none;
 }
-.profil .menu {
+.profile_bar .menu {
   display: flex;
   flex-direction: column;
   width: 80%;
 }
-.profil .menu .title {
+.profile_bar .menu .title {
   text-align: left;
   font-size: 1.1rem;
   font-weight: 600;
   color: rgb(12, 22, 105);
 }
-.profil .menu ul {
+.profile_bar .menu ul {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   margin: 5% 0;
 }
-.profil .menu ul li a {
+.profile_bar .menu ul li a {
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
@@ -1107,7 +1107,7 @@ nav .menu li.active {
   align-content: center;
   margin: 5% 0;
 }
-.profil .menu ul li a .icon {
+.profile_bar .menu ul li a .icon {
   background: rgb(109, 120, 233);
   padding: 8px;
   font-size: 1.2rem;
@@ -1120,7 +1120,7 @@ nav .menu li.active {
   margin-right: 5%;
   align-items: center;
 }
-.profil .menu ul li a .text {
+.profile_bar .menu ul li a .text {
   display: flex;
   justify-content: center;
   font-size: 0.85rem;
@@ -1129,7 +1129,7 @@ nav .menu li.active {
   white-space: nowrap;
   align-items: center;
 }
-.profil.register {
+.profile_bar.register {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1148,45 +1148,45 @@ nav .menu li.active {
   overflow: scroll;
   overflow-x: hidden;
 }
-.profil.register hr {
+.profile_bar.register hr {
   margin: 5%;
   border-color: rgba(109, 120, 233, 0.5);
 }
-.profil.register form {
+.profile_bar.register form {
   width: 80%;
 }
-.profil.register form h2 {
+.profile_bar.register form h2 {
   color: rgb(12, 22, 105);
   font-size: 1.2rem;
   text-align: left;
 }
-.profil.register .formInput {
+.profile_bar.register .formInput {
   display: flex;
   flex-direction: row;
   align-items: flex-start !important;
   text-align: left;
   width: 100%;
 }
-.profil.register .mail {
+.profile_bar.register .mail {
   display: flex;
   align-items: flex-start !important;
   text-align: left;
   width: 100%;
 }
-.profil.register section div {
+.profile_bar.register section div {
   width: 100%;
   padding: 1%;
   margin: auto;
   display: flex;
   flex-direction: column;
 }
-.profil.register label {
+.profile_bar.register label {
   font-size: 1rem;
   font-weight: 500;
   color: rgb(12, 22, 105);
   padding: 5px;
 }
-.profil.register .logoText {
+.profile_bar.register .logoText {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1194,16 +1194,16 @@ nav .menu li.active {
   width: 100%;
   margin: 2% 0;
 }
-.profil.register .logoText img {
+.profile_bar.register .logoText img {
   width: 30%;
 }
-.profil.register .logoText h2 {
+.profile_bar.register .logoText h2 {
   color: rgb(12, 22, 105);
   margin: 2% 0;
   font-size: 1.5rem;
   white-space: nowrap;
 }
-.profil.register button {
+.profile_bar.register button {
   margin: 5% 0;
   border: none;
   background: rgb(109, 120, 233);
@@ -1216,12 +1216,12 @@ nav .menu li.active {
   font-size: 1rem;
   font-weight: 600;
 }
-.profil.register button:hover {
+.profile_bar.register button:hover {
   background: rgb(92, 101, 196);
   box-shadow: 5px 5px 15px rgba(92, 101, 196, 0.7);
   transform: scale(1.02);
 }
-.profil.register input, .profil.register select, .profil.register textarea {
+.profile_bar.register input, .profile_bar.register select, .profile_bar.register textarea {
   border: none;
   border-radius: 8px;
   transition: all 0.3s;
@@ -1233,32 +1233,32 @@ nav .menu li.active {
   font-size: 1rem;
   padding: 10px 20px;
 }
-.profil.register input:focus, .profil.register select:focus, .profil.register textarea:focus {
+.profile_bar.register input:focus, .profile_bar.register select:focus, .profile_bar.register textarea:focus {
   border: 1px solid rgb(12, 22, 105);
   outline-offset: 0px;
   outline: none;
 }
-.profil.cart {
+.profile_bar.cart {
   width: 25%;
 }
-.profil.cart .user {
+.profile_bar.cart .user {
   padding: 2% 5%;
   margin: 7.5% 0 0 0 !important;
 }
-.profil.cart .user .item {
+.profile_bar.cart .user .item {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 5%;
 }
-.profil.cart .user .item .logo {
+.profile_bar.cart .user .item .logo {
   font-size: 2rem;
   border-radius: 12px;
   padding: 3%;
   color: rgb(12, 22, 105);
   background-color: rgba(109, 120, 233, 0.3);
 }
-.profil.cart .user .item .logo .badge {
+.profile_bar.cart .user .item .logo .badge {
   position: absolute;
   top: -10px;
   right: -10px;
@@ -1272,7 +1272,7 @@ nav .menu li.active {
   width: 1.25rem;
   font-size: 0.8rem;
 }
-.profil.cart .user .item .text {
+.profile_bar.cart .user .item .text {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1280,21 +1280,21 @@ nav .menu li.active {
   width: 75%;
   margin-left: 5%;
 }
-.profil.cart .user .item .text .name span {
+.profile_bar.cart .user .item .text .name span {
   font-size: 1.1rem;
   font-weight: 500;
 }
-.profil.cart .user .item .text .price span {
+.profile_bar.cart .user .item .text .price span {
   font-size: 1rem;
   font-weight: 500;
 }
-.profil.cart .user hr {
+.profile_bar.cart .user hr {
   background: #6d78e9;
   border-color: #6d78e9;
   width: 75%;
   margin: 7.5% auto;
 }
-.profil.cart .user button {
+.profile_bar.cart .user button {
   margin: 5% 0;
   border: none;
   background: rgb(109, 120, 233);
@@ -1308,48 +1308,48 @@ nav .menu li.active {
   font-size: 1rem;
   font-weight: 600;
 }
-.profil.cart .user button:hover {
+.profile_bar.cart .user button:hover {
   background: rgb(92, 101, 196);
   box-shadow: 5px 5px 15px rgba(109, 120, 233, 0.7);
   transform: scale(1.02);
 }
-.profil.cart .user .prices {
+.profile_bar.cart .user .prices {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   padding: 0 5%;
 }
-.profil.cart .user .prices div {
+.profile_bar.cart .user .prices div {
   display: flex;
   justify-content: space-between;
   width: 100%;
   padding: 0 3%;
 }
-.profil.cart .user .prices div span {
+.profile_bar.cart .user .prices div span {
   font-size: 1rem;
   font-weight: 500;
 }
-.profil.cart .user .total {
+.profile_bar.cart .user .total {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   padding: 0 5%;
 }
-.profil.cart .user .total div {
+.profile_bar.cart .user .total div {
   display: flex;
   justify-content: space-between;
   width: 100%;
   padding: 0 3%;
 }
-.profil.cart .user .total div span {
+.profile_bar.cart .user .total div span {
   font-size: 1.2rem;
   font-weight: 600;
 }
-.profil.cart .user .promo {
+.profile_bar.cart .user .promo {
   text-align: left;
   padding: 0 3%;
 }
-.profil.cart .user .promo label {
+.profile_bar.cart .user .promo label {
   font-size: 1rem;
   font-weight: 500;
   color: rgb(12, 22, 105);
@@ -1360,17 +1360,17 @@ nav .menu li.active {
   margin-left: 2%;
   margin-bottom: -5%;
 }
-.profil.cart .user .promo div {
+.profile_bar.cart .user .promo div {
   display: flex;
   flex-direction: row;
 }
-.profil.cart .user .promo input {
+.profile_bar.cart .user .promo input {
   width: 75%;
 }
-.profil.cart .user .promo input:focus {
+.profile_bar.cart .user .promo input:focus {
   padding: 3% 4%;
 }
-.profil.cart .user .promo button {
+.profile_bar.cart .user .promo button {
   width: 15%;
   font-size: 1.8rem;
   font-weight: 900;
