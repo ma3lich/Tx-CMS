@@ -162,7 +162,7 @@ module.exports = {
   addToCart:(req, res) => {
     id = req.params.id
     db.query(`SELECT * FROM carts WHERE planID = ${id}`, function(err, results) {
-      if(results !== []){
+      if(results == []){
         console.log("new")
         db.query(
           `INSERT INTO carts (owner, planID, amount) VALUES ('${req.user[0].id}', '${id}', '${req.body.amount}')`, function(err, sucess) {
