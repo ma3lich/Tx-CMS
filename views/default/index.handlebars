@@ -1,176 +1,185 @@
-    <nav class="">
-        <div class="logo">
-            <img src="/images/logo.png" alt="">
-        </div>
-        <ul class="menu">
-            <li class="active"><a href="/"><ion-icon name="home-outline"></ion-icon></a></li>
-        </ul>
+ <nav class="">
+    <div class="logo">
+        <img src="/images/logo.png" alt="">
+    </div>
+    <ul class="menu">
+        <li class="active"><a href="/"><ion-icon name="home-outline"></ion-icon></a></li>
+    </ul>
 
-        <ul class="menu">
-            <li style="visibility: hidden;"></li>
-        </ul>
-    </nav>
-    
-    <section class="container">
-        <div class="header">
-            <span>{{app.config.company.name}} - Espace Client</span>
-            <p>{{app.config.company.description}}</p>
-        </div>        
+    <ul class="menu">
+        <li style="visibility: hidden;"></li>
+    </ul>
+</nav>
 
-        <form  method="get" action="/" class="info" style="margin-top: 5%;">
-            <a href="" class="card">
-                <div class="icon">
-                    <ion-icon name="hand-right-outline"></ion-icon>                
-                </div>
-                <div class="text">
-                    <span class="value" id="usersCount">
-                        {{usersCount}}
-                    </span>
-                    <p class="desc">
-                        Utilisateurs inscrits
-                    </p>
-                </div>
-            </a>
-            <a href=""  class="card">
-                <div class="icon">
-                    <ion-icon name="happy-outline"></ion-icon>                
-                </div>
-                <div class="text">
-                    <span class="value">
-                        {{clientsCount}}
-                    </span>
-                    <p class="desc">
-                        Client satisfait
-                    </p>
-                </div>
-            </a>
-            <a href="" class="card">
-                <div class="icon">
-                    <ion-icon name="layers-outline"></ion-icon>
-                </div>
-                <div class="text">
-                    <span class="value">
-                        {{servicesCount}}
-                    </span>
-                    <p class="desc">
-                        Services actifs
-                    </p>
-                </div>
-            </a>
-            <a href=""  class="card">
-                <div class="icon">
-                    <ion-icon name="speedometer-outline"></ion-icon>
-                </div>
-                <div class="text">
-                    <span class="value">
-                        {{serversCount}}
-                    </span>
-                    <p class="desc">
-                        Serveur en production
-                    </p>
-                </div>
-            </a>
-        </form>
-        
+<section class="container">
+    <div class="header">
+        <span>{{app.config.company.name}} - Espace Client</span>
+        <p>{{app.config.company.description}}</p>
+    </div>
 
-        <div class="index">
-            <div class="content">
-                <h1>TxCMS c'est trop bien pour le moment</h1>
-                <div class="social">
-                    <span class="title">Rejoignez la communauté</span>
-                    <p> Discutez avec les membres de l'équipe, les contributeurs et les développeurs !</p>
-                    <div class="parent">
-                        {{#if social.config.discord.enabled}}
-                            <a href="{{social.config.discord.link}}" target="_blank" id="discord" class="div1">
-                                <ion-icon name="logo-discord"></ion-icon>
-                                <span>Discord</span>
-                            </a>
-                        {{/if}}
-                        {{#if social.config.github.enabled}}
-                            <a href="{{social.config.github.link}}" target="_blank" id="discord" class="div2">
-                                <ion-icon name="logo-github"></ion-icon>
-                                <span>Github</span>
-                            </a>
-                        {{/if}}
-                        {{#if social.config.facebook.enabled}}
-                            <a href="{{social.config.facebook.link}}" target="_blank" id="discord" class="div3">
-                                <ion-icon name="logo-facebook"></ion-icon>
-                                <span>Facebook</span>
-                            </a>
-                        {{/if}}
-                        {{#if social.config.twitter.enabled}}
-                            <a href="{{social.config.twitter.link}}" target="_blank" id="discord" class="div4">
-                                <ion-icon name="logo-twitter"></ion-icon>
-                                <span>Twitter</span>
-                            </a>
-                        {{/if}}
-                        {{#if social.config.youtube.enabled}}
-                            <a href="{{social.config.youtube.link}}" target="_blank" id="discord" class="div5">
-                                <ion-icon name="logo-youtube"></ion-icon>
-                                <span>Youtube</span>
-                            </a>
-                        {{/if}}
-                        {{#if social.config.tiktok.enabled}}
-                            <a href="{{social.config.tiktok.link}}" target="_blank" id="discord" class="div6">
-                                <ion-icon name="logo-tiktok"></ion-icon>
-                                <span>Tiktok</span>
-                            </a>
-                        {{/if}}
-                    </div>
+    <form method="get" action="/" class="info" style="margin-top: 5%;">
+        <a href="" class="card">
+            <div class="icon">
+                <ion-icon name="hand-right-outline"></ion-icon>
+            </div>
+            <div class="text">
+                <span class="value" id="usersCount">
+                    {{usersCount}}
+                </span>
+                <p class="desc">
+                    Utilisateurs inscrits
+                </p>
+            </div>
+        </a>
+        <a href="" class="card">
+            <div class="icon">
+                <ion-icon name="happy-outline"></ion-icon>
+            </div>
+            <div class="text">
+                <span class="value">
+                    {{clientsCount}}
+                </span>
+                <p class="desc">
+                    Client satisfait
+                </p>
+            </div>
+        </a>
+        <a href="" class="card">
+            <div class="icon">
+                <ion-icon name="layers-outline"></ion-icon>
+            </div>
+            <div class="text">
+                <span class="value">
+                    {{servicesCount}}
+                </span>
+                <p class="desc">
+                    Services actifs
+                </p>
+            </div>
+        </a>
+        <a href="" class="card">
+            <div class="icon">
+                <ion-icon name="speedometer-outline"></ion-icon>
+            </div>
+            <div class="text">
+                <span class="value">
+                    {{serversCount}}
+                </span>
+                <p class="desc">
+                    Serveur en production
+                </p>
+            </div>
+        </a>
+    </form>
+
+
+    <div class="index">
+        <div class="content">
+            <h1>TxCMS c'est trop bien pour le moment</h1>
+            <div class="social">
+                <span class="title">Rejoignez la communauté</span>
+                <p> Discutez avec les membres de l'équipe, les contributeurs et
+                    les développeurs !</p>
+                <div class="parent">
+                    {{#if social.config.discord.enabled}}
+                    <a href="{{social.config.discord.link}}" target="_blank"
+                        id="discord" class="div1">
+                        <ion-icon name="logo-discord"></ion-icon>
+                        <span>Discord</span>
+                    </a>
+                    {{/if}}
+                    {{#if social.config.github.enabled}}
+                    <a href="{{social.config.github.link}}" target="_blank"
+                        id="discord" class="div2">
+                        <ion-icon name="logo-github"></ion-icon>
+                        <span>Github</span>
+                    </a>
+                    {{/if}}
+                    {{#if social.config.facebook.enabled}}
+                    <a href="{{social.config.facebook.link}}" target="_blank"
+                        id="discord" class="div3">
+                        <ion-icon name="logo-facebook"></ion-icon>
+                        <span>Facebook</span>
+                    </a>
+                    {{/if}}
+                    {{#if social.config.twitter.enabled}}
+                    <a href="{{social.config.twitter.link}}" target="_blank"
+                        id="discord" class="div4">
+                        <ion-icon name="logo-twitter"></ion-icon>
+                        <span>Twitter</span>
+                    </a>
+                    {{/if}}
+                    {{#if social.config.youtube.enabled}}
+                    <a href="{{social.config.youtube.link}}" target="_blank"
+                        id="discord" class="div5">
+                        <ion-icon name="logo-youtube"></ion-icon>
+                        <span>Youtube</span>
+                    </a>
+                    {{/if}}
+                    {{#if social.config.tiktok.enabled}}
+                    <a href="{{social.config.tiktok.link}}" target="_blank"
+                        id="discord" class="div6">
+                        <ion-icon name="logo-tiktok"></ion-icon>
+                        <span>Tiktok</span>
+                    </a>
+                    {{/if}}
                 </div>
             </div>
         </div>
+    </div>
 
-        <footer>
-            <span>Copyright © {{app.config.company.name}}</span>
-            <span>TxCMS - {{system.version}}</span>
-        </footer>
+    <footer>
+        <span>Copyright © {{app.config.company.name}}</span>
+        <span>TxCMS - {{system.version}}</span>
+    </footer>
 
-    </section>
+</section>
 
-    <section class="profile_bar">
-        <div class="user">
-            <form  action="/" method="post">
-                <span class="inputTitle">Votre Email</span>
-                <input placeholder="Mon Email" type="email" name="email" id="email" required>
-                <span class="inputTitle">Votre Mot De Passe</span>
-                <input placeholder="Mon mot de passe" type="password" name="password" id="password" required>
-                <button>Me connecter</button>
-            </form>
-        </div>
-        <div class="menu">
-            <span class="title">Raccourcis</span>
-            <ul>
-                <li>
-                    <a href="/register">
-                        <div class="icon">
-                            <ion-icon name="enter-outline"></ion-icon>
-                        </div>
-                        <div class="text">
-                            <span>S'inscrire</span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="/register">
-                        <div class="icon">
-                            <ion-icon name="help-outline"></ion-icon>
-                        </div>
-                        <div class="text">
-                            <span>Mot de passe oublié ? </span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href={{app.config.company.site}}>
-                        <div class="icon">
-                            <ion-icon name="trail-sign-outline"></ion-icon>
-                        </div>
-                        <div class="text">
-                            <span>Revenir au site vitrine</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </section>
+<section class="profile_bar">
+    <div class="user">
+        <form action="/" method="post">
+            <span class="inputTitle">Votre Email</span>
+            <input placeholder="Mon Email" type="email" name="email" id="email"
+                required>
+            <span class="inputTitle">Votre Mot De Passe</span>
+            <input placeholder="Mon mot de passe" type="password"
+                name="password" id="password" required>
+            <button>Me connecter</button>
+        </form>
+    </div>
+    <div class="menu">
+        <span class="title">Raccourcis</span>
+        <ul>
+            <li>
+                <a href="/register">
+                    <div class="icon">
+                        <ion-icon name="enter-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>S'inscrire</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/register">
+                    <div class="icon">
+                        <ion-icon name="help-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Mot de passe oublié ? </span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href={{app.config.company.site}}>
+                    <div class="icon">
+                        <ion-icon name="trail-sign-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Revenir au site vitrine</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>

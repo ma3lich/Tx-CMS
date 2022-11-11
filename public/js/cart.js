@@ -1,5 +1,8 @@
 /*Cart calcul*/
 let amounts = document.querySelectorAll("#amount")
+let tvaPourcentage = document.getElementById("tva")
+
+
 
 /*Sum all fees and post the total fees */
 
@@ -12,7 +15,8 @@ if(fees !== undefined && fees !== []){
     for (let i = 0; i < fees.length; i++) {
       totalFees += Number(fees[i].innerHTML) * Number(amounts[i].innerHTML)
     };
-    $totalfees.innerHTML = totalFees.toFixed(2) + " €"
+    totalFees = totalFees.toFixed(2) 
+    $totalfees.innerHTML = totalFees + " €"
 }
 
 /*Sum all prices and post the sub total */
@@ -30,11 +34,24 @@ if (prices !== undefined && prices !== []) {
   $subtotal.innerHTML = subTotal.toFixed(2) + " €"
 }
 
+/*Sum all tva and prices and tva the total */
+
+let $totaltva = document.getElementById("totaltva")
+let totaltva =  ( Number(tvaPourcentage.innerHTML.replace("%","")) * (subTotal + Number(totalFees)) / 100).toFixed(2);
+
+if(tvaPourcentage !== undefined && tvaPourcentage !== []){
+    $totaltva.innerHTML = totaltva + " €"
+}
+
+
 /*Sum all fees and prices and post the total */
 
 let total = document.getElementById('total')
-
-if(subTotal + totalFees >= 0){
-  let totalAll = (subTotal + totalFees);
-  total.innerHTML = (subTotal + totalFees) + " €"
+console.log(subTotal + " | " + totalFees +  " | " + totaltva)
+let totalAll = (Number(subTotal) + Number(totalFees) + Number(totaltva)).toFixed(2);
+console.log(totalAll)
+if(totalAll){
+  total.innerHTML = totalAll + " €"
 }
+
+document.getElementById("form_id").action = (`/client/shop/cart?fees=${totalFees}&tva=${totaltva}&promo=0&subtotal=${subTotal}&total=${totalAll}`);

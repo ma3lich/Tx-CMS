@@ -1306,7 +1306,7 @@ nav .menu li.active {
   width: 75%;
   margin: 7.5% auto;
 }
-.profile_bar.cart .user button {
+.profile_bar.cart .user button, .profile_bar.cart .user a {
   margin: 5% 0;
   border: none;
   background: rgb(109, 120, 233);
@@ -1320,7 +1320,7 @@ nav .menu li.active {
   font-size: 1rem;
   font-weight: 600;
 }
-.profile_bar.cart .user button:hover {
+.profile_bar.cart .user button:hover, .profile_bar.cart .user a:hover {
   background: rgb(92, 101, 196);
   box-shadow: 5px 5px 15px rgba(109, 120, 233, 0.7);
   transform: scale(1.02);

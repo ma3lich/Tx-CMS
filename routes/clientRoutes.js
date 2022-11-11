@@ -32,5 +32,4 @@ router.route("/shop/cart/add/:id").post(addToCart)
 
 router.route("/shop/cart").get(getCart).post(checkoutCart);
 
-
 module.exports = router;

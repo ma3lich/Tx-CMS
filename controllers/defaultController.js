@@ -8,8 +8,7 @@ const mailserver = require("../config/mail");
 const app = require("../config/app.json");
 const social = require("../config/social.json");
 const package_json = require("../package.json");
-const adminLogs = require('logger').createLogger('./logs/admin_logs.log');
-
+const adminLogs = require("logger").createLogger("./logs/admin_logs.log");
 
 /* Configuration passport par email */
 
@@ -99,10 +98,12 @@ module.exports = {
                 `INSERT INTO users ( name, lastname, email, password, sexe, birthday) VALUES ('${req.body.name}', '${req.body.lastname}', '${req.body.email}', '${hash}', '${req.body.sexe}', '${req.body.birthday}')`,
                 async function (success, err) {
                   req.flash("success-message", "Votre compte a était creé"),
-                  res.redirect("/");
+                    res.redirect("/");
 
-                  adminLogs.setLevel('debug');
-                  adminLogs.debug(` : l'utilisateur : ${userData.email}, vien de crée son compte !`);
+                  adminLogs.setLevel("debug");
+                  adminLogs.debug(
+                    ` : l'utilisateur : ${userData.email}, vien de crée son compte !`
+                  );
 
                   const mail = req.body.email;
                   const mailMsg =
@@ -118,7 +119,10 @@ module.exports = {
                   });
 
                   console.log("Message sent: %s", info.messageId);
-                  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+                  console.log(
+                    "Preview URL: %s",
+                    nodemailer.getTestMessageUrl(info)
+                  );
                 }
               );
             });

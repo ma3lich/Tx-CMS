@@ -1,56 +1,65 @@
 
-    <nav class="">
-        <div class="logo">
-            <img src="/images/logo.png" alt="">
-        </div>
-        <ul class="menu">
-            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
-            <li class="active"><a href="/client/shop"><ion-icon name="cart-outline"></ion-icon></a></li>
-        </ul>
+<nav class="">
+    <div class="logo">
+        <img src="/images/logo.png" alt="">
+    </div>
+    <ul class="menu">
+        <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        <li class="active"><a href="/client/shop"><ion-icon name="cart-outline"></ion-icon></a></li>
+    </ul>
 
-        <ul class="menu">
-            <li style="visibility:hidden;"><a href="/admin"><ion-icon name="settings-outline"></ion-icon></a></li>
-        </ul>
-    </nav>
 
-    <section class="navShop">
-        <span class="title">Catégories</span>
-        <ul>
-            <script>console.log( "{{categories}}" )</script>
-            {{#each categories}}
-            <li><a href="/client/shop/products/{{name}}"> <ion-icon name="cube-outline"></ion-icon><span> {{name}}</span></a> </a><li>
+    <ul class="menu">
+    </ul>
+</nav>
+
+<section class="navShop">
+    <span class="title">Catégories</span>
+    <ul>
+        <script>console.log( "{{categories}}" )</script>
+        {{#each categories}}
+        <li><a href="/client/shop/products/{{name}}"> <ion-icon
+                    name="cube-outline"></ion-icon><span> {{name}}</span></a>
+        </a><li>
             {{/each}}
         </ul>
 
     </section>
-    
+
     <section class="container shop">
         <span class="title">Nos offres populaire :</span>
         <div class="plans">
             <script> console.log({{plans.price}})</script>
             {{#each plans}}
-                <form class="card" action="/client/shop/cart/add/{{id}}" method="post">
-                    <div class="cardHead">
-                        <span class="name">{{name}}</span>
-                        <span class="price"> {{price}}€<label for=""> /mois</label></span>
-                        <hr>
-                    </div>
-                    <div class="cardBoddy">
-                        <ul>
-                            <li><ion-icon name="checkmark-done-outline"></ion-icon> <span>1vC x5675 @3.46Ghz</span></li>
-                            <li><ion-icon name="checkmark-done-outline"></ion-icon> <span>4Go DDR3-ECC</span></li>
-                            <li><ion-icon name="checkmark-done-outline"></ion-icon> <span>32Go SSD SATA</span></li>
-                            <li><ion-icon name="checkmark-done-outline"></ion-icon> <span>1 Gbit/s Mutualisés</span></li>
-                            <li><ion-icon name="checkmark-done-outline"></ion-icon> <span>Anti DdoS OVH Game</span></li>
+            <form class="card" action="/client/shop/cart/add/{{id}}"
+                method="post">
+                <div class="cardHead">
+                    <span class="name">{{name}}</span>
+                    <span class="price"> {{price}}€<label for=""> /mois</label></span>
+                    <hr>
+                </div>
+                <div class="cardBoddy">
+                    <ul>
+                        <li><ion-icon name="checkmark-done-outline"></ion-icon>
+                            <span>1vC x5675 @3.46Ghz</span></li>
+                        <li><ion-icon name="checkmark-done-outline"></ion-icon>
+                            <span>4Go DDR3-ECC</span></li>
+                        <li><ion-icon name="checkmark-done-outline"></ion-icon>
+                            <span>32Go SSD SATA</span></li>
+                        <li><ion-icon name="checkmark-done-outline"></ion-icon>
+                            <span>1 Gbit/s Mutualisés</span></li>
+                        <li><ion-icon name="checkmark-done-outline"></ion-icon>
+                            <span>Anti DdoS OVH Game</span></li>
 
-                        </ul>
-                    </div>
-                        <div class="cardFotter">
-                            <input type="number" max="9" min="1" value="1" id="amount"  name="amount">
-                            <br>
-                            <button type="submit">Commander</button>
-                        </div>
-                </form>
+                    </ul>
+                </div>
+                <div class="cardFotter">
+                    <input type="number" max="9" min="1" value="1" id="amount"
+                        name="amount">
+                    <br>
+                    <button type="submit">Commander</button>
+                </div>
+            </form>
             {{/each}}
 
         </div>
@@ -88,10 +97,10 @@
                 <span class="id">tx-{{user.id}}</span>
             </div>
 
-            <form  action="/client/logout" method="post">
+            <form action="/client/logout" method="post">
                 <button type="submit">Me déconnecter</button>
             </form>
-            
+
         </div>
         <div class="menu">
             <span class="title">Raccourcis</span>
@@ -129,4 +138,3 @@
             </ul>
         </div>
     </section>
-

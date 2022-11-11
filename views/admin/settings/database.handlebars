@@ -1,69 +1,75 @@
-    <nav class="">
-        <div class="logo">
-            <img src="/images/logo.png" alt="">
-        </div>
-        <ul class="menu">
-            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
-            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
-            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
-            <hr>
-            <li  class="active"><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+ <nav class="">
+    <div class="logo">
+        <img src="/images/logo.png" alt="">
+    </div>
+    <ul class="menu">
+        <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+        <hr>
+        <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+        <hr>
+        <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
+        <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
+        <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+        <hr>
+        <li class="active"><a href="/admin/settings"><ion-icon
+                    name="cog-outline"></ion-icon></a></li>
 
-        </ul>
+    </ul>
 
-        <ul class="menu">
-            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
-        </ul>
-    </nav>
-    
-    <section class="container">
+    <ul class="menu">
+        <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+    </ul>
+</nav>
+
+<section class="container">
 
 
-    </section>
+</section>
 
-    <section class="profile register">
-        <div class="logoText">
-            <img src="/images/logo-text.png" classe=""alt="">
-            <h2>Gérer une offre Proxmox/Pterodactyl</h2>
-        </div>
-        <form   action="/admin/settings/database" method="post">
-                <section class="formInput">
-                    <div>
-                        <label for="hostname">Nom de l'hote</label>
-                        <br>
-                        <input placeholder="127.0.0.1" type="text" name="hostname" id="hostname" required value={{database.config.host}}>
-                    </div>
-                    <div>
-                        <label for="port">Port</label>
-                        <br>
-                        <input placeholder="3306" type="text" name="port" id="port" required value={{database.config.port}}>
-                    </div>
-                </section>
-                
-                <section class="formInput">
-                    <div>
-                        <label for="username">Nom de l'utilisateur</label>
-                        <br>
-                        <input placeholder="root" type="text" name="username" id="username" required value={{database.config.user}}>
-                    </div>
-                    <div>
-                        <label for="password">Mot de passe</label>
-                        <br>
-                        <input type="text" name="password" id="password" value={{database.config.password}}>
-                    </div>
-                </section>
+<section class="profile register">
+    <div class="logoText">
+        <img src="/images/logo-text.png" classe="" alt="">
+        <h2>Gérer une offre Proxmox/Pterodactyl</h2>
+    </div>
+    <form action="/admin/settings/database" method="post">
+        <section class="formInput">
+            <div>
+                <label for="hostname">Nom de l'hote</label>
+                <br>
+                <input placeholder="127.0.0.1" type="text" name="hostname"
+                    id="hostname" required value={{database.config.host}}>
+            </div>
+            <div>
+                <label for="port">Port</label>
+                <br>
+                <input placeholder="3306" type="text" name="port" id="port"
+                    required value={{database.config.port}}>
+            </div>
+        </section>
 
-                <section class="formInput">
-                    <div>
-                        <label for="dbname">Nom de la base de données</label>
-                        <br>
-                        <input placeholder="txcms" type="text" name="dbname" id="dbname" required value={{database.config.dbname}}>
-                    </div>
-                </section>
-                <button type="submit">Sauvegarder</button>
-        </form>
-    </section>
+        <section class="formInput">
+            <div>
+                <label for="username">Nom de l'utilisateur</label>
+                <br>
+                <input placeholder="root" type="text" name="username"
+                    id="username" required value={{database.config.user}}>
+            </div>
+            <div>
+                <label for="password">Mot de passe</label>
+                <br>
+                <input type="text" name="password" id="password"
+                    value={{database.config.password}}>
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="dbname">Nom de la base de données</label>
+                <br>
+                <input placeholder="txcms" type="text" name="dbname" id="dbname"
+                    required value={{database.config.dbname}}>
+            </div>
+        </section>
+        <button type="submit">Sauvegarder</button>
+    </form>
+</section>

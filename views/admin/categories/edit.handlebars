@@ -1,78 +1,82 @@
-    <nav class="">
-        <div class="logo">
-            <img src="/images/logo.png" alt="">
-        </div>
-        <ul class="menu">
-            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
-            <li  class="active"><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
-            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
-        </ul>
+ <nav class="">
+    <div class="logo">
+        <img src="/images/logo.png" alt="">
+    </div>
+    <ul class="menu">
+        <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+        <hr>
+        <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+        <hr>
+        <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
+        <li class="active"><a href="/admin/categories"><ion-icon
+                    name="copy-outline"></ion-icon></a></li>
+        <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+        <hr>
+        <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+    </ul>
 
-        <ul class="menu">
-            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
-        </ul>
-    </nav>
-
-    
-    <section class="container">
+    <ul class="menu">
+        <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+    </ul>
+</nav>
 
 
-    </section>
+<section class="container">
 
-    <section class="profile register">
-        <div class="logoText">
-            <img src="/images/logo-text.png" classe=""alt="">
-            <h2>Gérer une offre Proxmox/Pterodactyl</h2>
-        </div>
-       <form   action="/admin/categories/edit/:id" method="post">
-                <input style="display:none" type="text" name="id" id="id" value={{categorie.id}}>
-                <section class="formInput">
-                    <div>
-                        <label for="name">Nom de la catégorie</label>
-                        <br>
-                        <input type="text" name="name" id="name" required value={{categorie.name}}>
-                    </div>
-                    <div>
-                        <label for="categorie">Serveur</label>
-                        <br>
-                        <select style="text-transform:capitalize;" name="server" id="server" disabled>
-                        {{#each server}}
-                                <option value={{name}}>{{name}}</option>
-                        {{/each}}
-                        </select>
-                        
-                        <script>
+
+</section>
+
+<section class="profile register">
+    <div class="logoText">
+        <img src="/images/logo-text.png" classe="" alt="">
+        <h2>Gérer une offre Proxmox/Pterodactyl</h2>
+    </div>
+    <form action="/admin/categories/edit/:id" method="post">
+        <input style="display:none" type="text" name="id" id="id"
+            value={{categorie.id}}>
+        <section class="formInput">
+            <div>
+                <label for="name">Nom de la catégorie</label>
+                <br>
+                <input type="text" name="name" id="name" required
+                    value={{categorie.name}}>
+            </div>
+            <div>
+                <label for="categorie">Serveur</label>
+                <br>
+                <select style="text-transform:capitalize;" name="server"
+                    id="server" disabled>
+                    {{#each server}}
+                    <option value={{name}}>{{name}}</option>
+                    {{/each}}
+                </select>
+
+                <script>
                             document.getElementById('server').value = `{{categorie.server}}`
                         </script>
-                    </div>
-                </section>
+            </div>
+        </section>
 
-                <section class="formInput">
-                    <div>
-                        <label for="auto">Livraison</label>
-                        <br>
-                        <select name="auto" id="auto">
-                            <option value="1">Automatique</option>
-                            <option value="0">Manuelle</option>
-                        </select>
-                        <script>
+        <section class="formInput">
+            <div>
+                <label for="auto">Livraison</label>
+                <br>
+                <select name="auto" id="auto">
+                    <option value="1">Automatique</option>
+                    <option value="0">Manuelle</option>
+                </select>
+                <script>
                             document.getElementById('auto').value = `{{categorie.auto}}`
                         </script>
-                    </div>
-                </section>
+            </div>
+        </section>
 
-                <button type="submit">Sauvegarder</button>
-        </form>
-    </section>
+        <button type="submit">Sauvegarder</button>
+    </form>
+</section>
 
 
-    <style>
+<style>
         .hide{
             display: none;
         }
@@ -81,8 +85,7 @@
             display: block;
         }
     </style>
-
-    <script>
+<script>
    const categorieType = document.getElementById('planType').value
    const pterodactylOptions = document.querySelector('.pterodactylOptions')
    const proxmoxOptions = document.querySelector('.proxmoxOptions')

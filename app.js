@@ -2,7 +2,7 @@ const LicenseKey = require("./private/license.js");
 const txcms = require("./config/app.json");
 
 // Lancer l'application en cas de validité de la license
-LicenseKey.then(license => {
+LicenseKey.then((license) => {
   main();
 }).catch(function (error) {
   // Return une erreur en cas d'invalidité de la license

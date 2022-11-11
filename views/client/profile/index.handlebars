@@ -1,51 +1,27 @@
 
-    <nav class="">
-        <div class="logo">
-            <img src="/images/logo.png" alt="">
-        </div>
-        <ul class="menu">
-            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
-            <li><a href="/shop"><ion-icon name="cart-outline"></ion-icon></a></li>
-            <li class="active"><a href="/client/profile"><ion-icon name="person-outline"></ion-icon></a></li>
+<nav class="">
+    <div class="logo">
+        <img src="/images/logo.png" alt="">
+    </div>
+    <ul class="menu">
+        <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        <li><a href="/shop"><ion-icon name="cart-outline"></ion-icon></a></li>
+        <li class="active"><a href="/client/profile"><ion-icon
+                    name="person-outline"></ion-icon></a></li>
 
-        </ul>
+    </ul>
 
-        <ul class="menu hide" id="adminmenu">
-            <li><a href="/admin"><ion-icon name="settings-outline"></ion-icon></a></li>
-        </ul>
+    <ul class="menu">
+    </ul>
+</nav>
 
-        <style>
-            .hide{
-                display:  !important;
-                cursor: not-allowed;
-            }
 
-            .show{
-                display: block !important;
-            }
-        </style>
+<section class="container">
 
-        <script>
-            if("{{user.role}}" == "null"){
-                    document.getElementById("adminmenu").classList.add("hide")
-            }else{
-                if("{{user.role}}" == "admin"){
-                    document.getElementById("adminmenu").classList.add("show")
-                    document.getElementById("adminmenu").classList.remove("hide")
-                }else{
-                    document.getElementById("adminmenu").classList.add("hide")
-                }
-            }
-        </script>
-    </nav>
-
-    
-    <section class="container">
-
-        <form  class="profile"  action="/client/profile" method="post">           
-            <div class="userLogo">
-                <img id="pp" src="" alt="">
-                <script>
+    <form class="profile" action="/client/profile" method="post">
+        <div class="userLogo">
+            <img id="pp" src="" alt="">
+            <script>
                     if("{{user.logo}}" == ""){
                         
                         if("{{user.sexe}}" == "male"){
@@ -60,129 +36,139 @@
                         document.getElementById('pp').src = "{{user.logo}}"
                     }
                 </script>
-
-                <section class="formInput">
-                    <div>
-                        <label style="padding: 0 5px;" for="id">Client ID</label>
-                        <br>
-                        <input disabled type="text" name="id" id="id" maxlength="25">
-                        <script>
+            <section class="formInput">
+                <div>
+                    <label style="padding: 0 5px;" for="id">Client ID</label>
+                    <br>
+                    <input disabled type="text" name="id" id="id"
+                        maxlength="25">
+                    <script>
                             document.getElementById('id').value = "tx-"+`{{user.id}}` 
                         </script>
-                    </div>
-                </section>
+                </div>
+            </section>
 
-                <section style="margin-top: 20px;"  class="formInput">
-                    <div>
-                        <label for="id">Bloc-notes</label>
-                        <br>
-                        <textarea placeholder="Vous voullez notez un truc ? (par example le mot de passe et l'ip de votre vps chez txhost ?)" name="userNote" id="userNote" cols="50" rows="5"></textarea>
-                        <script>
+            <section style="margin-top: 20px;" class="formInput">
+                <div>
+                    <label for="id">Bloc-notes</label>
+                    <br>
+                    <textarea placeholder="Vous voullez notez un truc ? (par
+                        example le mot de passe et l'ip de votre vps chez txhost
+                        ?)" name="userNote" id="userNote" cols="50" rows="5"></textarea>
+                    <script>
                             document.getElementById('userNote').value = `{{user.usernote}}` 
                         </script>
-                    </div>
-                </section>
+                </div>
+            </section>
 
-                <button type="submit">Sauvegarder</button>
-            </div>
+            <button type="submit">Sauvegarder</button>
+        </div>
 
-            <div class="userInfo">
-                <section class="formInput">
-                    <div>
-                        <label for="lastname">Nom</label>
-                        <br>
-                        <input required type="text" name="lastname" id="lastname" maxlength="25">
-                        <script>
+        <div class="userInfo">
+            <section class="formInput">
+                <div>
+                    <label for="lastname">Nom</label>
+                    <br>
+                    <input required type="text" name="lastname" id="lastname"
+                        maxlength="25">
+                    <script>
                             document.getElementById('lastname').value = `{{user.lastname}}` 
                         </script>
-                    </div>
-                    <div>
-                        <label for="name">Prénom</label>
-                        <br>
-                        <input required type="text" name="name" id="name" maxlength="25">
-                        <script>
+                </div>
+                <div>
+                    <label for="name">Prénom</label>
+                    <br>
+                    <input required type="text" name="name" id="name"
+                        maxlength="25">
+                    <script>
                             document.getElementById('name').value = `{{user.name}}` 
                         </script>
-                    </div>
-                </section>
+                </div>
+            </section>
 
-                <section class="formInput">
-                    <div>
-                        <label for="name">Email</label>
-                        <br>
-                        <input required type="email" name="email" id="email" maxlength="25"  disabled>
-                        <script>
+            <section class="formInput">
+                <div>
+                    <label for="name">Email</label>
+                    <br>
+                    <input required type="email" name="email" id="email"
+                        maxlength="25" disabled>
+                    <script>
                             document.getElementById('email').value = `{{user.email}}` 
                         </script>
-                    </div>
-                    <div>
-                        <label for="lastname">Nouveau Mot De Passe</label>
-                        <br>
-                        <input required type="password" name="password" id="password" maxlength="25">
-                    </div>
-                </section>
-                <section class="formInput">
-                    <div>
-                        <label for="sexe">Sexe</label>
-                        <br>
-                        <select name="sexe" id="sexe" required>
-                            <option value="male">Homme</option>
-                            <option value="female">Femme</option>
-                        </select>
-                        <script>
+                </div>
+                <div>
+                    <label for="lastname">Nouveau Mot De Passe</label>
+                    <br>
+                    <input required type="password" name="password"
+                        id="password" maxlength="25">
+                </div>
+            </section>
+            <section class="formInput">
+                <div>
+                    <label for="sexe">Sexe</label>
+                    <br>
+                    <select name="sexe" id="sexe" required>
+                        <option value="male">Homme</option>
+                        <option value="female">Femme</option>
+                    </select>
+                    <script>
                             document.getElementById('sexe').value = `{{user.sexe}}` 
                         </script>
-                    </div>
-                    <div>
-                        <label for="birthday">Date de naissance</label>
-                        <br>
-                        <input type="date" name="birthday" id="birthday" max="2012-12-31" disabled>
-                        <script>
+                </div>
+                <div>
+                    <label for="birthday">Date de naissance</label>
+                    <br>
+                    <input type="date" name="birthday" id="birthday"
+                        max="2012-12-31" disabled>
+                    <script>
                             document.getElementById('birthday').value = `{{user.birthday}}` 
                         </script>
-                    </div>
-                </section>
+                </div>
+            </section>
 
-                <section class="formInput">
-                    <div>
-                        <label for="logo">Photo de profile (URL)</label>
-                        <br>
-                        <input type="logo" name="logo" id="logo" maxlength="1000" value={{user.logo}}>
-                    </div>
-                </section>
+            <section class="formInput">
+                <div>
+                    <label for="logo">Photo de profile (URL)</label>
+                    <br>
+                    <input type="logo" name="logo" id="logo" maxlength="1000"
+                        value={{user.logo}}>
+                </div>
+            </section>
 
-                <section class="formInput">
-                    <div>
-                        <label for="role">Role</label>
-                        <br>
-                        <select name="role" id="role" disabled>
-                            <option value="user">Utilisateur</option>
-                            <option value="admin">Administrateur</option>
-                        </select>
-                        <script>
+            <section class="formInput">
+                <div>
+                    <label for="role">Role</label>
+                    <br>
+                    <select name="role" id="role" disabled>
+                        <option value="user">Utilisateur</option>
+                        <option value="admin">Administrateur</option>
+                    </select>
+                    <script>
                             document.getElementById('role').value = `{{user.role}}` 
                         </script>
-                    </div>
-                    <div>
-                        <label for="wallet">Crédits</label>
-                        <br>
-                        <input type="number" name="wallet" id="wallet" max="999" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" disabled>
-                        <script>
+                </div>
+                <div>
+                    <label for="wallet">Crédits</label>
+                    <br>
+                    <input type="number" name="wallet" id="wallet" max="999"
+                        min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$"
+                        disabled>
+                    <script>
                             document.getElementById('wallet').value = `{{user.wallet}}` 
                         </script>
-                    </div>
-                </section>
-            </div>
-        </form>
-        
-    </section>
+                </div>
+            </section>
+        </div>
+    </form>
 
-    <section class="profile_bar">
+</section>
 
-        <div class="user">
-            <a class="logo" href="/client/profile">
-                <img id="userlogo" src="" alt="">
-                <script>
+<section class="profile_bar">
+
+    <div class="user">
+        <a class="logo" href="/client/profile">
+            <img id="userlogo" src="" alt="">
+            <script>
                     if("{{user.logo}}" == ""){
                         
                         if("{{user.sexe}}" == "male"){
@@ -197,53 +183,52 @@
                         document.getElementById('userlogo').src = "{{user.logo}}"
                     }
                 </script>
-                <span class="username">{{user.lastname}} {{user.name}}</span>
-            </a>
-            <div>
-                <span class="email">{{user.email}}</span>
-                <br>
-                <span class="id">tx-{{user.id}}</span>
-            </div>
-
-            <form  action="/client/logout" method="post">
-                <button type="submit">Me déconnecter</button>
-            </form>
-            
+            <span class="username">{{user.lastname}} {{user.name}}</span>
+        </a>
+        <div>
+            <span class="email">{{user.email}}</span>
+            <br>
+            <span class="id">tx-{{user.id}}</span>
         </div>
-        <div class="menu">
-            <span class="title">Raccourcis</span>
-            <ul>
-                <li>
-                    <a href="">
-                        <div class="icon">
-                            <ion-icon name="card-outline"></ion-icon>
-                        </div>
-                        <div class="text">
-                            <span>Moyen de paiment </span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <div class="icon">
-                            <ion-icon name="mail-outline"></ion-icon>
-                        </div>
-                        <div class="text">
-                            <span>Emails reçus</span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <div class="icon">
-                            <ion-icon name="help-buoy-outline"></ion-icon>
-                        </div>
-                        <div class="text">
-                            <span>Centre d'aide</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </section>
 
+        <form action="/client/logout" method="post">
+            <button type="submit">Me déconnecter</button>
+        </form>
+
+    </div>
+    <div class="menu">
+        <span class="title">Raccourcis</span>
+        <ul>
+            <li>
+                <a href="">
+                    <div class="icon">
+                        <ion-icon name="card-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Moyen de paiment </span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <div class="icon">
+                        <ion-icon name="mail-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Emails reçus</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <div class="icon">
+                        <ion-icon name="help-buoy-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Centre d'aide</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>

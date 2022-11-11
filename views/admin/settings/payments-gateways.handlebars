@@ -37,7 +37,7 @@
                     <div>
                         <label for="PaypalPublicKey">Clé public</label>
                         <br>
-                        <input type="text" name="PaypalPublicKey" id="PaypalPublicKey" value={{paymentsGateways.config.paypal.publicKey}}>
+                        <input type="text" name="PaypalPublicKey" id="PaypalPublicKey" value={{paymentsGateways.config.paypal.client_id}}>
                     </div>
                 </section>
 
@@ -45,7 +45,7 @@
                     <div>
                         <label for="PaypalSecretKey">Clé Privé</label>
                         <br>
-                        <input type="text" name="PaypalSecretKey" id="PaypalSecretKey" value="{{paymentsGateways.config.paypal.secretKey}}">
+                        <input type="text" name="PaypalSecretKey" id="PaypalSecretKey" value="{{paymentsGateways.config.paypal.client_secret}}">
                     </div>
                 </section>
 
