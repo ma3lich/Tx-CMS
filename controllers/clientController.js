@@ -1,19 +1,21 @@
 /* Importation des modules nodeJS */
+
 const bcrypt = require("bcrypt");
 const db = require("../config/database");
 const app = require("../config/app.json");
 const package_json = require("../package.json");
 const adminLogs = require("logger").createLogger("./logs/admin_logs.log");
-const paymentsSettings = require('../config/payments-gateways.json')
-const paypal = require('paypal-rest-sdk')
-var producstsInTheCart = []
+const paymentsSettings = require("../config/payments-gateways.json");
+const paypal = require("paypal-rest-sdk");
+const stripe = require("stripe")(paymentsSettings.config.stripe.secretKey);
+const easyinvoice = require("easyinvoice");
+
+var producstsInTheCart = [];
 paypal.configure({
-  'mode': 'sandbox', //sandbox or live
-  'client_id': paymentsSettings.config.paypal.client_id,
-  'client_secret': paymentsSettings.config.paypal.client_secret
+  mode: "sandbox", //sandbox or live
+  client_id: paymentsSettings.config.paypal.client_id,
+  client_secret: paymentsSettings.config.paypal.client_secret,
 });
-const easyinvoice = require('easyinvoice');
-// const stripe = require('stripe')('sk_test_51LaQfvH8EjxIHb36wkTV1HpLCKgWqbjff1oTa3QUvGGtltNEd1mEMhXcY4bowjGVbGbowstzLdT1cT2eEXiiArv000Y6m07ixd');
 
 module.exports = {
   /* Méthode Get pour la page client/index */
@@ -22,6 +24,7 @@ module.exports = {
       title: app.config.company.name + " - Espace Client",
       action: "info",
       user: req.user[0],
+      transactions: transactions,
       app: app,
       system: package_json,
     });
@@ -69,7 +72,7 @@ module.exports = {
     db.query(
       `SELECT * FROM plans WHERE state = "public" ORDER BY selled DESC LIMIT 6`,
       function (err, data) {
-        if(err) console.trace(err);
+        if (err) console.trace(err);
         else {
           db.query(
             `SELECT * FROM categories ORDER BY id`,
@@ -99,7 +102,7 @@ module.exports = {
     db.query(
       `SELECT * FROM plans WHERE categorie = "${name}" AND state = "public"`,
       function (err, data) {
-        if(err) console.trace(err);
+        if (err) console.trace(err);
         else {
           db.query(
             `SELECT * FROM categories ORDER BY id`,
@@ -129,7 +132,7 @@ module.exports = {
     db.query(
       `SELECT * FROM carts WHERE owner = ${req.user[0].id}`,
       function (err, results) {
-        if(err) console.trace(err);
+        if (err) console.trace(err);
         else {
           results.forEach((plans) => {
             if (plans.amount > 0) {
@@ -138,7 +141,7 @@ module.exports = {
                 function (error, data) {
                   if (error) throw error;
                   else {
-                    for(let plan of data){
+                    for (let plan of data) {
                       products.push({
                         id: plan.id,
                         name: plan.name,
@@ -147,14 +150,14 @@ module.exports = {
                         fee: plan.fee,
                         amount: plans.amount,
                       });
-                    };
+                    }
                   }
                 }
               );
             }
           });
 
-          producstsInTheCart = products
+          producstsInTheCart = products;
 
           res.render("client/shop/cart/", {
             title: app.config.company.name + " - Panier",
@@ -174,21 +177,24 @@ module.exports = {
     db.query(
       `SELECT * FROM carts WHERE planID = ${req.params.id} AND owner = ${req.user[0].id}`,
       (err, data) => {
-        if(err) console.trace(err);
+        if (err) console.trace(err);
         if (data.length > 0) {
           console.log("update");
 
           let newAmount = data[0].amount + Number(req.body.amount);
-          db.query(`UPDATE carts SET amount = ${newAmount} WHERE planID = ${req.params.id}`, function (err) {
-            if(err) console.trace(err);
-            res.redirect("/client/shop/cart");
-          });
+          db.query(
+            `UPDATE carts SET amount = ${newAmount} WHERE planID = ${req.params.id}`,
+            function (err) {
+              if (err) console.trace(err);
+              res.redirect("/client/shop/cart");
+            }
+          );
         } else {
           console.log("new");
           db.query(
             `INSERT INTO carts (owner, planID, amount) VALUES ('${req.user[0].id}', '${req.params.id}', '${req.body.amount}')`,
             function (err, sucess) {
-              if(err) console.trace(err);
+              if (err) console.trace(err);
               res.redirect("/client/shop/cart");
             }
           );
@@ -197,136 +203,227 @@ module.exports = {
     );
   },
 
-  checkoutCart: (req, res) => {
+  checkoutCart: async (req, res) => {
+    console.log(req.query);
     const date = new Date();
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
     var fs = require("fs");
     let items = [];
-    let itemsInvoice = []
+    let line_items = [];
+    let itemsInvoice = [];
 
-    for( let item of producstsInTheCart){
+
+    const taxRate = await stripe.taxRates.create({
+      display_name: 'TVA',
+      description: 'impôt indirect sur la consommation',
+      jurisdiction: 'FR',
+      percentage: 20,
+      inclusive: false,
+    });
+
+    for (let item of producstsInTheCart) {
       items.push({
         name: item.name,
         sku: `${item.id}`,
         price: item.price,
         currency: "EUR",
-        quantity:item.amount,
-      })
+        quantity: item.amount,
+      });
       itemsInvoice.push({
-          "quantity": item.amount,
-          "description": item.name,
-          "tax-rate": paymentsSettings.config.tva,
-          "price": Number(Number(item.price) + Number(item.fee))
-      })
+        quantity: item.amount,
+        description: item.name,
+        "tax-rate": paymentsSettings.config.tva,
+        price: Number(Number(item.price) + Number(item.fee)),
+      });
+      line_items.push({
+        quantity: item.amount,
+        tax_rates: [taxRate.id],
+        price_data: {
+          currency: "EUR",
+          unit_amount: (item.price * 100) + (item.fee * 100),
+          tax_behavior: "exclusive",
+          product_data: {
+            name: item.name,
+          },
+        },
+      });
     }
 
-    console.log(itemsInvoice)
+    console.log(itemsInvoice);
 
     var create_inovice_json = {
-      "images": {
-          "logo": app.config.company.logo,
-          background: fs.readFileSync('./public/images/invocie-background.pdf', 'base64')
+      images: {
+        logo: app.config.company.logo,
+        background: fs.readFileSync(
+          "./public/images/invocie-background.pdf",
+          "base64"
+        ),
       },
-      "sender": {
-          "company": app.config.company.name,
-          "address": app.config.company.adresse.adresse,
-          "zip": app.config.company.adresse.zip,
-          "city": app.config.company.adresse.city,
-          "country": app.config.company.country
+      sender: {
+        company: app.config.company.name,
+        address: app.config.company.adresse.adresse,
+        zip: app.config.company.adresse.zip,
+        city: app.config.company.adresse.city,
+        country: app.config.company.country,
       },
-      "client": {
-          "company": req.user[0].lastname +" "+ req.user[0].name,
-          "address": req.body.addresse1,
-          "zip": req.body.zip,
-          "city": req.body.city,
-          "country": req.body.country
+      client: {
+        company: req.user[0].lastname + " " + req.user[0].name,
+        address: req.body.addresse1,
+        zip: req.body.zip,
+        city: req.body.city,
+        country: req.body.country,
       },
-      "information": {
-          "number": "Tx-01-0001",
-          "date": `${day}-${month}-${year}`,
-          "due-date": `${day}-${month + 1}-${year}`
+      information: {
+        number: "Tx-01-0001",
+        date: `${day}-${month}-${year}`,
+        "due-date": `${day}-${month + 1}-${year}`,
       },
-      "products": itemsInvoice,
+      products: itemsInvoice,
       "bottom-notice": "Merci d'avoir choisi " + app.config.company.name + " !",
-      "settings": {
-          "currency": "EUR",
-          "locale": "fr-FR",
-          "tax-notation": "TVA",
+      settings: {
+        currency: "EUR",
+        locale: "fr-FR",
+        "tax-notation": "TVA",
       },
-      "translate": {
-          "invoice": "Facture",
-          "number": "Numéro",
-          "date": "Date",
-          "due-date": "Date d'échéance",
-          "subtotal": "Sous total",
-          "products": "Produits",
-          "quantity": "Quantité",
-          "price": "Prix (+ frais)",
-          "product-total": "Total",
-          "total": "Total"
+      translate: {
+        invoice: "Facture",
+        number: "Numéro",
+        date: "Date",
+        "due-date": "Date d'échéance",
+        subtotal: "Sous total",
+        products: "Produits",
+        quantity: "Quantité",
+        price: "Prix (+ frais)",
+        "product-total": "Total",
+        total: "Total",
       },
     };
 
-    
-    const create_payment_json = {
-      "intent": "sale",
-      "payer": {
-          "payment_method": "paypal"
+    const paypal_json = {
+      intent: "sale",
+      payer: {
+        payment_method: "paypal",
       },
-      "redirect_urls": {
-          "return_url": "http://localhost:2004/success",
-          "cancel_url": "http://localhost:2004/cancel"
+      redirect_urls: {
+        return_url: "http://localhost:2004/client/shop/cart/checkout/success",
+        cancel_url: "http://localhost:2004/client/shop/cart/checkout/cancel",
       },
-      "transactions": [{
-          "item_list": {
-            items,
-            "shipping_address": {
-              "line1": req.body.adresse1,
-              "line2": req.body.adresse2,
-              "city": req.body.city,
-              "country_code": req.body.country,
-              "postal_code": req.body.zip,
-              "state": req.body.state,
-              "phone": req.body.tel,
+      transactions: [
+        {
+          item_list: {
+            shipping_address: {
+              line1: req.body.adresse1,
+              line2: req.body.adresse2,
+              city: req.body.city,
+              country_code: req.body.country,
+              postal_code: req.body.zip,
+              state: req.body.state,
+              phone: req.body.tel,
             },
-            "shipping_phone_number" : req.body.tel,
+            shipping_phone_number: req.body.tel,
           },
-          "amount": {
-              "currency": "EUR",
-              "details": {
-                "subtotal": req.query.subtotal,
-                "tax": req.query.tva,
-                "handling_fee": req.query.fees,
-                "shipping": "0",
+          amount: {
+            currency: "EUR",
+            details: {
+              subtotal: req.query.subtotal,
+              tax: req.query.tva,
+              shipping: req.query.fees,
 
-                //"shipping_discout": req.query.promo
-              },
-              "total": req.query.total
+              //"shipping_discout": req.query.promo
+            },
+            total: req.query.total,
           },
-          "description": app.config.company.name
-      }]
+          description: app.config.company.name,
+        },
+      ],
     };
 
-    if(itemsInvoice.length > 0 && items.length > 0){
-        paypal.payment.create(create_payment_json, function (error, payment) {
-        if (error) {
+
+
+  console.log(taxRate)
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+
+      submit_type: 'pay',
+      line_items : line_items,
+      locale: 'fr',
+      mode: "payment",
+      success_url: "http://localhost:2004/client/shop/cart/checkout/success",
+      cancel_url: "http://localhost:2004/client/shop/cart/checkout/cancel",
+    });
+
+    if (req.query.getway == "paypal") {
+      if (itemsInvoice.length > 0 && items.length > 0) {
+        paypal.payment.create(paypal_json, function (error, payment) {
+          if (error) {
             throw error;
-        } else {
-            for(let i = 0;i < payment.links.length;i++){
-              if(payment.links[i].rel === 'approval_url'){
-                res.redirect(payment.links[i].href);
+          } else {
+            for (let i = 0; i < payment.links.length; i++) {
+              if (payment.links[i].rel === "approval_url") {
+
+                db.query( `INSERT INTO transactions ( owner, date, products, total) VALUES ('${req.user[0].id}', '${year}-${month}-${day}', '${producstsInTheCart}', '${req.query.total}')`,
+                function (success, err){
+                  if (err) console.debug(err)
+
+                  res.redirect(303, payment.links[i].href);
+
+                  easyinvoice.createInvoice(create_inovice_json, function (result) {
+                    fs.writeFileSync("invoice.pdf", result.pdf, "base64");
+                  });
+
+                })
               }
             }
-
-              easyinvoice.createInvoice(create_inovice_json,  function (result) {
-                fs.writeFileSync("invoice.pdf", result.pdf, 'base64');          
-              });
-            }
-      });
-    }else{
-      res.redirect("/client/shop/cart");
+          }
+        });
+      } else {
+        res.redirect("/client/shop/cart");
+      }
     }
+
+    if (req.query.getway == "stripe") {
+      if (session) {
+
+        db.query( `INSERT INTO transactions ( owner, date, products, total) VALUES ('${req.user[0].id}', '${year}-${month}-${day}', '${producstsInTheCart}', '${req.query.total}')`,
+        function (success, err){
+          if (err) console.debug(err)
+          
+          res.redirect(303, session.url);
+
+          easyinvoice.createInvoice(create_inovice_json, function (result) {
+            fs.writeFileSync("invoice.pdf", result.pdf, "base64");
+          });
+
+        })
+      }else {
+        res.redirect("/client/shop/cart");
+      }
+    }
+  },
+
+  cancelCheckout: (req, res) =>{
+    res.render("client/shop/cart/checkout/cancel", {
+      title: app.config.company.name + " - success",
+      user: req.user[0],
+      app: app,
+      system: package_json,
+    });
+  },
+
+  successCheckout: (req ,res) => {
+    db.query(`DELETE FROM carts WHERE owner = ${req.user[0].id}`, function (success, err) {
+      if (err) console.debug(err)
+
+      res.render("client/shop/cart/checkout/success", {
+        title: app.config.company.name + " - success",
+        user: req.user[0],
+        app: app,
+        system: package_json,
+      });
+    })
   }
+
 };

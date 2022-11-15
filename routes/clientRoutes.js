@@ -10,7 +10,9 @@ const {
   getShopByCategorie,
   getCart,
   addToCart,
-  checkoutCart
+  checkoutCart,
+  successCheckout,
+  cancelCheckout
 } = require("../controllers/clientController.js");
 
 router.all("/*", isUserAuthenticated, (req, res, next) => {
@@ -30,6 +32,12 @@ router.route("/shop/products/:name").get(getShopByCategorie);
 
 router.route("/shop/cart/add/:id").post(addToCart)
 
-router.route("/shop/cart").get(getCart).post(checkoutCart);
+router.route("/shop/cart").get(getCart);
+
+router.route("/shop/cart/checkout").post(checkoutCart)
+
+router.route("/shop/cart/checkout/success").get(successCheckout);
+router.route("/shop/cart/checkout/cancel").get(cancelCheckout);
+
 
 module.exports = router;

@@ -54,4 +54,14 @@ if(totalAll){
   total.innerHTML = totalAll + " €"
 }
 
-document.getElementById("form_id").action = (`/client/shop/cart?fees=${totalFees}&tva=${totaltva}&promo=0&subtotal=${subTotal}&total=${totalAll}`);
+document.getElementById("paypal").addEventListener('click', () => {
+  document.getElementById("form_id").action = (`/client/shop/cart/checkout?getway=paypal&fees=${totalFees}&tva=${totaltva}&promo=0&subtotal=${subTotal}&total=${totalAll}`);
+})
+
+document.getElementById("stripe").addEventListener('click', () => {
+  document.getElementById("form_id").action = (`/client/shop/cart/checkout?getway=stripe&fees=${totalFees}&tva=${totaltva}&promo=0&subtotal=${subTotal}&total=${totalAll}`);
+})
+
+document.getElementById("wallet").addEventListener('click', () => {
+  document.getElementById("form_id").action = (`/client/shop/cart/checkout?getway=wallet&fees=${totalFees}&tva=${totaltva}&promo=0&subtotal=${subTotal}&total=${totalAll}`);
+})

@@ -237,14 +237,16 @@ nav .menu li.active {
   background: rgb(122, 245, 167);
   color: rgb(255, 255, 255);
 }
-.notif.success h2, .notif.success button {
+.notif.success h2,
+.notif.success button {
   color: rgb(30, 163, 79);
 }
 .notif.error {
   background: rgb(245, 123, 148);
   color: rgb(255, 255, 255);
 }
-.notif.error h2, .notif.error button {
+.notif.error h2,
+.notif.error button {
   color: rgb(230, 78, 86);
 }
 
@@ -268,6 +270,100 @@ nav .menu li.active {
   font-weight: 600;
   color: rgb(12, 22, 105);
   margin: 1%;
+}
+.container .return_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+  width: 100%;
+  margin-top: 25%;
+  transform: translateY(-50%);
+}
+.container .return_box .icon {
+  width: 125px;
+  height: 125px;
+  font-size: 5rem;
+  background: linear-gradient(52deg, #14caad, #21d29d);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  color: #fff;
+  margin: 3%;
+  font-weight: 900;
+  box-shadow: 5px 5px 15px rgba(20, 202, 173, 0.7);
+}
+.container .return_box .text {
+  display: flex;
+  flex-direction: column;
+}
+.container .return_box .text span:first-child {
+  font-size: 2rem;
+  font-weight: 600;
+  background: -webkit-linear-gradient(52deg, #14caad, #21d29d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 0 2% 0;
+  white-space: nowrap;
+}
+.container .return_box .text span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 0.632);
+}
+.container .return_box .buttons button {
+  margin: 20% 0;
+  border: none;
+  background: linear-gradient(52deg, #14caad, #21d29d);
+  box-shadow: 5px 5px 15px rgba(20, 202, 173, 0.5);
+  color: rgb(255, 255, 255);
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 12px;
+  transition: all 0.3s;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.container .return_box .buttons button:hover {
+  background: linear-gradient(52deg, #14caad, #21d29d);
+  box-shadow: 5px 5px 15px rgba(20, 202, 173, 0.7);
+  transform: scale(1.02);
+}
+.container .return_box.success .icon {
+  background: linear-gradient(52deg, #14caad, #21d29d);
+  box-shadow: 5px 5px 15px rgba(20, 202, 173, 0.7);
+}
+.container .return_box.success .text span:first-child {
+  background: -webkit-linear-gradient(52deg, #14caad, #21d29d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.container .return_box.success .buttons button {
+  background: linear-gradient(52deg, #14caad, #21d29d);
+  box-shadow: 5px 5px 15px rgba(20, 202, 173, 0.5);
+}
+.container .return_box.success .buttons button:hover {
+  background: linear-gradient(52deg, #14caad, #21d29d);
+  box-shadow: 5px 5px 15px rgba(20, 202, 173, 0.7);
+}
+.container .return_box.cancel .icon {
+  background: linear-gradient(52deg, #ff4446, #ff685e);
+  box-shadow: 5px 5px 15px rgba(255, 68, 70, 0.7);
+}
+.container .return_box.cancel .text span:first-child {
+  background: -webkit-linear-gradient(52deg, #ff4446, #ff685e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.container .return_box.cancel .buttons button {
+  background: linear-gradient(52deg, #ff4446, #ff685e);
+  box-shadow: 5px 5px 15px rgba(255, 68, 70, 0.5);
+}
+.container .return_box.cancel .buttons button:hover {
+  background: linear-gradient(52deg, #ff4446, #ff685e);
+  box-shadow: 5px 5px 15px rgba(255, 68, 70, 0.7);
 }
 .container .profile {
   display: flex;
@@ -319,7 +415,9 @@ nav .menu li.active {
   color: rgb(12, 22, 105);
   padding: 5px;
 }
-.container .profile input, .container .profile select, .container .profile textarea {
+.container .profile input,
+.container .profile select,
+.container .profile textarea {
   border: none;
   border-radius: 8px;
   transition: all 0.3s;
@@ -332,12 +430,16 @@ nav .menu li.active {
   padding: 10px 20px;
   resize: none;
 }
-.container .profile input:focus, .container .profile select:focus, .container .profile textarea:focus {
+.container .profile input:focus,
+.container .profile select:focus,
+.container .profile textarea:focus {
   border: 1px solid rgb(12, 22, 105);
   outline-offset: 0px;
   outline: none;
 }
-.container .profile input:disabled, .container .profile select:disabled, .container .profile textarea:disabled {
+.container .profile input:disabled,
+.container .profile select:disabled,
+.container .profile textarea:disabled {
   background-color: rgba(255, 255, 255, 0.05);
   border-color: rgba(12, 22, 105, 0.5);
   opacity: 1;
@@ -520,7 +622,8 @@ nav .menu li.active {
 .container .tables table tbody tr td:last-child form {
   display: inline-block;
 }
-.container .tables table tbody tr a, .container .tables table tbody tr button {
+.container .tables table tbody tr a,
+.container .tables table tbody tr button {
   border: none;
   background: rgb(109, 120, 233);
   box-shadow: 5px 5px 15px rgba(109, 120, 233, 0.5);
@@ -530,24 +633,29 @@ nav .menu li.active {
   border-radius: 12px;
   transition: all 0.3s;
 }
-.container .tables table tbody tr a:hover, .container .tables table tbody tr button:hover {
+.container .tables table tbody tr a:hover,
+.container .tables table tbody tr button:hover {
   background: rgb(92, 101, 196);
   box-shadow: 5px 5px 15px rgba(92, 101, 196, 0.7);
   transform: scale(1.02);
 }
-.container .tables table tbody tr a.danger, .container .tables table tbody tr button.danger {
+.container .tables table tbody tr a.danger,
+.container .tables table tbody tr button.danger {
   background: rgb(245, 123, 148);
   box-shadow: 5px 5px 15px rgba(245, 123, 148, 0.5);
 }
-.container .tables table tbody tr a.danger:hover, .container .tables table tbody tr button.danger:hover {
+.container .tables table tbody tr a.danger:hover,
+.container .tables table tbody tr button.danger:hover {
   background: rgb(230, 78, 86);
   box-shadow: 5px 5px 15px rgba(245, 123, 148, 0.7);
 }
-.container .tables table tbody tr a.normal, .container .tables table tbody tr button.normal {
+.container .tables table tbody tr a.normal,
+.container .tables table tbody tr button.normal {
   background: rgb(74, 142, 245);
   box-shadow: 5px 5px 15px rgba(74, 142, 245, 0.5);
 }
-.container .tables table tbody tr a.normal:hover, .container .tables table tbody tr button.normal:hover {
+.container .tables table tbody tr a.normal:hover,
+.container .tables table tbody tr button.normal:hover {
   background: rgb(39, 99, 189);
   box-shadow: 5px 5px 15px rgba(74, 142, 245, 0.7);
 }
@@ -574,7 +682,9 @@ nav .menu li.active {
   background: rgb(109, 120, 233);
   color: rgb(255, 255, 255);
 }
-.container .info .card:hover .icon, .container .info .card:hover .text .value, .container .info .card:hover .text .desc {
+.container .info .card:hover .icon,
+.container .info .card:hover .text .value,
+.container .info .card:hover .text .desc {
   color: rgb(255, 255, 255);
 }
 .container .info .card .icon {
@@ -1233,7 +1343,9 @@ nav .menu li.active {
   box-shadow: 5px 5px 15px rgba(92, 101, 196, 0.7);
   transform: scale(1.02);
 }
-.profile_bar.register input, .profile_bar.register select, .profile_bar.register textarea {
+.profile_bar.register input,
+.profile_bar.register select,
+.profile_bar.register textarea {
   border: none;
   border-radius: 8px;
   transition: all 0.3s;
@@ -1245,7 +1357,9 @@ nav .menu li.active {
   font-size: 1rem;
   padding: 10px 20px;
 }
-.profile_bar.register input:focus, .profile_bar.register select:focus, .profile_bar.register textarea:focus {
+.profile_bar.register input:focus,
+.profile_bar.register select:focus,
+.profile_bar.register textarea:focus {
   border: 1px solid rgb(12, 22, 105);
   outline-offset: 0px;
   outline: none;
@@ -1306,21 +1420,71 @@ nav .menu li.active {
   width: 75%;
   margin: 7.5% auto;
 }
-.profile_bar.cart .user button, .profile_bar.cart .user a {
+.profile_bar.cart .user button,
+.profile_bar.cart .user a {
   margin: 5% 0;
   border: none;
   background: rgb(109, 120, 233);
   box-shadow: 5px 5px 15px rgba(109, 120, 233, 0.5);
   color: rgb(255, 255, 255);
   width: 75%;
-  margin: 7.5% auto;
+  margin: 5% auto;
   padding: 10px 20px;
   border-radius: 12px;
   transition: all 0.3s;
   font-size: 1rem;
   font-weight: 600;
+  border: none !important;
 }
-.profile_bar.cart .user button:hover, .profile_bar.cart .user a:hover {
+.profile_bar.cart .user button:hover,
+.profile_bar.cart .user a:hover {
+  background: rgb(92, 101, 196);
+  box-shadow: 5px 5px 15px rgba(109, 120, 233, 0.7);
+  transform: scale(1.02);
+}
+.profile_bar.cart .user .checkoutButtons {
+  display: flex;
+  justify-content: space-around;
+  margin: 5%;
+  transform: scale(0.9);
+}
+.profile_bar.cart .user .checkoutButtons button {
+  width: 25%;
+  padding: 5px 0;
+  margin: 1%;
+}
+.profile_bar.cart .user .checkoutButtons button.paypal {
+  background: #fcfc23;
+  box-shadow: 5px 5px 15px rgba(252, 252, 35, 0.5);
+}
+.profile_bar.cart .user .checkoutButtons button.paypal img {
+  width: 30%;
+}
+.profile_bar.cart .user .checkoutButtons button.paypal:hover {
+  background: #eeee29;
+  box-shadow: 5px 5px 15px rgba(238, 238, 41, 0.7);
+  transform: scale(1.02);
+}
+.profile_bar.cart .user .checkoutButtons button.bank {
+  background: #e7a121;
+  box-shadow: 5px 5px 15px rgba(238, 171, 4, 0.5);
+}
+.profile_bar.cart .user .checkoutButtons button.bank img {
+  width: 60%;
+}
+.profile_bar.cart .user .checkoutButtons button.bank:hover {
+  background: #eeab04;
+  box-shadow: 5px 5px 15px rgba(238, 171, 4, 0.7);
+  transform: scale(1.02);
+}
+.profile_bar.cart .user .checkoutButtons button.wallet {
+  background: rgb(109, 120, 233);
+  box-shadow: 5px 5px 15px rgba(109, 120, 233, 0.5);
+}
+.profile_bar.cart .user .checkoutButtons button.wallet img {
+  width: 50%;
+}
+.profile_bar.cart .user .checkoutButtons button.wallet:hover {
   background: rgb(92, 101, 196);
   box-shadow: 5px 5px 15px rgba(109, 120, 233, 0.7);
   transform: scale(1.02);

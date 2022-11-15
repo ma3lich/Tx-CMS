@@ -1,7 +1,6 @@
 @use "theme";
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500;600;900&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500;600;900&display=swap");
 
 * {
     margin: 0%;
@@ -9,39 +8,38 @@
     box-sizing: border-box;
     list-style: none;
     text-decoration: none;
-    font-family: 'Noto Sans Mono', monospace;
-    
+    font-family: "Noto Sans Mono", monospace;
 }
 
 ::-webkit-scrollbar {
     width: 10px;
     border-radius: 12px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
+}
+
+/* Track */
+::-webkit-scrollbar-track {
     background: transparent;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: theme.$colored_back_1;
     border-radius: 12px;
-    transition: all .3s;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+    transition: all 0.3s;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
     background: theme.$dark_text_color;
     border-radius: 12px;
-    transition: all .3s;
-  }
+    transition: all 0.3s;
+}
 
-  .switchInput{
+.switchInput {
     justify-content: flex-start;
     flex-direction: row !important;
     align-items: center;
-    label{
+    label {
         margin-left: 2%;
     }
     .toggler-wrapper {
@@ -51,14 +49,14 @@
         cursor: pointer;
         position: relative;
 
-        input[type="checkbox"]{
+        input[type="checkbox"] {
             display: none;
-            &:checked+.toggler-slider{
+            &:checked + .toggler-slider {
                 background-color: theme.$colored_back_1;
-                
+
                 .toggler-knob {
                     left: calc(100% - 19px - 3px);
-                  }
+                }
             }
         }
 
@@ -72,9 +70,9 @@
             height: 100%;
             -webkit-transition: all 300ms ease;
             transition: all 300ms ease;
-          }
+        }
 
-          .toggler-knob {
+        .toggler-knob {
             position: absolute;
             -webkit-transition: all 300ms ease;
             transition: all 300ms ease;
@@ -84,16 +82,15 @@
             left: 3px;
             top: 3px;
             background-color: theme.$light_back;
-          }
-      }
-  }
+        }
+    }
+}
 
-body{
+body {
     font-size: 10px;
 }
 
-
-nav{
+nav {
     display: flex;
     text-align: center;
     justify-content: space-between;
@@ -107,62 +104,58 @@ nav{
     width: 7.5%;
     border-radius: 20px;
     background: linear-gradient(145deg, theme.$colored_back_1, theme.$colored_back_2);
-    box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.5),
-                 -5px -5px 15px rgba(theme.$colored_back_1, 0.5);
+    box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5), -5px -5px 15px rgba(theme.$colored_back_1, 0.5);
 
-    animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 0.1s forwards;
+    animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.1s forwards;
 
-    hr{
+    hr {
         width: 50%;
         margin: auto;
-        padding: .60px;
+        padding: 0.6px;
         background: theme.$light_border_color;
         border-radius: 50px;
-        box-shadow:  5px 5px 10px rgba(theme.$light_border_color, 0.2),
-        -5px -5px 10px rgba(theme.$light_border_color, 0.2);
+        box-shadow: 5px 5px 10px rgba(theme.$light_border_color, 0.2),
+            -5px -5px 10px rgba(theme.$light_border_color, 0.2);
         margin: 3% auto;
-
     }
-    .logo{
+    .logo {
         width: 80%;
-        img{
+        img {
             width: 80%;
         }
     }
 
-    .menu{
+    .menu {
         display: flex;
         text-align: center;
         justify-content: space-between;
         flex-direction: column;
         width: 100%;
-        li{
+        li {
             width: 100%;
             border-left: 4px solid transparent;
             padding-right: 4px;
             margin: 10% 0;
             transition: all 0.3s;
 
-            &:hover{
+            &:hover {
                 border-left: 4px solid rgba(theme.$light_border_color, 0.3);
-
             }
 
-            a{
+            a {
                 width: 100%;
                 color: theme.$light_text_color;
                 font-size: 1.8rem;
             }
         }
 
-        li.active{
+        li.active {
             border-left: 4px solid theme.$light_border_color;
         }
     }
-
 }
 
-.navShop{
+.navShop {
     display: flex;
     flex-direction: column;
     padding: 2% 0% 2% 2%;
@@ -174,41 +167,41 @@ nav{
     opacity: 0;
     border-radius: 0 20px 20px 0;
     background: linear-gradient(145deg, rgba(theme.$colored_back_1, 0.3), rgba(theme.$colored_back_2, 0.3));
-    box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.5);
-    animation: left2 1s cubic-bezier(.36,-0.64,.34,1.76) 0.8s forwards;
+    box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5);
+    animation: left2 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.8s forwards;
     transition: 0.3s all;
     color: theme.$dark_text_color;
-    .title{
+    .title {
         text-align: left;
         font-size: 1.2rem;
         font-weight: 600;
     }
 
-    ul{
+    ul {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         margin: 10% 2%;
-        li{
-            a{
-            font-size: 1.1rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            margin: 5% 0;
-            text-transform: capitalize;
-            color: theme.$dark_text_color;
+        li {
+            a {
+                font-size: 1.1rem;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                margin: 5% 0;
+                text-transform: capitalize;
+                color: theme.$dark_text_color;
 
-                ion-icon{
+                ion-icon {
                     color: theme.$dark_text_color;
                     font-size: 1rem;
                     margin-right: 10px;
                     text-align: center;
                 }
             }
-            &.active{
+            &.active {
                 background: rgba(theme.$colored_back_1, 0.11);
-                box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.1);
+                box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.1);
                 padding: 2% 10%;
                 border-radius: 8px;
             }
@@ -216,9 +209,7 @@ nav{
     }
 }
 
-
-
-.notif{
+.notif {
     margin: 70px auto;
     padding: 20px;
     background: theme.$light_back;
@@ -229,8 +220,7 @@ nav{
     position: absolute;
     bottom: 3%;
 
-
-    h2{
+    h2 {
         text-align: left;
         color: theme.$dark_text_color;
         margin-top: 3.5px;
@@ -244,18 +234,18 @@ nav{
         position: absolute;
         top: 20px;
         right: 20px;
-        transition: all .3s;
+        transition: all 0.3s;
         font-size: 2rem;
         font-weight: bold;
         text-decoration: none;
         color: #333;
 
-        &:hover{
+        &:hover {
             color: theme.$dark_text_color;
         }
     }
 
-      .content{
+    .content {
         margin-top: 20px;
         text-align: left;
         font-weight: 500;
@@ -263,25 +253,25 @@ nav{
         width: 95%;
     }
 
-    &.success{
+    &.success {
         background: theme.$green;
         color: theme.$light_text_color;
-        h2, button{
+        h2,
+        button {
             color: theme.$dark_green;
         }
     }
 
-    &.error{
+    &.error {
         background: theme.$red;
         color: theme.$light_text_color;
-        h2, button{
+        h2,
+        button {
             color: theme.$dark_red;
         }
     }
-
-
 }
-.container{
+.container {
     display: flex;
     text-align: center;
     justify-content: space-between;
@@ -290,32 +280,153 @@ nav{
     position: relative;
     margin: 2% 13%;
     width: 64%;
-    height:auto !important;
-    min-height:100%;
-    animation: top 1s cubic-bezier(.36,-0.64,.34,1.76);
-    
-    .title{
+    height: auto !important;
+    min-height: 100%;
+    animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76);
+
+    .title {
         text-align: left;
         font-size: 1.6rem;
         font-weight: 600;
         color: theme.$dark_text_color;
         margin: 1%;
+    }
+
+    .return_box{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin: auto;
+        width: 100%;
+        margin-top: 25%;
+        transform: translateY(-50%);
+        .icon{
+            width: 125px;
+            height: 125px;
+            font-size: 5rem;
+            background: linear-gradient(52deg, #14caad, #21d29d);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 100%;
+            color: #fff;
+            margin: 3%;
+            font-weight: 900;
+            box-shadow: 5px 5px 15px rgba(#14caad, 0.7);
+
+        }
+
+        .text{
+            display: flex;
+            flex-direction: column;
+            span:first-child{
+                font-size: 2rem;
+                font-weight: 600;
+                background: -webkit-linear-gradient(52deg ,#14caad, #21d29d);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin: 0 0 2% 0;
+                white-space: nowrap;
+            }
+
+            span{
+                font-size: .8rem;
+                font-weight: 500;
+                color: rgba(51, 51, 51, 0.632);
+            }
+        }
+
+        .buttons{
+            button {
+                margin: 20% 0;
+                border: none;
+                background: linear-gradient(52deg, #14caad, #21d29d);
+                box-shadow: 5px 5px 15px rgba(#14caad, 0.5);
+                color: theme.$light_text_color;
+                width: 100%;
+                padding: 10px 20px;
+                border-radius: 12px;
+                transition: all 0.3s;
+                font-size: 1rem;
+                font-weight: 600;
+                &:hover {
+                    background: linear-gradient(52deg, #14caad, #21d29d);
+                    box-shadow: 5px 5px 15px rgba(#14caad, 0.7);
+                    transform: scale(1.02);
+                }
+            }
+        }
+
+        &.success{
+            .icon{
+                background: linear-gradient(52deg, #14caad, #21d29d);
+                box-shadow: 5px 5px 15px rgba(#14caad, 0.7);
+    
+            }
+    
+            .text{
+                span:first-child{
+                    background: -webkit-linear-gradient(52deg ,#14caad, #21d29d);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+            }
+    
+            .buttons{
+                button {
+                    background: linear-gradient(52deg, #14caad, #21d29d);
+                    box-shadow: 5px 5px 15px rgba(#14caad, 0.5);
+                    &:hover {
+                        background: linear-gradient(52deg, #14caad, #21d29d);
+                        box-shadow: 5px 5px 15px rgba(#14caad, 0.7);
+                    }
+                }
+            }
+        }
+
+        &.cancel{
+            .icon{
+                background: linear-gradient(52deg, #ff4446, #ff685e);
+                box-shadow: 5px 5px 15px rgba(#ff4446, 0.7);
+    
+            }
+    
+            .text{
+                span:first-child{
+                    background: -webkit-linear-gradient(52deg ,#ff4446, #ff685e);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+            }
+    
+            .buttons{
+                button {
+                    background: linear-gradient(52deg, #ff4446, #ff685e);
+                    box-shadow: 5px 5px 15px rgba(#ff4446, 0.5);
+                    &:hover {
+                        background: linear-gradient(52deg, #ff4446, #ff685e);
+                        box-shadow: 5px 5px 15px rgba(#ff4446, 0.7);
+                    }
+                }
+            }
+        }
 
     }
 
-    .profile{
+    .profile {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         align-items: flex-start;
 
-        .userLogo{
+        .userLogo {
             width: 20%;
             padding-top: 2%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            img{
+            img {
                 width: 80%;
                 border-radius: 100%;
                 border: 2px solid theme.$dark_border_color;
@@ -323,9 +434,9 @@ nav{
             }
         }
 
-        .userInfo{
+        .userInfo {
             width: 70%;
-            .title{
+            .title {
                 text-align: left;
                 display: flex;
                 flex-direction: row;
@@ -335,7 +446,7 @@ nav{
             }
         }
 
-        .formInput{
+        .formInput {
             display: flex;
             flex-direction: row;
             align-items: flex-start !important;
@@ -343,10 +454,7 @@ nav{
             width: 100%;
         }
 
-        
-
-
-        section div{
+        section div {
             width: 100%;
             padding: 1%;
             margin: auto;
@@ -354,28 +462,29 @@ nav{
             flex-direction: column;
         }
 
-        label{
+        label {
             font-size: 1rem;
             font-weight: 500;
             color: theme.$dark_text_color;
-            padding:5px;
+            padding: 5px;
         }
 
-        input, select, textarea{
+        input,
+        select,
+        textarea {
             border: none;
             border-radius: 8px;
-            transition: all .3s;
+            transition: all 0.3s;
             width: 100%;
             color: theme.$dark_text_color;
-            box-shadow:  4px 4px 10px rgba(theme.$colored_back_1, 0.01);
+            box-shadow: 4px 4px 10px rgba(theme.$colored_back_1, 0.01);
             border: 1px solid theme.$dark_border_color;
             font-weight: 500;
             font-size: 1rem;
             padding: 10px 20px;
             resize: none;
 
-
-            &:focus{
+            &:focus {
                 border: 1px solid theme.$dark_border_color;
                 outline-offset: 0px;
                 outline: none;
@@ -389,81 +498,78 @@ nav{
             }
         }
 
-        a{
+        a {
             border: none;
             background: linear-gradient(145deg, theme.$colored_back_1, theme.$colored_back_2);
-            box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.5);
+            box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5);
             color: theme.$light_text_color;
             width: 100%;
             padding: 10px 20px;
             border-radius: 12px;
-            transition: all .3s;
+            transition: all 0.3s;
             font-size: 1rem;
             font-weight: 600;
-            &:hover{
-                box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.7);
+            &:hover {
+                box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.7);
                 transform: scale(1.02);
             }
         }
 
-        button{
+        button {
             margin: 5% 0;
             border: none;
             background: theme.$colored_back_1;
-            box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.5);
+            box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5);
             color: theme.$light_text_color;
             width: 80%;
             padding: 10px 20px;
             border-radius: 12px;
-            transition: all .3s;
+            transition: all 0.3s;
             font-size: 1rem;
             font-weight: 600;
-            &:hover{
+            &:hover {
                 background: theme.$colored_back_2;
-                box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.7);
+                box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.7);
                 transform: scale(1.02);
             }
         }
-       
     }
 
-    .header{
+    .header {
         width: 95%;
         height: auto;
         border-radius: 12px;
         background: linear-gradient(145deg, rgba(theme.$colored_back_1, 0.3), rgba(theme.$colored_back_2, 0.3));
-        box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.3);
+        box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.3);
         color: theme.$dark_text_color;
         text-align: left;
         padding: 3% 5%;
         margin: auto;
 
-        span{
+        span {
             font-size: 1.8rem;
             font-weight: 600;
         }
 
-        p{
+        p {
             font-size: 1rem;
             font-weight: 600;
             margin: 1% 0;
         }
     }
 
-    footer{
-        font-size: .8rem;
+    footer {
+        font-size: 0.8rem;
         width: 100%;
         padding: 0 5%;
         display: flex;
         justify-content: space-between;
         flex-direction: row;
-        height: 100%;        
+        height: 100%;
         margin-top: 5%;
-
     }
 
-
-    .index{
+    .index {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -471,29 +577,28 @@ nav{
         margin: 5% 0;
         width: 100%;
 
-
-        .content{
+        .content {
             display: flex;
             justify-content: space-between;
             width: 90%;
 
-            .social{
-                background: linear-gradient(145deg, rgba(theme.$light_back ,1), rgba(theme.$colored_back_1, 0.1));
-                box-shadow:  7px 7px 14px rgba(theme.$colored_back_1, 0.15);
+            .social {
+                background: linear-gradient(145deg, rgba(theme.$light_back, 1), rgba(theme.$colored_back_1, 0.1));
+                box-shadow: 7px 7px 14px rgba(theme.$colored_back_1, 0.15);
                 text-align: left;
                 border-radius: 12px;
                 padding: 3%;
                 width: 35%;
-                .title{
+                .title {
                     color: theme.$dark_text_color;
                     font-size: 1.2rem;
                     font-weight: 600;
                 }
-    
-                p{
+
+                p {
                     color: theme.$dark_text_color;
                     margin: 2% 0 6% 0;
-                    font-size: .8rem;
+                    font-size: 0.8rem;
                 }
                 .parent {
                     display: grid;
@@ -502,42 +607,38 @@ nav{
                     grid-column-gap: 5px;
                     grid-row-gap: 5px;
                     margin-top: 10%;
-    
-                    a{
+
+                    a {
                         display: flex;
                         align-items: center;
                         justify-content: flex-start;
-                        ion-icon{
+                        ion-icon {
                             color: theme.$colored_back_1;
                             font-size: 1.7rem;
                             width: 25%;
                             text-align: center;
                         }
-                        span{
+                        span {
                             font-size: 1rem;
                             color: theme.$dark_text_color;
                             padding: 0 5%;
                             width: 75%;
                             text-align: left;
-    
                         }
-    
                     }
-                    }
+                }
             }
         }
-        
     }
 
-
-    .tables{
+    .tables {
         width: 100%;
         border-radius: 20px;
-        background: linear-gradient(145deg, rgba(theme.$light_back ,1), rgba(theme.$colored_back_1, 0.08));
-        box-shadow:  7px 7px 14px rgba(theme.$colored_back_1, 0.15);
+        background: linear-gradient(145deg, rgba(theme.$light_back, 1), rgba(theme.$colored_back_1, 0.08));
+        box-shadow: 7px 7px 14px rgba(theme.$colored_back_1, 0.15);
         padding-left: 2%;
 
-        table{
+        table {
             border: none !important;
             overflow: hidden;
             border-collapse: collapse;
@@ -545,106 +646,103 @@ nav{
             width: 100%;
             border-radius: 20px;
 
-
-            thead{
+            thead {
                 font-size: 1rem;
-                tr{
+                tr {
                     height: 75px;
                     border: none !important;
                 }
             }
-            tbody{
-                font-size: .8rem;
+            tbody {
+                font-size: 0.8rem;
                 overflow: hidden;
-                tr{
+                tr {
                     height: 80px;
                     border: none !important;
                     transition: all 0.3s;
                     overflow: hidden;
 
-                    &:hover{
+                    &:hover {
                         background: theme.$light_back;
                     }
 
-                    td.state.actif label{
+                    td.state.actif label {
                         background: theme.$green;
                         border-radius: 12px;
                         padding: 4px 16px;
                         color: theme.$light_text_color;
-
                     }
-    
-                    td.state.padding label{
+
+                    td.state.padding label {
                         background: theme.$orange;
                         border-radius: 12px;
                         padding: 4px 16px;
                         color: theme.$light_text_color;
-
                     }
-    
-                    td.state.inactif label{
+
+                    td.state.inactif label {
                         background: theme.$red;
                         border-radius: 12px;
                         padding: 4px 16px;
                         color: theme.$light_text_color;
                     }
 
-                    td:last-child{
-                        form{
+                    td:last-child {
+                        form {
                             display: inline-block;
                         }
                     }
 
-                    a, button{
+                    a,
+                    button {
                         border: none;
                         background: theme.$colored_back_1;
-                        box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.5);
+                        box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5);
                         color: theme.$light_text_color;
                         padding: 5px 20px;
                         margin: 0 2%;
                         border-radius: 12px;
-                        transition: all .3s;
-                        &:hover{
+                        transition: all 0.3s;
+                        &:hover {
                             background: theme.$colored_back_2;
-                            box-shadow:  5px 5px 15px rgba(theme.$colored_back_2, 0.7);
+                            box-shadow: 5px 5px 15px rgba(theme.$colored_back_2, 0.7);
                             transform: scale(1.02);
                         }
                     }
 
-                    a.danger, button.danger{
+                    a.danger,
+                    button.danger {
                         background: theme.$red;
-                        box-shadow:  5px 5px 15px rgba(theme.$red, 0.5);
+                        box-shadow: 5px 5px 15px rgba(theme.$red, 0.5);
 
-                        &:hover{
-                            background: theme.$dark_red; 
-                            box-shadow:  5px 5px 15px rgba(theme.$red, 0.7);
-
+                        &:hover {
+                            background: theme.$dark_red;
+                            box-shadow: 5px 5px 15px rgba(theme.$red, 0.7);
                         }
                     }
 
-                    a.normal, button.normal{
+                    a.normal,
+                    button.normal {
                         background: theme.$blue;
-                        box-shadow:  5px 5px 15px rgba(theme.$blue, 0.5);
+                        box-shadow: 5px 5px 15px rgba(theme.$blue, 0.5);
 
-                        &:hover{
-                            background: theme.$dark_blue; 
-                            box-shadow:  5px 5px 15px rgba(theme.$blue, 0.7);
-
+                        &:hover {
+                            background: theme.$dark_blue;
+                            box-shadow: 5px 5px 15px rgba(theme.$blue, 0.7);
                         }
                     }
-    
                 }
             }
         }
     }
 
-    .info{
+    .info {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         width: 100%;
 
-        .card{
+        .card {
             display: flex;
             flex-direction: column;
             justify-content: space-around;
@@ -653,291 +751,273 @@ nav{
             padding: 2.5% 3%;
             height: 180px;
             border-radius: 20px;
-            background: linear-gradient(145deg, rgba(theme.$light_back ,1), rgba(theme.$colored_back_1, 0.1));
-            box-shadow:  7px 7px 25px rgba(theme.$colored_back_1, 0.15);
+            background: linear-gradient(145deg, rgba(theme.$light_back, 1), rgba(theme.$colored_back_1, 0.1));
+            box-shadow: 7px 7px 25px rgba(theme.$colored_back_1, 0.15);
             transition: all 0.3s;
-            &:hover{
+            &:hover {
                 background: theme.$colored_back_1;
                 color: theme.$light_text_color;
-                .icon, .text .value, .text .desc{
+                .icon,
+                .text .value,
+                .text .desc {
                     color: theme.$light_text_color;
                 }
             }
-            .icon{
+            .icon {
                 font-size: 2.5rem;
                 color: theme.$dark_text_color;
                 transition: all 0.3s;
             }
         }
-        .text{
-            .value{
+        .text {
+            .value {
                 font-size: 2.5rem;
                 font-weight: 600;
                 color: theme.$dark_text_color;
                 transition: all 0.3s;
-
             }
-            .desc{
+            .desc {
                 color: theme.$dark_text_color;
                 transition: all 0.3s;
-
             }
         }
 
-        
-        .card:nth-child(1){
-            animation: down 1s cubic-bezier(.36,-0.64,.34,1.76) 0.1s forwards;
+        .card:nth-child(1) {
+            animation: down 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.1s forwards;
         }
-        
-        .card:nth-child(2){
-            animation: down 1s cubic-bezier(.36,-0.64,.34,1.76) 0.2s forwards;
+
+        .card:nth-child(2) {
+            animation: down 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.2s forwards;
         }
-        
-        .card:nth-child(3){
-            animation: down 1s cubic-bezier(.36,-0.64,.34,1.76) 0.3s forwards;
+
+        .card:nth-child(3) {
+            animation: down 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.3s forwards;
         }
-        
-        .card:nth-child(4){
-            animation: down 1s cubic-bezier(.36,-0.64,.34,1.76) 0.4s forwards;
+
+        .card:nth-child(4) {
+            animation: down 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.4s forwards;
         }
     }
 
-    .card.perf{
-
-        .icon{
+    .card.perf {
+        .icon {
             font-size: 2.4rem;
             color: theme.$dark_text_color;
             transition: all 0.3s;
         }
-        .text{
-            .value{
+        .text {
+            .value {
                 font-size: 2rem;
                 font-weight: 600;
                 color: theme.$dark_text_color;
                 transition: all 0.3s;
                 white-space: nowrap;
-
             }
-            .desc{
+            .desc {
                 color: theme.$dark_text_color;
                 transition: all 0.3s;
             }
         }
     }
 
-    .actions{
+    .actions {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         width: 100%;
         margin-top: 3%;
-        button{
+        button {
             width: 24%;
             border: none;
             background-color: transparent;
             padding: 1%;
             border-radius: 12px;
             color: theme.$light_text_color;
-            box-shadow:  5px 5px 18px theme.$light_text_color,
-             -5px -5px 18px theme.$light_text_color;
-            transition: all .3s;
+            box-shadow: 5px 5px 18px theme.$light_text_color, -5px -5px 18px theme.$light_text_color;
+            transition: all 0.3s;
 
-
-
-
-            &.boot{
+            &.boot {
                 background: theme.$green;
-                
-                &:hover{
+
+                &:hover {
                     background: theme.$dark_blue;
                     transform: scale(1.05);
                     letter-spacing: 1px;
                 }
             }
-            &.reboot{
+            &.reboot {
                 background: theme.$orange;
-                &:hover{
+                &:hover {
                     background: theme.$dark_orange;
                     transform: scale(1.05);
                     letter-spacing: 1px;
                 }
             }
-            &.stop{
+            &.stop {
                 background: theme.$red;
-                &:hover{
+                &:hover {
                     background: theme.$dark_red;
                     transform: scale(1.05);
                     letter-spacing: 1px;
                 }
             }
-            &.kill{
+            &.kill {
                 background: #ec4f4f;
-                &:hover{
+                &:hover {
                     background: #f03333;
                     transform: scale(1.05);
                     letter-spacing: 1px;
                 }
             }
 
-            &.backup{
+            &.backup {
                 background: theme.$blue;
-                &:hover{
+                &:hover {
                     background: theme.$dark_blue;
                     transform: scale(1.05);
                     letter-spacing: 1px;
                 }
             }
 
-            &:nth-child(1){
-                animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 0.1s forwards;
+            &:nth-child(1) {
+                animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.1s forwards;
             }
-            
-            &:nth-child(2){
-                animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 0.2s forwards;
+
+            &:nth-child(2) {
+                animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.2s forwards;
             }
-            
-            &:nth-child(3){
-                animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 0.3s forwards;
+
+            &:nth-child(3) {
+                animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.3s forwards;
             }
-            
-            &:nth-child(4){
-                animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 0.4s forwards;
+
+            &:nth-child(4) {
+                animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.4s forwards;
             }
         }
-
     }
 
-    .consol{
+    .consol {
         height: 350px;
         border-radius: 20px;
-        background: linear-gradient(145deg, rgba(theme.$light_back ,1), rgba(theme.$colored_back_1, 0.1));
-        box-shadow:  7px 7px 25px rgba(theme.$colored_back_1, 0.25);
+        background: linear-gradient(145deg, rgba(theme.$light_back, 1), rgba(theme.$colored_back_1, 0.1));
+        box-shadow: 7px 7px 25px rgba(theme.$colored_back_1, 0.25);
         width: 100%;
         margin-top: 3%;
 
-        .commands{
+        .commands {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;   
+            position: relative;
             top: 80%;
             width: 100%;
 
-            input{
+            input {
                 padding: 1.5% 2%;
                 border: none;
                 border-radius: 12px;
                 width: 90%;
-                transition: all .3s;
+                transition: all 0.3s;
                 color: theme.$dark_text_color;
-                box-shadow:  4px 4px 10px rgba(theme.$colored_back_1, 0.01);
+                box-shadow: 4px 4px 10px rgba(theme.$colored_back_1, 0.01);
                 border: 1px solid transparent;
 
-
-                &:focus
-                {
+                &:focus {
                     border: 1px solid theme.$dark_border_color;
-                    box-shadow:  4px 4px 10px rgba(theme.$colored_back_1, 0.01), -4px -4px 10px rgba(theme.$colored_back_1, 0.01);
+                    box-shadow: 4px 4px 10px rgba(theme.$colored_back_1, 0.01),
+                        -4px -4px 10px rgba(theme.$colored_back_1, 0.01);
                     outline-offset: 0px;
                     outline: none;
                 }
 
-
                 &::-webkit-input-placeholder {
                     display: inline-block;
                     opacity: 0.5;
-                    transition: all .3s;
-                    padding-right: .15em;
+                    transition: all 0.3s;
+                    padding-right: 0.15em;
                     white-space: nowrap;
                     color: theme.$dark_text_color;
-
-                  }
+                }
 
                 &:focus::-webkit-input-placeholder {
                     transform: translateX(-25%);
                     font-size: 75%;
-                    opacity: 0.05
-
-                  }
+                    opacity: 0.05;
+                }
             }
         }
-
     }
 
-    .services{
+    .services {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         width: 100%;
         margin: 2.5% 0;
 
-        .title{
+        .title {
             text-align: left;
             font-size: 1.5rem;
             font-weight: 600;
             color: theme.$dark_text_color;
             margin: 0 1%;
-
         }
     }
-    
 
-    .createButtons{
+    .createButtons {
         display: flex;
         justify-content: flex-end;
         flex-direction: row;
         align-items: flex-end;
         width: 100%;
-        a{
+        a {
             border: none;
             color: theme.$light_text_color;
             width: 20%;
             padding: 10px 20px;
             border-radius: 12px;
-            transition: all .3s;
-            font-size: .9rem;
+            transition: all 0.3s;
+            font-size: 0.9rem;
             font-weight: 600;
             white-space: nowrap;
             margin: 2%;
             background: theme.$colored_back_1;
-            box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.5);
+            box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5);
 
-            &:hover{
+            &:hover {
                 background: theme.$colored_back_2;
-                box-shadow:  5px 5px 15px rgba(theme.$colored_back_2, 0.7);
+                box-shadow: 5px 5px 15px rgba(theme.$colored_back_2, 0.7);
                 transform: scale(1.02);
             }
-
         }
     }
 
-    &.cart{
+    &.cart {
         width: 60%;
         margin: 2% 10.5%;
-    .userInfo{
-        width: 85%;
-    }
+        .userInfo {
+            width: 85%;
+        }
     }
 }
 
-.container.shop{
+.container.shop {
     margin: 2% 23%;
     width: 56%;
     align-items: unset;
     animation: unset;
-    .title{
+    .title {
         text-align: left;
         font-size: 1.5rem;
         font-weight: 600;
         color: theme.$dark_text_color;
         margin: 0 5%;
-        animation: down 1s cubic-bezier(.36,-0.64,.34,1.76) 0.3s forwards;
-
-
+        animation: down 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.3s forwards;
     }
-    
-    .plans{
+
+    .plans {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -946,38 +1026,38 @@ nav{
         align-content: center;
         width: 100%;
 
-        .card:nth-child(1){
-            animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 0.4s forwards;
-        }
-        
-        .card:nth-child(2){
-            animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 0.5s forwards;
-        }
-        
-        .card:nth-child(3){
-            animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 0.6s forwards;
-        }
-        
-        .card:nth-child(4){
-            animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 0.7s forwards;
-        }
-        .card:nth-child(5){
-            animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 0.8s forwards;
-        }
-        .card:nth-child(6){
-            animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 0.9s forwards;
-        }
-        .card:nth-child(7){
-            animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 1s forwards;
-        }
-        .card:nth-child(8){
-            animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 1.1s forwards;
-        }
-        .card:nth-child(9){
-            animation: top 1s cubic-bezier(.36,-0.64,.34,1.76) 1.2s forwards;
+        .card:nth-child(1) {
+            animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.4s forwards;
         }
 
-        .card{
+        .card:nth-child(2) {
+            animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.5s forwards;
+        }
+
+        .card:nth-child(3) {
+            animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.6s forwards;
+        }
+
+        .card:nth-child(4) {
+            animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.7s forwards;
+        }
+        .card:nth-child(5) {
+            animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.8s forwards;
+        }
+        .card:nth-child(6) {
+            animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.9s forwards;
+        }
+        .card:nth-child(7) {
+            animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 1s forwards;
+        }
+        .card:nth-child(8) {
+            animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 1.1s forwards;
+        }
+        .card:nth-child(9) {
+            animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 1.2s forwards;
+        }
+
+        .card {
             display: flex;
             flex-direction: column;
             justify-content: space-around;
@@ -986,46 +1066,46 @@ nav{
             height: 400px;
             border-radius: 20px;
             background: linear-gradient(145deg, theme.$light_text_color, rgba(theme.$colored_back_1, 0.08));
-            box-shadow:  7px 7px 25px rgba(theme.$colored_back_1, 0.15),-7px -7px 25px rgba(theme.$colored_back_1, 0.05);
+            box-shadow: 7px 7px 25px rgba(theme.$colored_back_1, 0.15), -7px -7px 25px rgba(theme.$colored_back_1, 0.05);
             transition: all 0.3s;
             color: theme.$dark_text_color;
 
-            &:hover{
-                .cardHead{
-                    hr{
+            &:hover {
+                .cardHead {
+                    hr {
                         width: 35%;
                     }
                 }
 
-                .cardFotter{
-                    button{
+                .cardFotter {
+                    button {
                         padding: 2% 20%;
                     }
                 }
             }
 
-            .cardHead{
+            .cardHead {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
 
-                .name{
-                    font-size: .9rem;
+                .name {
+                    font-size: 0.9rem;
                     letter-spacing: 1px;
                 }
 
-                .price{
+                .price {
                     font-size: 2rem;
                     font-weight: 600;
                     margin: 2% 0 0 0;
 
-                    label{
-                        font-size: .9rem;
+                    label {
+                        font-size: 0.9rem;
                         font-weight: 400;
                     }
                 }
 
-                hr{
+                hr {
                     background: theme.$colored_back_1;
                     border: none;
                     width: 30%;
@@ -1033,16 +1113,14 @@ nav{
                     padding: 5px;
                     border-radius: 8px;
                     margin-top: 5%;
-                    transition: all .3s;
-
+                    transition: all 0.3s;
                 }
             }
-            
 
-            .cardBoddy{
+            .cardBoddy {
                 margin: 2% 0;
 
-                ul{
+                ul {
                     display: flex;
                     flex-direction: column;
                     justify-content: space-around;
@@ -1051,13 +1129,13 @@ nav{
                     width: 80%;
                     margin: auto;
 
-                    li{
+                    li {
                         font-size: 1rem;
                         font-weight: 500;
                         display: flex;
                         align-items: center;
                         margin: 2% 0;
-                        ion-icon{
+                        ion-icon {
                             color: theme.$colored_back_1;
                             font-size: 1.4rem;
                             margin-right: 20px;
@@ -1066,48 +1144,44 @@ nav{
                 }
             }
 
-            .cardFotter{
-
-                input{
+            .cardFotter {
+                input {
                     padding: 1% 3%;
                     border: none;
                     border-radius: 8px;
-                    transition: all .3s;
+                    transition: all 0.3s;
                     margin: auto;
                     color: theme.$dark_text_color;
-                    box-shadow:  4px 4px 10px rgba(theme.$colored_back_1, 0.01);
+                    box-shadow: 4px 4px 10px rgba(theme.$colored_back_1, 0.01);
                     border: 1px solid theme.$dark_text_color;
                     font-weight: 600;
                 }
 
-                button{
+                button {
                     border: none;
                     background-color: transparent;
                     padding: 2% 15%;
                     border-radius: 12px;
                     color: theme.$light_text_color;
-                    box-shadow:  5px 5px 18px rgba(theme.$colored_back_1, 0.15),
-                     -5px -5px 18px rgba(theme.$colored_back_1, 0.15);
-                    transition: all .3s;
+                    box-shadow: 5px 5px 18px rgba(theme.$colored_back_1, 0.15),
+                        -5px -5px 18px rgba(theme.$colored_back_1, 0.15);
+                    transition: all 0.3s;
                     background: theme.$colored_back_1;
                     margin-top: 3%;
-                    &:hover{
+                    &:hover {
                         background-color: theme.$colored_back_2;
                     }
                 }
             }
         }
-
     }
 
     .plans > * {
         margin: 3% 0;
     }
-
-    
 }
 
-.profile_bar{
+.profile_bar {
     display: flex;
     text-align: center;
     flex-direction: column;
@@ -1119,68 +1193,68 @@ nav{
     width: 17.5%;
     border-radius: 20px;
     background: linear-gradient(145deg, rgba(theme.$colored_back_1, 0.3), rgba(theme.$colored_back_2, 0.3));
-    box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.5);
-    animation: right 1s cubic-bezier(.36,-0.64,.34,1.76) 0.2s forwards;
+    box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5);
+    animation: right 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.2s forwards;
 
-    .user{
+    .user {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         width: 85%;
-        border-radius: 20px;     
+        border-radius: 20px;
         background: theme.$light_text_color;
         margin-top: 20%;
         margin-bottom: 5%;
 
-        form{
+        form {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             width: 100%;
-            border-radius: 20px;     
+            border-radius: 20px;
             background: theme.$light_text_color;
         }
 
-        .logo{
+        .logo {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;   
+            position: relative;
             top: -20%;
             margin-bottom: -5%;
 
-            .username{
-                position: absolute;   
+            .username {
+                position: absolute;
                 background: linear-gradient(145deg, theme.$colored_back_1, theme.$colored_back_2);
-                font-size: .8rem;
+                font-size: 0.8rem;
                 padding: 5px 35px;
                 color: theme.$light_text_color;
                 bottom: -15%;
                 border-radius: 12px;
             }
-            img{
+            img {
                 width: 50%;
                 background: theme.$light_text_color;
                 border-radius: 100%;
             }
         }
 
-        span{
+        span {
             position: relative;
-            font-size: .8rem;
+            font-size: 0.8rem;
             color: theme.$dark_text_color;
             height: auto;
             margin-bottom: 2%;
         }
 
-        span.inputTitle{
+        span.inputTitle {
             text-align: left;
             padding-left: 10%;
             margin-top: 5%;
         }
 
-        button{
+        button {
             color: theme.$dark_text_color;
             background-color: transparent;
             border-top: 1px solid rgba(theme.$dark_border_color, 0.3) !important;
@@ -1190,106 +1264,104 @@ nav{
             transition: all 0.3s;
             font-weight: 600;
             cursor: pointer;
-            &:hover{
+            &:hover {
                 color: theme.$dark_text_color;
             }
         }
 
-        input#password{
+        input#password {
             margin-bottom: 5%;
         }
 
-        input{
+        input {
             padding: 3% 4%;
             border: none;
             border-radius: 8px;
-            transition: all .3s;
+            transition: all 0.3s;
             width: 85%;
             margin: auto;
             color: theme.$dark_text_color;
-            box-shadow:  4px 4px 10px rgba(theme.$colored_back_1, 0.01);
+            box-shadow: 4px 4px 10px rgba(theme.$colored_back_1, 0.01);
             border: 1px solid theme.$dark_text_color;
             font-weight: 600;
 
-            &:focus{
+            &:focus {
                 padding: 5%;
                 border: 1px solid theme.$dark_text_color;
                 outline-offset: 0px;
                 outline: none;
             }
         }
-
     }
 
-    .server{
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 80%;
-            height: 180px;
-            border-radius: 20px;     
-            background: theme.$light_text_color;
-            margin: 10% 0;
-            padding: 10%;
-            
-            span{
-                text-align: left;
-                font-size: .8rem;
+    .server {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 80%;
+        height: 180px;
+        border-radius: 20px;
+        background: theme.$light_text_color;
+        margin: 10% 0;
+        padding: 10%;
+
+        span {
+            text-align: left;
+            font-size: 0.8rem;
+            color: theme.$dark_text_color;
+            height: auto;
+            margin-bottom: 1%;
+            font-weight: 600;
+            white-space: nowrap;
+
+            input {
+                padding: 0 5%;
+                border: none;
+                border-radius: 8px;
+                transition: all 0.3s;
+                width: 70%;
                 color: theme.$dark_text_color;
-                height: auto;
-                margin-bottom: 1%;
+                box-shadow: 4px 4px 10px rgba(theme.$colored_back_1, 0.01);
+                border: 0px solid transparent;
                 font-weight: 600;
-                white-space: nowrap;
 
-                input{
-                    padding: 0 5%;
-                    border: none;
-                    border-radius: 8px;
-                    transition: all .3s;
-                    width: 70%;
-                    color: theme.$dark_text_color;
-                    box-shadow:  4px 4px 10px rgba(theme.$colored_back_1, 0.01);
-                    border: 0px solid transparent;
-                    font-weight: 600;
-
-    
-                    &:focus{
-                        padding: 2.5% 5%;
-                        border: 1px solid theme.$dark_text_color;
-                        outline-offset: 0px;
-                        outline: none;
-                    }
+                &:focus {
+                    padding: 2.5% 5%;
+                    border: 1px solid theme.$dark_text_color;
+                    outline-offset: 0px;
+                    outline: none;
                 }
             }
+        }
     }
 
-    .menu{
+    .menu {
         display: flex;
         flex-direction: column;
         width: 80%;
-        .title{
+        .title {
             text-align: left;
             font-size: 1.1rem;
             font-weight: 600;
             color: theme.$dark_text_color;
         }
 
-        ul{
+        ul {
             display: flex;
             flex-direction: column;
             justify-content: space-around;
             margin: 5% 0;
 
-            li a{
+            li a {
                 display: flex;
                 justify-content: flex-start;
                 flex-direction: row;
                 align-items: stretch;
                 align-content: center;
                 margin: 5% 0;
-                .icon{
+                .icon {
                     background: theme.$colored_back_1;
-                    padding: 8px ;
+                    padding: 8px;
                     font-size: 1.2rem;
                     color: theme.$light_text_color;
                     border-radius: 12px;
@@ -1299,26 +1371,22 @@ nav{
                     align-content: center;
                     margin-right: 5%;
                     align-items: center;
-
                 }
 
-                .text{
+                .text {
                     display: flex;
                     justify-content: center;
-                    font-size: .85rem;
+                    font-size: 0.85rem;
                     color: theme.$dark_text_color;
                     text-align: center;
                     white-space: nowrap;
                     align-items: center;
-
-
                 }
             }
         }
-
     }
 
-    &.register{
+    &.register {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1330,46 +1398,42 @@ nav{
         width: 50%;
         border-radius: 20px;
         background: linear-gradient(145deg, rgba(theme.$colored_back_1, 0.3), rgba(theme.$colored_back_2, 0.3));
-        box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.5);
-        animation: right 1s cubic-bezier(.36,-0.64,.34,1.76) 0.2s forwards;
+        box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5);
+        animation: right 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.2s forwards;
         padding: 2%;
-        overflow:scroll;
-        overflow-x:hidden;
+        overflow: scroll;
+        overflow-x: hidden;
 
-
-        hr{
+        hr {
             margin: 5%;
             border-color: rgba(theme.$colored_back_1, 0.5);
-
         }
 
-        form{
+        form {
             width: 80%;
 
-            h2{
+            h2 {
                 color: theme.$dark_text_color;
                 font-size: 1.2rem;
                 text-align: left;
             }
         }
 
-
-
-        .formInput{
+        .formInput {
             display: flex;
             flex-direction: row;
             align-items: flex-start !important;
             text-align: left;
             width: 100%;
         }
-        .mail{
+        .mail {
             display: flex;
             align-items: flex-start !important;
             text-align: left;
             width: 100%;
         }
 
-        section div{
+        section div {
             width: 100%;
             padding: 1%;
             margin: auto;
@@ -1377,95 +1441,92 @@ nav{
             flex-direction: column;
         }
 
-        label{
+        label {
             font-size: 1rem;
             font-weight: 500;
             color: theme.$dark_text_color;
             padding: 5px;
         }
 
-        .logoText{
+        .logoText {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             width: 100%;
             margin: 2% 0;
-            img{
+            img {
                 width: 30%;
-
             }
-            h2{
+            h2 {
                 color: theme.$dark_text_color;
                 margin: 2% 0;
                 font-size: 1.5rem;
                 white-space: nowrap;
             }
-
-
-              
         }
 
-        button{
+        button {
             margin: 5% 0;
             border: none;
             background: theme.$colored_back_1;
-            box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.5);
+            box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5);
             color: theme.$light_text_color;
             width: 50%;
             padding: 10px 20px;
             border-radius: 12px;
-            transition: all .3s;
+            transition: all 0.3s;
             font-size: 1rem;
             font-weight: 600;
-            &:hover{
+            &:hover {
                 background: theme.$colored_back_2;
-                box-shadow:  5px 5px 15px rgba(theme.$colored_back_2, 0.7);
+                box-shadow: 5px 5px 15px rgba(theme.$colored_back_2, 0.7);
                 transform: scale(1.02);
             }
         }
 
-        input, select, textarea{
+        input,
+        select,
+        textarea {
             border: none;
             border-radius: 8px;
-            transition: all .3s;
+            transition: all 0.3s;
             width: 100%;
             color: theme.$dark_text_color;
-            box-shadow:  4px 4px 10px rgba(theme.$colored_back_2, 0.01);
+            box-shadow: 4px 4px 10px rgba(theme.$colored_back_2, 0.01);
             border: 0px solid transparent;
             font-weight: 500;
             font-size: 1rem;
             padding: 10px 20px;
 
-            &:focus{
+            &:focus {
                 border: 1px solid theme.$dark_text_color;
                 outline-offset: 0px;
                 outline: none;
             }
         }
-
     }
 
-    &.cart{
+    &.cart {
         width: 25%;
 
-        .user{
+        .user {
             padding: 2% 5%;
             margin: 7.5% 0 0 0 !important;
 
-            .item{
+            .item {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 padding: 5%;
 
-                .logo{
+                .logo {
                     font-size: 2rem;
                     border-radius: 12px;
                     padding: 3%;
                     color: theme.$dark_text_color;
                     background-color: rgba(theme.$colored_back_1, 0.3);
-                    
+
                     .badge {
                         position: absolute;
                         top: -10px;
@@ -1482,22 +1543,22 @@ nav{
                     }
                 }
 
-                .text{
+                .text {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                     align-content: center;
                     width: 75%;
                     margin-left: 5%;
-                    .name{
-                        span{
+                    .name {
+                        span {
                             font-size: 1.1rem;
                             font-weight: 500;
                         }
                     }
 
-                    .price{
-                        span{
+                    .price {
+                        span {
                             font-size: 1rem;
                             font-weight: 500;
                         }
@@ -1505,83 +1566,138 @@ nav{
                 }
             }
 
-            hr{
+            hr {
                 background: rgba(theme.$colored_back_1, 1);
                 border-color: rgba(theme.$colored_back_1, 1);
                 width: 75%;
                 margin: 7.5% auto;
             }
 
-            button, a{
+            button,
+            a {
                 margin: 5% 0;
                 border: none;
                 background: theme.$colored_back_1;
-                box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.5);
+                box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5);
                 color: theme.$light_text_color;
                 width: 75%;
-                margin: 7.5% auto;
+                margin: 5% auto;
                 padding: 10px 20px;
                 border-radius: 12px;
-                transition: all .3s;
+                transition: all 0.3s;
                 font-size: 1rem;
                 font-weight: 600;
-                &:hover{
+                border: none !important;
+
+                &:hover {
                     background: theme.$colored_back_2;
-                    box-shadow:  5px 5px 15px rgba(theme.$colored_back_1, 0.7);
+                    box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.7);
                     transform: scale(1.02);
                 }
             }
 
-            
+            .checkoutButtons {
+                display: flex;
+                justify-content: space-around;
+                margin: 5%;
+                transform: scale(.9);
+                button {
+                    width: 25%;
+                    padding: 5px 0;
+                    margin: 1%;
 
+                    &.paypal {
+                        background: #fcfc23;
+                        box-shadow: 5px 5px 15px rgba(#fcfc23, 0.5);
 
-            .prices{
+                        img {
+                            width: 30%;
+                        }
+
+                        &:hover {
+                            background: #eeee29;
+                            box-shadow: 5px 5px 15px rgba(#eeee29, 0.7);
+                            transform: scale(1.02);
+                        }
+                    }
+
+                    &.bank {
+                        background: #e7a121;
+                        box-shadow: 5px 5px 15px rgba(#eeab04, 0.5);
+
+                        img {
+                            width: 60%;
+                        }
+
+                        &:hover {
+                            background: #eeab04;
+                            box-shadow: 5px 5px 15px rgba(#eeab04, 0.7);
+                            transform: scale(1.02);
+                        }
+                    }
+
+                    &.wallet {
+                        background: theme.$colored_back_1;
+                        box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5);
+
+                        img {
+                            width: 50%;
+                        }
+
+                        &:hover {
+                            background: theme.$colored_back_2;
+                            box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.7);
+                            transform: scale(1.02);
+                        }
+                    }
+                }
+            }
+
+            .prices {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-end;
                 padding: 0 5%;
-                div{
+                div {
                     display: flex;
                     justify-content: space-between;
                     width: 100%;
                     padding: 0 3%;
-                    
 
-                    span{
+                    span {
                         font-size: 1rem;
                         font-weight: 500;
                     }
                 }
             }
 
-            .total{
+            .total {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-end;
                 padding: 0 5%;
-                div{
+                div {
                     display: flex;
                     justify-content: space-between;
                     width: 100%;
                     padding: 0 3%;
-                    
 
-                    span{
+                    span {
                         font-size: 1.2rem;
                         font-weight: 600;
                     }
                 }
             }
 
-            .promo{
+            .promo {
                 text-align: left;
                 padding: 0 3%;
 
-                label{
+                label {
                     font-size: 1rem;
                     font-weight: 500;
                     color: theme.$dark_text_color;
-                    padding:5px;
+                    padding: 5px;
                     text-align: left;
                     align-items: left;
                     display: flex;
@@ -1589,96 +1705,92 @@ nav{
                     margin-bottom: -5%;
                 }
 
-                div{
+                div {
                     display: flex;
                     flex-direction: row;
                 }
 
-                input{
+                input {
                     width: 75%;
-                    &:focus{
+                    &:focus {
                         padding: 3% 4%;
                     }
                 }
 
-                button{
+                button {
                     width: 15%;
                     font-size: 1.8rem;
                     font-weight: 900;
                     padding: 5px;
                 }
             }
-            
         }
     }
-
-    
 }
 
-@keyframes left{
-    0%{
+@keyframes left {
+    0% {
         transform: translateX(-20%);
         opacity: 0;
         perspective: 100px;
     }
-    100%{
+    100% {
         transform: translateX(0%);
         opacity: 1;
         perspective: 0px;
     }
 }
 
-@keyframes left2{
-    0%{
+@keyframes left2 {
+    0% {
         transform: translateX(-20%);
         opacity: 0;
         perspective: 100px;
         width: 0%;
     }
-    75%{
+    75% {
         width: 13%;
     }
-    100%{
+    100% {
         transform: translateX(0%);
         opacity: 1;
         perspective: 0px;
     }
 }
 
-
-@keyframes right{
-    0%{
+@keyframes right {
+    0% {
         transform: translateX(20%);
         opacity: 0;
         perspective: 100px;
     }
-    100%{
+    100% {
         transform: translateX(0%);
         opacity: 1;
         perspective: 0px;
     }
 }
 
-@keyframes top{
-    0%{
+@keyframes top {
+    0% {
         transform: translateY(20%);
         opacity: 0;
         perspective: 100px;
     }
-    100%{
+    100% {
         transform: translateY(0%);
         opacity: 1;
         perspective: 0px;
     }
 }
 
-@keyframes down{
-    0%{
+@keyframes down {
+    0% {
         transform: translateY(-50%);
         opacity: 0;
         perspective: 100px;
     }
-    100%{
+    100% {
         transform: translateY(0%);
         opacity: 1;
         perspective: 0px;
