@@ -24,7 +24,6 @@ module.exports = {
       title: app.config.company.name + " - Espace Client",
       action: "info",
       user: req.user[0],
-      transactions: transactions,
       app: app,
       system: package_json,
     });

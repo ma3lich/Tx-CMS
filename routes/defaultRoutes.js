@@ -23,11 +23,12 @@ passport.use(
       usernameField: "email",
       passReqToCallback: true,
     },
-    (req, email, password, done) => {
+    function verify(req, email, password, done) {
       db.query(
         `SELECT * FROM users WHERE email = "${email}"`,
         async function (error, user, fields) {
-          if (!user) return done(null, false);
+          if (error) return done(error); 
+          if (!user) return done(null, false, { message: 'Incorrect username or password.' });
 
           const userData = JSON.parse(JSON.stringify(user))[0];
 
@@ -36,11 +37,10 @@ passport.use(
             userData.password,
             (err, passwordMatched) => {
               if (err) return err;
+              if (!passwordMatched) return done(null, false, { message: 'Incorrect username or password.' });;
 
-              if (!passwordMatched) return done(null, false);
               adminLogs.setLevel('debug');
               adminLogs.debug(` : l'utilisateur : ${userData.email}, vien de se connecter !`);
-
               return done(null, user);
             }
           );
