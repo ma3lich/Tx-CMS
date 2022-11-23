@@ -1,6 +1,6 @@
  <nav class="">
     <div class="logo">
-        <img src="/images/logo.png" alt="">
+        <img src="{{app.config.company.logo}}" alt="">
     </div>
     <ul class="menu">
         <li class="active"><a href="/"><ion-icon name="home-outline"></ion-icon></a></li>
@@ -37,9 +37,9 @@
 
     <section class="formInput">
         <div>
-            <label for="sexe">Sexe</label>
+            <label for="sex">sex</label>
             <br>
-            <select name="sexe" id="sexe" required>
+            <select name="sex" id="sex" required>
                 <option value="male">Homme</option>
                 <option value="female">Femme</option>
             </select>

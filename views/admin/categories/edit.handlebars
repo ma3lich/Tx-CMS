@@ -1,6 +1,6 @@
  <nav class="">
     <div class="logo">
-        <img src="/images/logo.png" alt="">
+        <img src="{{app.config.company.logo}}" alt="">
     </div>
     <ul class="menu">
         <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
@@ -33,16 +33,16 @@
     </div>
     <form action="/admin/categories/edit/:id" method="post">
         <input style="display:none" type="text" name="id" id="id"
-            value={{categorie.id}}>
+            value={{category.id}}>
         <section class="formInput">
             <div>
                 <label for="name">Nom de la catégorie</label>
                 <br>
                 <input type="text" name="name" id="name" required
-                    value={{categorie.name}}>
+                    value={{category.name}}>
             </div>
             <div>
-                <label for="categorie">Serveur</label>
+                <label for="category">Serveur</label>
                 <br>
                 <select style="text-transform:capitalize;" name="server"
                     id="server" disabled>
@@ -52,7 +52,7 @@
                 </select>
 
                 <script>
-                            document.getElementById('server').value = `{{categorie.server}}`
+                            document.getElementById('server').value = `{{category.server}}`
                         </script>
             </div>
         </section>
@@ -66,7 +66,7 @@
                     <option value="0">Manuelle</option>
                 </select>
                 <script>
-                            document.getElementById('auto').value = `{{categorie.auto}}`
+                            document.getElementById('auto').value = `{{category.auto}}`
                         </script>
             </div>
         </section>
@@ -86,18 +86,18 @@
         }
     </style>
 <script>
-   const categorieType = document.getElementById('planType').value
+   const categoryType = document.getElementById('planType').value
    const pterodactylOptions = document.querySelector('.pterodactylOptions')
    const proxmoxOptions = document.querySelector('.proxmoxOptions')
 
-   console.log(categorieType)
-    if (categorieType == 'pterodactyl'){
+   console.log(categoryType)
+    if (categoryType == 'pterodactyl'){
         pterodactylOptions.classList.add('show')
     }else{
         pterodactylOptions.classList.add('hide')
     }
 
-    if (categorieType == 'proxmox'){
+    if (categoryType == 'proxmox'){
         proxmoxOptions.classList.add('show')
 
     }else{

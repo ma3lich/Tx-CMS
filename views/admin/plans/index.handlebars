@@ -1,6 +1,6 @@
     <nav class="">
         <div class="logo">
-            <img src="/images/logo.png" alt="">
+            <img src="{{app.config.company.logo}}" alt="">
         </div>
         <ul class="menu">
             <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
@@ -22,7 +22,7 @@
     
     
     <section class="container">
-        <span class="title">Liste de vos produits : </span>
+        <span class="title">Liste de vos offres : </span>
         <div class="tables">
                 <table>
                     <thead>
@@ -31,7 +31,7 @@
                             <th>Nom du produit</th>
                             <th>Catégorie</th>
                             <th>Prix</th>
-                            <th>État</th>
+                            <th>État du stock</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -40,16 +40,17 @@
                             <tr>
                                 <td>{{id}}</td>
                                 <td>{{name}}</td>
-                                <td style="text-transform:capitalize;">{{categorie}}</td>
+                                <td style="text-transform:capitalize;">{{category}}</td>
                                 <td>{{price}}€</td>
                                 {{#if stock}}
-                                <td class="state actif"> <label for="">En stock</label></td>
+                                <td class="state actif"> <label for="">En stock : {{stock}}</label></td>
                                 {{else}}
                                 <td class="state inactif"> <label for="">Repture de stock</label></td>
                                 {{/if}}
 
                                 <td>
                                     <a href="/admin/plans/edit/{{id}}">Gérer</a>
+                                    <a class="normal" href="/admin/plans/config/{{server}}/{{id}}">Config</a>
                                     <form  action="/admin/plans/delete/{{id}}" method="post">
                                         <button class="danger" type="submit">Suprimé</button>
                                     </form>
@@ -59,7 +60,7 @@
                             {{else}}
 
                             <tr>
-                                <td colspan="6">Aucun offre n'a était créé sur votre TxCMS</td>
+                                <td colspan="6">Aucune offre n'a était créé...</td>
                             </tr>
                         {{/each}}
                     </tbody>
@@ -68,7 +69,7 @@
         </div>
 
         <div class="createButtons">
-            <a href="/admin/plans/create">Crée une offre</a>
+            <a href="/admin/plans/create">Crée une nouvelle offre</a>
         </div>
 
         <footer>
@@ -83,24 +84,21 @@
         {{#if success_message}}
 
             <div class="notif success" role="alert">
-                <h2>Succès</h2>
+                <strong>{{success_message}}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <ion-icon name="close-outline"></ion-icon>
+                    <span>$times;</span>
                 </button>
-                <p class="content">{{success_message}}</p>
             </div>
 
         {{/if}}
 
-
         {{#if error_message}}
 
             <div class="notif error" role="alert">
-                <h2>Erreur</h2>
+                <strong>{{error_message}}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <ion-icon name="close-outline"></ion-icon>
+                    <span>$times;</span>
                 </button>
-                <p class="content">{{error_message}}</p>
             </div>
 
         {{/if}}

@@ -1,6 +1,5 @@
 /* Importation des modules nodeJS */
 const bcrypt = require("bcrypt");
-const passport = require("passport");
 const db = require("../config/database");
 const nodemailer = require("nodemailer");
 const config = require("config");
@@ -12,13 +11,6 @@ const adminLogs = require("logger").createLogger("./logs/admin_logs.log");
 
 /* Configuration passport par email */
 
-passport.serializeUser(function (email, done) {
-  done(null, email);
-});
-
-passport.deserializeUser(function (email, done) {
-  done(null, email);
-});
 
 module.exports = {
   /* Méthode Get pour la page index */
@@ -26,7 +18,7 @@ module.exports = {
     db.query("SELECT COUNT(*) AS userCount FROM users", (err, usersCount) => {
       if (err) throw err;
       db.query(
-        "SELECT COUNT(*) AS clientsCount FROM users WHERE id = 11",
+        "SELECT COUNT(*) AS clientsCount FROM transactions",
         (err, clientsCount) => {
           if (err) throw err;
           db.query(
@@ -95,7 +87,7 @@ module.exports = {
           bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(req.body.password, 10, (err, hash) => {
               db.query(
-                `INSERT INTO users ( name, lastname, email, password, sexe, birthday) VALUES ('${req.body.name}', '${req.body.lastname}', '${req.body.email}', '${hash}', '${req.body.sexe}', '${req.body.birthday}')`,
+                `INSERT INTO users ( name, lastname, email, password, sex, birthday) VALUES ('${req.body.name}', '${req.body.lastname}', '${req.body.email}', '${hash}', '${req.body.sex}', '${req.body.birthday}')`,
                 async function (success, err) {
                   req.flash("success-message", "Votre compte a était creé"),
                     res.redirect("/");

@@ -29,7 +29,7 @@ let subTotal = 0;
 if (prices !== undefined && prices !== []) {
 
   for (let i = 0; i < prices.length; i++) {
-    subTotal += Number(prices[i].innerHTML) * Number(amounts[i].innerHTML);
+    subTotal += Number(prices[i].innerHTML.replace(" €", "")) * Number(amounts[i].innerHTML);
   }
   $subtotal.innerHTML = subTotal.toFixed(2) + " €"
 }

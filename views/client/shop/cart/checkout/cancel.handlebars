@@ -1,6 +1,6 @@
 <nav class="">
     <div class="logo">
-        <img src="/images/logo.png" alt="">
+        <img src="{{app.config.company.logo}}" alt="">
     </div>
     <ul class="menu">
         <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
@@ -36,11 +36,11 @@
             <script>
                     if("{{user.logo}}" == ""){
                         
-                        if("{{user.sexe}}" == "male"){
+                        if("{{user.sex}}" == "male"){
                             document.getElementById('userlogo').src = "/images/male-logo.png"
                         } 
 
-                        if("{{user.sexe}}" == "female"){
+                        if("{{user.sex}}" == "female"){
                             document.getElementById('userlogo').src = "/images/female-logo.png"
                         }
 
@@ -70,7 +70,7 @@
                         <ion-icon name="card-outline"></ion-icon>
                     </div>
                     <div class="text">
-                        <span>Moyen de paiment </span>
+                        <span>Panier</span>
                     </div>
                 </a>
             </li>

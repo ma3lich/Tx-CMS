@@ -74,18 +74,18 @@ INSERT INTO `categories` (`id`, `name`, `server`, `auto`) VALUES
 CREATE TABLE `plans` (
   `id` int(255) NOT NULL,
   `name` text NOT NULL,
-  `categorie` varchar(255) NOT NULL,
+  `category` varchar(255) NOT NULL,
   `price` text NOT NULL,
   `stock` tinyint(1) NOT NULL,
   `state` varchar(255) NOT NULL,
-  `selled` int(255) NOT NULL DEFAULT 0
+  `sold` int(255) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `plans`
 --
 
-INSERT INTO `plans` (`id`, `name`, `categorie`, `price`, `stock`, `state`, `selled`) VALUES
+INSERT INTO `plans` (`id`, `name`, `category`, `price`, `stock`, `state`, `sold`) VALUES
 (30, 'Tx-Game 1', 'game', '1.25', 0, 'public', 0),
 (43, 'Tx-Game 2', 'game', '6.50', 1, 'public', 0),
 (44, 'Tx-Game 3', 'game', '11.75', 1, 'public', 0);
@@ -140,7 +140,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('SOVa77fkopEfSwbj7Z6hKJQVM2FhCZKy', 1667775015, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":[{\"id\":36,\"name\":\"Toufik\",\"lastname\":\"Tala Ighil\",\"email\":\"talaighiltoufik@outlook.fr\",\"password\":\"$2b$10$m9kHQWpjoX5ogivTyzg3nuMOFAmUur0fqe5VslHqzX84E/CayeThK\",\"sexe\":\"male\",\"birthday\":\"2004-06-22\",\"role\":\"user\",\"logo\":null,\"usernote\":null,\"wallet\":0,\"services\":0,\"transactions\":0,\"tikets\":0}]},\"flash\":{}}');
+('SOVa77fkopEfSwbj7Z6hKJQVM2FhCZKy', 1667775015, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"passport\":{\"user\":[{\"id\":36,\"name\":\"Toufik\",\"lastname\":\"Tala Ighil\",\"email\":\"talaighiltoufik@outlook.fr\",\"password\":\"$2b$10$m9kHQWpjoX5ogivTyzg3nuMOFAmUur0fqe5VslHqzX84E/CayeThK\",\"sex\":\"male\",\"birthday\":\"2004-06-22\",\"role\":\"user\",\"logo\":null,\"usernote\":null,\"wallet\":0,\"services\":0,\"transactions\":0,\"tikets\":0}]},\"flash\":{}}');
 
 -- --------------------------------------------------------
 
@@ -154,7 +154,7 @@ CREATE TABLE `users` (
   `lastname` text NOT NULL,
   `email` text NOT NULL,
   `password` varchar(255) NOT NULL,
-  `sexe` varchar(255) NOT NULL,
+  `sex` varchar(255) NOT NULL,
   `birthday` varchar(255) NOT NULL,
   `role` varchar(255) NOT NULL DEFAULT 'user',
   `logo` varchar(255) DEFAULT NULL,
@@ -170,7 +170,7 @@ CREATE TABLE `users` (
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `lastname`, `email`, `password`, `sexe`, `birthday`, `role`, `logo`, `usernote`, `cart`, `wallet`, `services`, `transactions`, `tikets`) VALUES
+INSERT INTO `users` (`id`, `name`, `lastname`, `email`, `password`, `sex`, `birthday`, `role`, `logo`, `usernote`, `cart`, `wallet`, `services`, `transactions`, `tikets`) VALUES
 (1, 'Jean', 'Martin', 'jeanmartin@txhost.fr', '$2b$10$vVBCqHBY3fXVfBvbJ4adQeRy0OSnR374dCDAHF.uwkZ4XvDDbILvG', 'male', '2001-01-04', 'user', NULL, NULL, NULL, 0, 0, 0, 0),
 (36, 'Toufik', 'Tala Ighil', 'talaighiltoufik@outlook.fr', '$2b$10$m9kHQWpjoX5ogivTyzg3nuMOFAmUur0fqe5VslHqzX84E/CayeThK', 'male', '2004-06-22', 'user', NULL, NULL, '{}', 0, 0, 0, 0);
 
@@ -192,7 +192,7 @@ ALTER TABLE `carts`
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`),
-  ADD KEY `CategorieServer` (`server`);
+  ADD KEY `categorieserver` (`server`);
 
 --
 -- Index pour la table `plans`
@@ -201,7 +201,7 @@ ALTER TABLE `plans`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `price` (`price`) USING HASH,
   ADD UNIQUE KEY `name` (`name`(255)),
-  ADD KEY `PlanCategorie` (`categorie`);
+  ADD KEY `Plancategory` (`category`);
 
 --
 -- Index pour la table `servers`
@@ -271,13 +271,13 @@ ALTER TABLE `carts`
 -- Contraintes pour la table `categories`
 --
 ALTER TABLE `categories`
-  ADD CONSTRAINT `CategorieServer` FOREIGN KEY (`server`) REFERENCES `servers` (`name`);
+  ADD CONSTRAINT `categorieserver` FOREIGN KEY (`server`) REFERENCES `servers` (`name`);
 
 --
 -- Contraintes pour la table `plans`
 --
 ALTER TABLE `plans`
-  ADD CONSTRAINT `PlanCategorie` FOREIGN KEY (`categorie`) REFERENCES `categories` (`name`);
+  ADD CONSTRAINT `Plancategory` FOREIGN KEY (`category`) REFERENCES `categories` (`name`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

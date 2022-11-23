@@ -16,10 +16,11 @@ function main() {
   const path = require("path");
   const session = require("express-session");
   const passport = require("passport");
+  const bodyParser = require('body-parser'); // parser middleware
   const cookieParser = require("cookie-parser");
   const MySQLStore = require("express-mysql-session")(session);
   const hbs = require("express-handlebars");
-  const flash = require("express-flash");
+  const flash = require("connect-flash");
   const { serverIP } = require("./config/customFunction.js");
 
   const sessionStore = new MySQLStore({} /* session store options */, db);
@@ -38,17 +39,24 @@ function main() {
   app.use(
     session({
       key: "txcms-cookie",
-      secret: "txcmsbytxhost",
+      secret: "anything",
+      cookie: { maxAge: 60 * (60 * 1000) },
       store: sessionStore,
-      saveUninitialized: true,
+      saveUninitialized: false,
       resave: false,
     })
   );
-
+  app.use(bodyParser.urlencoded({ extended: false }));
   app.use(passport.initialize());
   app.use(passport.session());
 
   app.use(flash());
+
+  app.use(function(req, res, next){
+    res.locals.success_messages = req.flash('success_messages');
+    res.locals.error_messages = req.flash('error_messages');
+    next();
+});
 
   /* Gestion des view (handlebars)*/
 
@@ -77,7 +85,7 @@ function main() {
     console.log(
       "TxCMS est lancer !" +
         "\n\n" +
-        "https://" +
+        "http://" +
         serverIP +
         ":" +
         txcms.config.system.port +

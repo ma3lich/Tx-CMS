@@ -1,23 +1,33 @@
 /* Importation des modules nodeJS */
 const bcrypt = require("bcrypt");
-const config = require("config");
 const db = require("../config/database");
-const nodemailer = require("nodemailer");
-const mailserver = require("../config/mail");
 const app = require("../config/app.json");
 const package_json = require("../package.json");
+const {
+  sendMail,
+  getHostStats,
+  getPterodactylEggs,
+  getPterodactylNodes,
+} = require("../config/customFunction");
+const { Login } = require("../templates/emails/templates_emails");
+const { pterodactylApp, pterodactylClient } = require("../private/servers");
+const Nodeactyl = require("nodeactyl");
+const application = new Nodeactyl.NodeactylApplication(
+  "https://panel.txhost.fr",
+  "ptla_nm9keWWAnHOaAM2EKVtiRhoXNqTz3Hmr8e4E5v7PqGC"
+);
 
 module.exports = {
   /* Méthode Get pour la page admin/index */
   index: (req, res) => {
-    db.query("SELECT COUNT(*) AS userCount FROM users", (err, data) => {
+    getHostStats(function (hostStats) {
       res.render("admin/index", {
         title: app.config.company.name + " - Espace Admin",
         action: "info",
-        userCount: JSON.parse(JSON.stringify(data))[0].userCount,
-        user: req.user[0],
+        hostStats,
         app: app,
         system: package_json,
+        user: req.user[0],
       });
     });
   },
@@ -46,8 +56,9 @@ module.exports = {
       if (err) throw err;
       else {
         res.render("admin/users/edit", {
-          title: "TxCMS - Gestion d'utilisateur",
+          title: app.config.company.name + " - Gestion d'utilisateur",
           action: "edit",
+          app: app,
           user: JSON.parse(JSON.stringify(data))[0],
         });
       }
@@ -57,28 +68,47 @@ module.exports = {
   /* Méthode Post pour la page admin/users/edit */
   submitEditedUser: (req, res) => {
     const id = req.body.id;
-
-    bcrypt.genSalt(10, function (err, salt) {
-      bcrypt.hash(req.body.password, salt, function (err, hash) {
-        db.query(
-          `UPDATE users SET name = '${req.body.name}', lastname = '${req.body.lastname}', password = '${hash}', sexe = '${req.body.sexe}', birthday = '${req.body.birthday}' , logo = '${req.body.logo}', role = '${req.body.role}', wallet = '${req.body.wallet}' WHERE id = ${id}`,
-          function (success, err) {
-            if (err) {
-              req.flash("error-message", err);
-              res.redirect("/admin/users");
-            } else {
-              req.flash("success-message", "Offre Créé !"),
+    if (req.body.password) {
+      bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(req.body.password, salt, function (err, hash) {
+          db.query(
+            `UPDATE users SET name = '${req.body.name}', lastname = '${req.body.lastname}', password = '${hash}', sex = '${req.body.sex}', birthday = '${req.body.birthday}' , logo = '${req.body.logo}', role = '${req.body.role}', wallet = '${req.body.wallet}' WHERE id = ${id}`,
+            function (success, err) {
+              if (err) {
+                req.flash("error-message", err);
                 res.redirect("/admin/users");
+              } else {
+                req.flash("success-message", "Offre Créé !"),
+                  res.redirect("/admin/users");
+              }
             }
-          }
-        );
+          );
+        });
       });
-    });
+    } else {
+      db.query(
+        `UPDATE users SET name = '${req.body.name}', lastname = '${req.body.lastname}', sex = '${req.body.sex}', birthday = '${req.body.birthday}' , logo = '${req.body.logo}', role = '${req.body.role}', wallet = '${req.body.wallet}' WHERE id = ${id}`,
+        function (success, err) {
+          if (err) {
+            req.flash("error-message", err);
+            res.redirect("/admin/users");
+          } else {
+            req.flash("success-message", "Offre Créé !"),
+              res.redirect("/admin/users");
+          }
+        }
+      );
+    }
   },
 
   /* Méthode Get pour la page admin/users/create */
   createUser: (req, res) => {
-    res.render("admin/users/create");
+    res.render("admin/users/create", {
+      title: app.config.company.name + " - Gestion d'utilisateur",
+      action: "edit",
+      app: app,
+      user: req.user[0].id,
+    });
   },
 
   /* Méthode Post pour la page admin/users/create */
@@ -93,7 +123,7 @@ module.exports = {
           bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(req.body.password, 10, (err, hash) => {
               db.query(
-                `INSERT INTO users ( name, lastname, email, password, sexe, birthday, role, wallet, logo) VALUES ('${req.body.name}', '${req.body.lastname}', '${req.body.email}', '${hash}', '${req.body.sexe}', '${req.body.birthday}', '${req.body.role}', '${req.body.wallet}', '${req.body.logo}' )`,
+                `INSERT INTO users ( name, lastname, email, password, sex, birthday, role, wallet, logo) VALUES ('${req.body.name}', '${req.body.lastname}', '${req.body.email}', '${hash}', '${req.body.sex}', '${req.body.birthday}', '${req.body.role}', '${req.body.wallet}', '${req.body.logo}' )`,
                 function (success, err) {
                   req.flash("success-message", "Utilisateur Créé !"),
                     res.redirect("/admin/users");
@@ -117,7 +147,7 @@ module.exports = {
         if (err) throw err;
         else
           res.render("admin/users/mail", {
-            title: "TxCMS - Gestion d'utilisateur",
+            title: app.config.company.name + " - Contacte d'utilisateur",
             action: "edit",
             user: JSON.parse(JSON.stringify(data))[0],
           });
@@ -126,24 +156,7 @@ module.exports = {
   },
 
   SendMailUser: async (req, res) => {
-    if (req.body.template == "none") {
-      const title = config.get("TxCMS.company.name");
-      const from = config.get("TxCMS.mail.auth.user");
-      const email = req.params.email;
-      const subject = req.body.subject;
-      const message = req.body.message;
-      console.log(email + " " + subject + " " + message);
-
-      let info = await mailserver.sendMail({
-        from: `"${title}" ${from}`,
-        to: email,
-        subject: subject,
-        text: message,
-      });
-      console.log("Message sent: %s", info.messageId);
-      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-      res.redirect("/admin/users");
-    }
+    sendMail(req.params.email, req.body.subject, "", Login);
   },
 
   /* Méthode Post pour la page admin/users/delete */
@@ -163,17 +176,34 @@ module.exports = {
 
   /* Méthode Get pour la page admin/plans */
   getPlans: (req, res) => {
-    db.query(`SELECT * FROM plans ORDER BY id DESC`, function (err, data) {
-      if (err) req.flash("error-message", err);
-      else
-        res.render("admin/plans/index", {
-          title: app.config.company.name + " Plans Liste",
-          action: "list",
-          plans: data,
-          user: req.user[0],
-          app: app,
-          system: package_json,
-        });
+    let plans = [];
+    db.query(`SELECT * FROM plans`, function (err, data) {
+      data.forEach((plan) => {
+        db.query(
+          `SELECT * FROM categories WHERE id = ${plan.category}`,
+          function (err, result) {
+            result.forEach((category) => {
+              plans.push({
+                id: plan.id,
+                name: plan.name,
+                category: category.name,
+                server: category.server,
+                price: plan.price,
+                stock: plan.stock,
+              });
+            });
+          }
+        );
+      });
+
+      res.render("admin/plans/index", {
+        title: app.config.company.name + " - List des offres",
+        action: "list",
+        user: req.user[0],
+        plans,
+        app: app,
+        system: package_json,
+      });
     });
   },
 
@@ -181,19 +211,19 @@ module.exports = {
   createPlan: (req, res) => {
     db.query(`SELECT * FROM categories ORDER BY id`, function (err, data) {
       if (err) req.flash("error-message", err);
-      else
-        res.render("admin/plans/create", {
-          title: app.config.company.name + " - Créé une offre",
-          action: "list",
-          categorie: data,
-        });
+      console.log(JSON.parse(JSON.stringify(data)));
+      res.render("admin/plans/create", {
+        title: app.config.company.name + " - Créé une offre",
+        action: "list",
+        categories: JSON.parse(JSON.stringify(data)),
+      });
     });
   },
 
   /* Méthode Post pour la page admin/plans/create */
   submitCreatedPlan: (req, res) => {
     db.query(
-      `INSERT INTO plans ( name, categorie, price, stock, state) VALUES ('${req.body.name}', '${req.body.categorie}', '${req.body.price}', '${req.body.stock}', '${req.body.state}')`,
+      `INSERT INTO plans ( name, category, price, stock, state) VALUES ('${req.body.name}', '${req.body.category}', '${req.body.price}', '${req.body.stock}', '${req.body.state}')`,
       function (success, err) {
         if (err) {
           req.flash("error-message", err);
@@ -208,46 +238,95 @@ module.exports = {
 
   /* Méthode Get pour la page admin/plans/edit/id */
   editPlan: (req, res) => {
-    const id = req.params.id;
-
-    db.query(`SELECT * FROM plans WHERE id = ${id}`, function (err, data) {
-      if (err) throw err;
-      else {
-        db.query(
-          `SELECT * FROM categories ORDER BY id`,
-          function (err, results) {
-            if (err) {
-              req.flash("error-message", err);
-            } else {
+    let plan = [];
+    db.query(
+      `SELECT * FROM plans WHERE id = ${req.params.id}`,
+      function (err, data) {
+        data.forEach((item) => {
+          db.query(
+            `SELECT * FROM categories WHERE id = ${item.category}`,
+            function (err, result) {
+              result.forEach((category) => {
+                plan.push({
+                  id: item.id,
+                  name: item.name,
+                  category: category.name,
+                  price: item.price,
+                  stock: item.stock,
+                  state: item.state,
+                });
+              });
               res.render("admin/plans/edit", {
-                title: app.config.company.name + " Plans Edit",
+                title: app.config.company.name + " - Modification d'une offre",
                 action: "edit",
-                plan: JSON.parse(JSON.stringify(data))[0],
-                categorie: results,
+                plan: plan[0],
+                user: req.user[0],
+                app: app,
+                system: package_json,
               });
             }
-          }
-        );
+          );
+        });
       }
-    });
+    );
   },
 
   /* Méthode Post pour la page admin/plans/edit/id */
   submitEditedPlan: (req, res) => {
-    const id = req.body.id;
-
     db.query(
-      `UPDATE plans SET name = '${req.body.name}', price = '${req.body.price}', stock = '${req.body.stock}', state = '${req.body.state}' WHERE id = ${id}`,
+      `UPDATE plans SET name = '${req.body.name}', price = '${req.body.price}', stock = '${req.body.stock}', state = '${req.body.state}' WHERE id = ${req.params.id}`,
       function (success, err) {
         if (err) {
-          req.flash("error-message", err);
+          req.flash("error_message", err);
           res.redirect("/admin/plans");
         } else {
-          req.flash("success-message", "Offre Créé !"),
+          req.flash("success_message", "Offre Créé !"),
             res.redirect("/admin/plans");
         }
       }
     );
+  },
+
+  configPterodactylPlan: (req, res) => {
+    let id = req.params.id;
+    let plan = [];
+
+    getPterodactylNodes(function (nodes) {
+      getPterodactylEggs(function (eggs) {
+
+        db.query(`SELECT * FROM plans WHERE id = ${id}`, function (err, data) {
+          data.forEach((item) => {
+            db.query(
+              `SELECT * FROM categories WHERE id = ${item.category}`,
+              function (err, result) {
+                result.forEach((category) => {
+                  plan.push({
+                    id: item.id,
+                    name: item.name,
+                    category: category.name,
+                    price: item.price,
+                    stock: item.stock,
+                    state: item.state,
+                  });
+                });
+              }
+            );
+          });
+        });
+        res.render(`admin/plans/config/1/index`, {
+          title:
+            app.config.company.name +
+            " - Configuration d'une offre pterodactyl",
+          action: "edit",
+          user: req.user[0],
+          plan: plan[0],
+          nodes,
+          eggs,
+          app: app,
+          system: package_json,
+        });
+      });
+    });
   },
 
   /* Méthode Post pour la page admin/plans/ */
@@ -281,7 +360,7 @@ module.exports = {
   },
 
   /* Méthode Get pour la page admin/categories/create */
-  createCategorie: (req, res) => {
+  createCategory: (req, res) => {
     db.query(`SELECT * FROM servers ORDER BY id`, function (err, data) {
       if (err) req.flash("error-message", err);
       else
@@ -294,7 +373,7 @@ module.exports = {
   },
 
   /* Méthode Post pour la page admin/categories/create */
-  submitCreatedCategorie: (req, res) => {
+  submitCreatedCategory: (req, res) => {
     db.query(
       `INSERT INTO categories ( name, server, auto) VALUES ('${req.body.name}', '${req.body.server}', '${req.body.auto}')`,
       function (success, err) {
@@ -310,7 +389,7 @@ module.exports = {
   },
 
   /* Méthode Get pour la page admin/categories/edit */
-  editCategorie: (req, res) => {
+  editCategory: (req, res) => {
     const id = req.params.id;
 
     db.query(`SELECT * FROM categories WHERE id = ${id}`, function (err, data) {
@@ -332,7 +411,7 @@ module.exports = {
   },
 
   /* Méthode Post pour la page admin/categories/edit */
-  submitEditedCategorie: (req, res) => {
+  submitEditedCategory: (req, res) => {
     const id = req.body.id;
 
     db.query(
@@ -350,11 +429,9 @@ module.exports = {
   },
 
   /* Méthode Post pour la page admin/categories/ */
-  deleteCategorie: (req, res) => {
-    const id = req.params.id;
-
+  deleteCategory: (req, res) => {
     db.query(
-      `DELETE FROM categories WHERE id = ${id}`,
+      `DELETE FROM categories WHERE id = ${req.params.id}`,
       function (success, err) {
         if (err) {
           req.flash("error-message", err);

@@ -1,7 +1,7 @@
 
 <nav class="">
     <div class="logo">
-        <img src="/images/logo.png" alt="">
+        <img src="{{app.config.company.logo}}" alt="">
     </div>
     <ul class="menu">
         <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
@@ -18,17 +18,17 @@
 
 <section class="container">
 
-    <form class="profile" action="/client/profile" method="post">
+    <form class="profile" action="/client/profile" method="post" autocomplete="off">
         <div class="userLogo">
             <img id="pp" src="" alt="">
             <script>
-                    if("{{user.logo}}" == ""){
+                    if("{{user.logo}}" == "" || "{{user.logo}}" == null || "{{user.logo}}" == ''){
                         
-                        if("{{user.sexe}}" == "male"){
+                        if("{{user.sex}}" == "male"){
                             document.getElementById('pp').src = "/images/male-logo.png"
                         } 
 
-                        if("{{user.sexe}}" == "female"){
+                        if("{{user.sex}}" == "female"){
                             document.getElementById('pp').src = "/images/female-logo.png"
                         }
 
@@ -56,8 +56,8 @@
                         example le mot de passe et l'ip de votre vps chez txhost
                         ?)" name="userNote" id="userNote" cols="50" rows="5"></textarea>
                     <script>
-                            document.getElementById('userNote').value = `{{user.usernote}}` 
-                        </script>
+                        document.getElementById('userNote').value = `{{user.usernote}}` 
+                    </script>
                 </div>
             </section>
 
@@ -99,20 +99,20 @@
                 <div>
                     <label for="lastname">Nouveau Mot De Passe</label>
                     <br>
-                    <input required type="password" name="password"
-                        id="password" maxlength="25">
+                    <input type="password" name="newPassword"
+                        id="NewPassword" maxlength="25">
                 </div>
             </section>
             <section class="formInput">
                 <div>
-                    <label for="sexe">Sexe</label>
+                    <label for="sex">Sexe</label>
                     <br>
-                    <select name="sexe" id="sexe" required>
+                    <select name="sex" id="sex" required>
                         <option value="male">Homme</option>
                         <option value="female">Femme</option>
                     </select>
                     <script>
-                            document.getElementById('sexe').value = `{{user.sexe}}` 
+                            document.getElementById('sex').value = `{{user.sex}}` 
                         </script>
                 </div>
                 <div>
@@ -171,11 +171,11 @@
             <script>
                     if("{{user.logo}}" == ""){
                         
-                        if("{{user.sexe}}" == "male"){
+                        if("{{user.sex}}" == "male"){
                             document.getElementById('userlogo').src = "/images/male-logo.png"
                         } 
 
-                        if("{{user.sexe}}" == "female"){
+                        if("{{user.sex}}" == "female"){
                             document.getElementById('userlogo').src = "/images/female-logo.png"
                         }
 
@@ -200,17 +200,17 @@
         <span class="title">Raccourcis</span>
         <ul>
             <li>
-                <a href="">
+                <a href="/client/shop/cart">
                     <div class="icon">
                         <ion-icon name="card-outline"></ion-icon>
                     </div>
                     <div class="text">
-                        <span>Moyen de paiment </span>
+                        <span>Panier</span>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="/client/profile/emails">
                     <div class="icon">
                         <ion-icon name="mail-outline"></ion-icon>
                     </div>
@@ -220,7 +220,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="/client/help">
                     <div class="icon">
                         <ion-icon name="help-buoy-outline"></ion-icon>
                     </div>
@@ -229,6 +229,24 @@
                     </div>
                 </a>
             </li>
+
+            <li id="admin">
+                <a href="/admin">
+                    <div class="icon">
+                        <ion-icon name="settings-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Administration</span>
+                    </div>
+                </a>
+            </li>
+            <script>
+                    if("{{user.role}}" == "admin"){
+                        document.getElementById("admin").style.display = "block";
+                    }else{
+                        document.getElementById("admin").style.display = "none";
+                    }
+                </script>
         </ul>
     </div>
 </section>

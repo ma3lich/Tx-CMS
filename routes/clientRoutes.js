@@ -7,9 +7,10 @@ const {
   getProfile,
   submitProfile,
   getShop,
-  getShopByCategorie,
+  getShopByCategory,
   getCart,
   addToCart,
+  removeFromCart,
   checkoutCart,
   successCheckout,
   cancelCheckout
@@ -28,9 +29,10 @@ router.route("/profile").get(getProfile).post(submitProfile);
 
 router.route("/shop").get(getShop);
 
-router.route("/shop/products/:name").get(getShopByCategorie);
+router.route("/shop/categories/:id").get(getShopByCategory);
 
 router.route("/shop/cart/add/:id").post(addToCart)
+router.route("/shop/cart/remove/:id").get(removeFromCart)
 
 router.route("/shop/cart").get(getCart);
 

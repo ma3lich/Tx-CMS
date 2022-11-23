@@ -1,6 +1,6 @@
     <nav class="">
         <div class="logo">
-            <img src="/images/logo.png" alt="">
+            <img src="{{app.config.company.logo}}" alt="">
         </div>
         <ul class="menu">
             <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
@@ -26,10 +26,10 @@
 
     </section>
 
-    <section class="profile register">
+    <section class="profile_bar register">
         <div class="logoText">
-            <img src="/images/logo-text.png" classe=""alt="">
-            <h2>Gérer l'utilisateur : {{user.name}} {{user.lastname}}</h2>
+        <img src="/images/logo-text.png" alt="TxCMS LOGO">
+            <h2>Gestion de l'utilisateur : {{user.name}} {{user.lastname}}</h2>
         </div>
         <form   action="/admin/users/edit/:id" method="post">
                 <input style="display:none" type="text" name="id" id="id" value={{user.id}}>
@@ -64,19 +64,19 @@
                     <div>
                         <label for="lastname">Nouveau Mot De Passe</label>
                         <br>
-                        <input required type="password" name="password" id="password" maxlength="25">
+                        <input type="password" name="password" id="password" maxlength="25">
                     </div>
                 </section>
                 <section class="formInput">
                     <div>
-                        <label for="sexe">Sexe</label>
+                        <label for="sex">sex</label>
                         <br>
-                        <select name="sexe" id="sexe" required>
+                        <select name="sex" id="sex" required>
                             <option value="male">Homme</option>
                             <option value="female">Femme</option>
                         </select>
                         <script>
-                            document.getElementById('sexe').value = `{{user.sexe}}` 
+                            document.getElementById('sex').value = `{{user.sex}}` 
                         </script>
                     </div>
                     <div>

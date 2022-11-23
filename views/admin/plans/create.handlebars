@@ -1,6 +1,6 @@
  <nav class="">
     <div class="logo">
-        <img src="/images/logo.png" alt="">
+        <img src="{{app.config.company.logo}}" alt="">
     </div>
     <ul class="menu">
         <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
@@ -26,7 +26,7 @@
 
 </section>
 
-<section class="profile register">
+<section class="profile_bar register">
     <div class="logoText">
         <img src="/images/logo-text.png" classe="" alt="">
         <h2>Crée une offre</h2>
@@ -39,17 +39,15 @@
                 <input type="text" name="name" id="name" required>
             </div>
             <div>
-                <label for="categorie">Catégorie</label>
+                <label for="category">Catégorie</label>
                 <br>
-                <select style="text-transform:capitalize;" name="categorie"
-                    id="categorie">
-                    {{#each categorie}}
-                    <option value={{name}}>{{name}}</option>
+                <select style="text-transform:capitalize;" name="category"
+                    id="category">
+                    {{#each categories}}
+                    <option value={{id}}>{{name}}</option>
                     {{/each}}
                 </select>
-                <script>
-                            console.log(document.getElementById('categorie').value)
-                        </script>
+
             </div>
         </section>
 
@@ -63,10 +61,7 @@
             <div>
                 <label for="stock">État du stock</label>
                 <br>
-                <select name="stock" id="stock">
-                    <option value="1">En stock</option>
-                    <option value="0">Repture de stock</option>
-                </select>
+                <input type="number" name="stock" id="stock" min="0" max="999" value="1">
             </div>
         </section>
 

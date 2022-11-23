@@ -1,7 +1,7 @@
 
 <nav class="">
     <div class="logo">
-        <img src="/images/logo.png" alt="">
+        <img src="{{app.config.company.logo}}" alt="">
     </div>
     <ul class="menu">
         <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
@@ -386,11 +386,15 @@
                                 <span>{{name}}</span>
                             </div>
                             <div class="price">
-                                <span id="price">{{price}}</span>
+                                <span id="price">{{price}} €</span>
                                 <span style="display: none;" id="fee">{{fee}}</span>
                             </div>
                         </div>
+                        <a href="/client/shop/cart/remove/{{id}}" class="badge" id="remove"><ion-icon name="close-outline"></ion-icon></a>
                     </div>
+
+                    {{else}}
+                        <span style="">Aucun produit na été ajouté au panier.</span>
                     {{/each}}
                 </div>
 

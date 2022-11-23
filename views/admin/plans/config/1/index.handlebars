@@ -1,0 +1,148 @@
+ <nav class="">
+    <div class="logo">
+        <img src="{{app.config.company.logo}}" alt="">
+    </div>
+    <ul class="menu">
+        <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+        <hr>
+        <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+        <hr>
+        <li class="active"><a href="/admin/plans"><ion-icon
+                    name="storefront-outline"></ion-icon></a></li>
+        <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
+        <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+        <hr>
+        <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+    </ul>
+
+    <ul class="menu">
+    </ul>
+</nav>
+
+<section class="container register">
+    <div class="calculator">
+        <span class="title">Calculatrice MB vers GB :</span>
+        <div>
+            <label for="">Valeur (Gb)</label>
+            <br>
+            <input type="number" id="inputGB" min="0" max="512" value="1">
+        </div>
+        <div>
+            <label for="">Résulta (Mb)</label>
+            <br>
+            <input type="number" id="resulutMB" min="0" max="1024000"
+                value="1024" disabled>
+        </div>
+        <button id="coppyMB">Copier</button>
+    </div>
+
+    <div class="calculator">
+        <span class="title">Calculatrice % vers VC :</span>
+        <div>
+            <label for="">Valeur (Vc)</label>
+            <br>
+            <input type="number" id="inputVC" min="0" max="10000" value="1">
+        </div>
+        <div>
+            <label for="">Résulta (%)</label>
+            <br>
+            <input type="number" id="resulutPR" min="0" max="1024000"
+                value="100" disabled>
+        </div>
+        <button id="coppyPR">Copier</button>
+    </div>
+
+    <div class="notice">
+        <span class="title">Information : </span>
+        <ul>
+            <li>Définir CPU, RAM et Disque sur 0 autorisera une utilsation
+                illimitée. </li>
+            <li>Définir SWAP sur 0 le déactivera et sur -1 autorisera une
+                utilsation illimitée.</li>
+
+        </ul>
+    </div>
+</section>
+
+<section class="profile_bar register">
+    <div class="logoText">
+        <img src="/images/logo-text.png" classae="" alt="">
+        <h2>Configuration de l'offre : {{plan.name}}</h2>
+    </div>
+    <form action="/admin/plans/config/1/:id" method="post">
+        <section class="formInput">
+            <div>
+                <label for="name">Node</label>
+                <br>
+                <select style="text-transform:capitalize;" name="egg" id="egg">
+                    {{#each nodes}}
+                    <option value={{id}}>{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div>
+                <label for="category">Egg</label>
+                <br>
+                <select style="text-transform:capitalize;" name="egg" id="egg">
+                    {{#each eggs}}
+                    <option value={{id}}>{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </section>
+
+        <hr>
+
+        <section class="formInput">
+            <div>
+                <label for="name">CPU (%)</label>
+                <br>
+                <input required type="number" name="cpu" id="cpu" step="5"
+                    min="0" max="100000" value={{plan.cpu}}>
+            </div>
+
+            <div>
+                <label for="name">RAM (Mb)</label>
+                <br>
+                <input required type="number" name="ram" id="ram" min="0"
+                    max="1024000" value={{plan.ram}}>
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="name">Disque (Mb)</label>
+                <br>
+                <input required type="number" name="disk" id="disk" min="0"
+                    max="10240000" value={{plan.disk}}>
+            </div>
+
+            <div>
+                <label for="name">Swap (Mb)</label>
+                <br>
+                <input required type="number" name="swap" id="swap" min="0"
+                    max="10240000" value={{plan.swap}}>
+            </div>
+        </section>
+
+        <hr>
+
+        <section class="formInput">
+            <div>
+                <label for="name">Base de donneés</label>
+                <br>
+                <input required type="number" name="disk" id="disk" min="0"
+                    max="100" value={{plan.databases}}>
+            </div>
+
+            <div>
+                <label for="name">Backups</label>
+                <br>
+                <input required type="number" name="swap" id="swap" min="0"
+                    max="100" value={{plan.backups}}>
+            </div>
+        </section>
+
+        <button type="submit">Sauvegarder</button>
+    </form>
+</section>

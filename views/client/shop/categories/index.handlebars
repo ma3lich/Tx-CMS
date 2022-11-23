@@ -1,7 +1,7 @@
 
 <nav class="">
     <div class="logo">
-        <img src="/images/logo.png" alt="">
+        <img src="{{app.config.company.logo}}" alt="">
     </div>
     <ul class="menu">
         <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
@@ -18,7 +18,7 @@
     <ul>
         <script>console.log( "{{categories}}" )</script>
         {{#each categories}}
-        <li><a href="/client/shop/products/{{name}}"> <ion-icon
+        <li><a href="/client/shop/categories/{{id}}"> <ion-icon
                     name="cube-outline"></ion-icon><span> {{name}}</span></a>
         </a><li>
             {{/each}}
@@ -58,6 +58,11 @@
                     <button type="submit">Commander</button>
                 </div>
             </form>
+
+            {{else}}
+
+            <span style="font-size: .8rem;" >Aucune offre na n'était liée/créée pour cette catégorie.</span
+
             {{/each}}
         </div>
 
@@ -67,18 +72,19 @@
         </footer>
     </section>
 
-    <section class="profile_bar">
-        <div class="user">
-            <a class="logo" href="/client/profile">
-                <img id="userlogo" src="" alt="">
-                <script>
+<section class="profile_bar">
+
+    <div class="user">
+        <a class="logo" href="/client/profile">
+            <img id="userlogo" src="" alt="">
+            <script>
                     if("{{user.logo}}" == ""){
                         
-                        if("{{user.sexe}}" == "male"){
+                        if("{{user.sex}}" == "male"){
                             document.getElementById('userlogo').src = "/images/male-logo.png"
                         } 
 
-                        if("{{user.sexe}}" == "female"){
+                        if("{{user.sex}}" == "female"){
                             document.getElementById('userlogo').src = "/images/female-logo.png"
                         }
 
@@ -86,52 +92,70 @@
                         document.getElementById('userlogo').src = "{{user.logo}}"
                     }
                 </script>
-                <span class="username">{{user.lastname}} {{user.name}}</span>
-            </a>
-            <div>
-                <span class="email">{{user.email}}</span>
-                <br>
-                <span class="id">tx-{{user.id}}</span>
-            </div>
-
-            <form action="/client/logout" method="post">
-                <button type="submit">Me déconnecter</button>
-            </form>
-
+            <span class="username">{{user.lastname}} {{user.name}}</span>
+        </a>
+        <div>
+            <span class="email">{{user.email}}</span>
+            <br>
+            <span class="id">tx-{{user.id}}</span>
         </div>
-        <div class="menu">
-            <span class="title">Raccourcis</span>
-            <ul>
-                <li>
-                    <a href="">
-                        <div class="icon">
-                            <ion-icon name="card-outline"></ion-icon>
-                        </div>
-                        <div class="text">
-                            <span>Moyen de paiment </span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <div class="icon">
-                            <ion-icon name="mail-outline"></ion-icon>
-                        </div>
-                        <div class="text">
-                            <span>Emails reçus</span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <div class="icon">
-                            <ion-icon name="help-buoy-outline"></ion-icon>
-                        </div>
-                        <div class="text">
-                            <span>Centre d'aide</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </section>
+
+        <form action="/client/logout" method="post">
+            <button type="submit">Me déconnecter</button>
+        </form>
+
+    </div>
+    <div class="menu">
+        <span class="title">Raccourcis</span>
+        <ul>
+            <li>
+                <a href="/client/shop/cart">
+                    <div class="icon">
+                        <ion-icon name="card-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Panier</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/client/profile/emails">
+                    <div class="icon">
+                        <ion-icon name="mail-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Emails reçus</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/client/help">
+                    <div class="icon">
+                        <ion-icon name="help-buoy-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Centre d'aide</span>
+                    </div>
+                </a>
+            </li>
+
+            <li id="admin">
+                <a href="/client/help">
+                    <div class="icon">
+                        <ion-icon name="settings-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Administration</span>
+                    </div>
+                </a>
+            </li>
+                <script>
+                    if("{{user.role}}" == "admin"){
+                        document.getElementById("admin").style.display = "block";
+                    }else{
+                        document.getElementById("admin").style.display = "none";
+                    }
+                </script>
+        </ul>
+    </div>
+</section>

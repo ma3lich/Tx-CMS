@@ -1,5 +1,8 @@
 const express = require("express");
-const { isUserAuthenticated } = require("../config/customFunction.js");
+const {
+  isUserAuthenticated,
+  isUserAdmin,
+} = require("../config/customFunction.js");
 const router = express.Router();
 const {
   index,
@@ -16,13 +19,14 @@ const {
   submitCreatedPlan,
   editPlan,
   submitEditedPlan,
+  configPterodactylPlan,
   deletePlan,
   getCategories,
-  createCategorie,
-  submitCreatedCategorie,
-  editCategorie,
-  submitEditedCategorie,
-  deleteCategorie,
+  createCategory,
+  submitCreatedCategory,
+  editCategory,
+  submitEditedCategory,
+  deleteCategory,
   getServers,
   getSettings,
   postSettings,
@@ -34,7 +38,7 @@ const {
   postPaymentsSettings,
 } = require("../controllers/adminController.js");
 
-router.all("/*", isUserAuthenticated, (req, res, next) => {
+router.all("/*", isUserAuthenticated, isUserAdmin, (req, res, next) => {
   req.app.locals.layout = "admin";
   next();
 });
@@ -56,6 +60,7 @@ router.route("/plans").get(getPlans);
 router.route("/plans/create").get(createPlan).post(submitCreatedPlan);
 
 router.route("/plans/edit/:id").get(editPlan).post(submitEditedPlan);
+router.route("/plans/config/1/:id").get(configPterodactylPlan); //.post(submitConfigPlan);
 
 router.route("/plans/delete/:id").post(deletePlan);
 
@@ -63,15 +68,15 @@ router.route("/categories").get(getCategories);
 
 router
   .route("/categories/create")
-  .get(createCategorie)
-  .post(submitCreatedCategorie);
+  .get(createCategory)
+  .post(submitCreatedCategory);
 
 router
   .route("/categories/edit/:id")
-  .get(editCategorie)
-  .post(submitEditedCategorie);
+  .get(editCategory)
+  .post(submitEditedCategory);
 
-router.route("/categories/delete/:id").post(deleteCategorie);
+router.route("/categories/delete/:id").post(deleteCategory);
 
 router.route("/servers").get(getServers);
 

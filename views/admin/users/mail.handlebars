@@ -1,6 +1,6 @@
     <nav class="">
         <div class="logo">
-            <img src="/images/logo.png" alt="">
+            <img src="{{app.config.company.logo}}" alt="">
         </div>
         <ul class="menu">
             <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
@@ -27,10 +27,10 @@
 
     </section>
 
-    <section class="profile register">
+    <section class="profile_bar register">
         <div class="logoText">
             <img src="/images/logo-text.png" classe=""alt="">
-            <h2>Envoyer un E-Mail a un utilisateur</h2>
+            <h2>Contacter l'utilisateur : {{user.name}} {{user.lastname}}</h2>
         </div>
         <form   action="/admin/users/mail/{{user.email}}" method="post">
                 <input style="display:none" type="text" name="id" id="id" value={{user.id}}>

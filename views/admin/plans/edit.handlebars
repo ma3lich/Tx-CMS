@@ -1,6 +1,6 @@
  <nav class="">
     <div class="logo">
-        <img src="/images/logo.png" alt="">
+        <img src="{{app.config.company.logo}}" alt="">
     </div>
     <ul class="menu">
         <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
@@ -22,40 +22,28 @@
 
 <section class="container">
 
-
 </section>
 
-<section class="profile register">
+<section class="profile_bar register">
     <div class="logoText">
-        <img src="/images/logo-text.png" classe="" alt="">
+        <img src="/images/logo-text.png" classae="" alt="">
         <h2>Gérer une offre Proxmox/Pterodactyl</h2>
     </div>
     <form action="/admin/plans/edit/:id" method="post">
-        <input style="display:none" type="text" name="id" id="id"
-            value={{plan.id}}>
         <section class="formInput">
             <div>
                 <label for="name">Nom de l'offre</label>
                 <br>
-                <input required type="text" name="name" id="name"
-                    maxlength="25">
-                <script>
-                            document.getElementById('name').value = `{{plan.name}}` 
-                        </script>
+                <input required type="text" name="name" id="name" maxlength="25" value={{plan.name}}>
             </div>
             <div>
-                <label for="categorie">Catégorie</label>
+                <label for="category">Catégorie</label>
                 <br>
-                <select style="text-transform:capitalize;" name="categorie"
-                    id="categorie" disabled>
-                    {{#each categorie}}
-                    <option value={{name}}>{{name}}</option>
-                    {{/each}}
+                <select style="text-transform:capitalize;" name="category"
+                    id="category" disabled>
+                    <option selected value={{plan.category}}>{{plan.category}}</option>
                 </select>
 
-                <script>
-                            document.getElementById('categorie').value = `{{plan.categorie}}`
-                        </script>
             </div>
         </section>
 
@@ -76,8 +64,8 @@
                 </select>
 
                 <script>
-                            document.getElementById('stock').value = `{{plan.stock}}`
-                        </script>
+                    document.getElementById('stock').value = `{{plan.stock}}`
+                </script>
             </div>
         </section>
 

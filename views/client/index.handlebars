@@ -1,7 +1,7 @@
 
 <nav class="">
     <div class="logo">
-        <img src="/images/logo.png" alt="">
+        <img src="{{app.config.company.logo}}" alt="">
     </div>
     <ul class="menu">
         <li class="active"><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
@@ -22,7 +22,7 @@
             </div>
             <div class="text">
                 <span class="value">
-                    {{user.wallet}}€
+                    {{userStats.wallet}}€
                 </span>
                 <p class="desc">
                     Le montant de votre porte feuille
@@ -35,7 +35,7 @@
             </div>
             <div class="text">
                 <span class="value">
-                    {{user.services}}
+                    {{userStats.services}}
                 </span>
                 <p class="desc">
                     Le nombre des services actifs
@@ -48,7 +48,7 @@
             </div>
             <div class="text">
                 <span class="value">
-                    {{user.transactions}}
+                    {{userStats.transactions}}
                 </span>
                 <p class="desc">
                     Le nombre de toutes vos transactions
@@ -61,7 +61,7 @@
             </div>
             <div class="text">
                 <span class="value">
-                    {{user.tikets}}
+                    {{userStats.tikets}}
                 </span>
                 <p class="desc">
                     Le nombre de vos demandes ouvertes
@@ -118,11 +118,11 @@
             <script>
                     if("{{user.logo}}" == ""){
                         
-                        if("{{user.sexe}}" == "male"){
+                        if("{{user.sex}}" == "male"){
                             document.getElementById('userlogo').src = "/images/male-logo.png"
                         } 
 
-                        if("{{user.sexe}}" == "female"){
+                        if("{{user.sex}}" == "female"){
                             document.getElementById('userlogo').src = "/images/female-logo.png"
                         }
 
@@ -147,17 +147,17 @@
         <span class="title">Raccourcis</span>
         <ul>
             <li>
-                <a href="">
+                <a href="/client/shop/cart">
                     <div class="icon">
                         <ion-icon name="card-outline"></ion-icon>
                     </div>
                     <div class="text">
-                        <span>Moyen de paiment </span>
+                        <span>Panier</span>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="/client/profile/emails">
                     <div class="icon">
                         <ion-icon name="mail-outline"></ion-icon>
                     </div>
@@ -167,7 +167,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="/client/help">
                     <div class="icon">
                         <ion-icon name="help-buoy-outline"></ion-icon>
                     </div>
@@ -176,6 +176,26 @@
                     </div>
                 </a>
             </li>
+
+            <li id="admin">
+                <a href="/admin">
+                    <div class="icon">
+                        <ion-icon name="settings-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Administration</span>
+                    </div>
+                </a>
+            </li>
+                <script>
+                    if("{{user.role}}" == "admin"){
+                        document.getElementById("admin").style.display = "block";
+                    }else{
+                        document.getElementById("admin").style.display = "none";
+                    }
+                </script>
         </ul>
     </div>
 </section>
+
+

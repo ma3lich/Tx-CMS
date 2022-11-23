@@ -1,6 +1,6 @@
     <nav class="">
         <div class="logo">
-            <img src="/images/logo.png" alt="">
+            <img src="{{app.config.company.logo}}" alt="">
         </div>
         <ul class="menu">
             <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
@@ -30,7 +30,7 @@
                             <th>#</th>
                             <th>Nom</th>
                             <th>Email</th>
-                            <th>Sexe</th>
+                            <th>sex</th>
                             <th>Date de naissance</th>
                             <th>Role</th>
                             <th>Action</th>
@@ -65,7 +65,7 @@
                                 <td>{{id}}</td>
                                 <td>{{name}} {{lastname}}</td>
                                 <td style="text-transform:inherit;">{{email}}</td>
-                                <td>{{sexe}}</td>
+                                <td>{{sex}}</td>
                                 <td>{{birthday}}</td>
                                 <td>{{role}}</td>
                                 <td>
@@ -98,32 +98,90 @@
 
     </section>
 
-    <section class="profile_bar">
+<section class="profile_bar">
 
-        {{#if success_message}}
+    <div class="user">
+        <a class="logo" href="/client/profile">
+            <img id="userlogo" src="" alt="">
+            <script>
+                    if("{{user.logo}}" == ""){
+                        
+                        if("{{user.sex}}" == "male"){
+                            document.getElementById('userlogo').src = "/images/male-logo.png"
+                        } 
 
-            <div class="notif success" role="alert">
-                <h2>Succès</h2>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <ion-icon name="close-outline"></ion-icon>
-                </button>
-                <p class="content">{{success_message}}</p>
-            </div>
+                        if("{{user.sex}}" == "female"){
+                            document.getElementById('userlogo').src = "/images/female-logo.png"
+                        }
 
-        {{/if}}
+                    }else{
+                        document.getElementById('userlogo').src = "{{user.logo}}"
+                    }
+                </script>
+            <span class="username">{{user.lastname}} {{user.name}}</span>
+        </a>
+        <div>
+            <span class="email">{{user.email}}</span>
+            <br>
+            <span class="id">tx-{{user.id}}</span>
+        </div>
 
+        <form action="/client/logout" method="post">
+            <button type="submit">Me déconnecter</button>
+        </form>
 
-        {{#if error_message}}
+    </div>
+    <div class="menu">
+        <span class="title">Raccourcis</span>
+        <ul>
+            <li>
+                <a href="/client/shop/cart">
+                    <div class="icon">
+                        <ion-icon name="card-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Panier</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/client/profile/emails">
+                    <div class="icon">
+                        <ion-icon name="mail-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Emails reçus</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/client/help">
+                    <div class="icon">
+                        <ion-icon name="help-buoy-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Centre d'aide</span>
+                    </div>
+                </a>
+            </li>
 
-            <div class="notif error" role="alert">
-                <h2>Erreur</h2>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <ion-icon name="close-outline"></ion-icon>
-                </button>
-                <p class="content">{{error_message}}</p>
-            </div>
-
-        {{/if}}
-
-
-    </section>
+            <li id="admin">
+                <a href="/client">
+                    <div class="icon">
+                        <ion-icon name="settings-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Espace client</span>
+                    </div>
+                </a>
+            </li>
+                <script>
+                    if("{{user.role}}" == "admin"){
+                        document.getElementById("admin").style.display = "block";
+                    }else{
+                        document.getElementById("admin").style.display = "none";
+                    }
+                </script>
+        </ul>
+    </div>
+</section>
