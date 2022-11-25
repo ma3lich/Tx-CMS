@@ -1,0 +1,155 @@
+ <nav class="">
+
+    <div class="logo">
+        <img src="{{app.config.company.logo}}" alt="">
+    </div>
+    <ul class="menu">
+        <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        <li><a href="/client/shop"><ion-icon name="cart-outline"></ion-icon></a></li>
+        <li class="active"><a href=""><ion-icon name="albums-outline"></ion-icon></a></li>
+    </ul>
+
+
+    <ul class="menu">
+    </ul>
+</nav>
+
+<section class="container">
+    <span style="margin-bottom: 2%;" class="title">Gestion du service : {{server.name}}</span>
+
+    <div class="info">
+        <a href="" class="card perf">
+            <div class="icon">
+                <ion-icon name="hardware-chip-outline"></ion-icon>
+            </div>
+            <div class="text">
+                <span class="value" id="cpu_rate">
+                    <script>
+                        let cpu_rate = Number({{server.resources.cpu_absolute}}).toFixed(2)
+                        document.getElementById("cpu_rate").innerHTML = cpu_rate + " %";
+                    </script>
+                </span>
+                <p class="desc">
+                    Utilisation du CPU
+                </p>
+            </div>
+        </a>
+        <a href="" class="card perf">
+            <div class="icon">
+                <ion-icon name="pulse-outline"></ion-icon>
+            </div>
+            <div class="text">
+                <span class="value" id="ram_rate">
+                    <script>
+                        let ram_rate = Number(Number({{server.resources.memory_bytes}}) / 1073741824).toFixed(2);
+                        document.getElementById("ram_rate").innerHTML = ram_rate + " Go";
+                    </script>
+                </span>
+                <p class="desc">
+                    Utilisation du RAM
+                </p>
+            </div>
+        </a>
+        <a href="" class="card perf">
+            <div class="icon">
+                <ion-icon name="save-outline"></ion-icon>
+            </div>
+            <div class="text">
+                <span class="value" id="disk_rate">
+                    <script>
+                        let disk_rate = Number(Number({{server.resources.disk_bytes}}) / 1073741824).toFixed(2);
+                        document.getElementById("disk_rate").innerHTML = disk_rate + " Go";
+                    </script>
+                </span>
+                <p class="desc">
+                    Utilisation du Disque
+                </p>
+            </div>
+        </a>
+        <a href="" class="card perf">
+            <div class="icon">
+                <ion-icon name="swap-vertical-outline"></ion-icon>
+            </div>
+            <div class="text">
+                <span class="value" id="net_rate">
+                    <script>
+                        let net_rate = Number(Number(Number(Number(Number({{server.resources.network_rx_bytes}}) / 1024000) + Number(Number({{server.resources.network_tx_bytes}}) / 1024000))) / 2).toFixed(2)
+                        document.getElementById("net_rate").innerHTML = net_rate + " Mb/s";
+                    </script>
+                </span>
+                <p class="desc">
+                    Utilisation Traffic réseau
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <div class="actions">
+        <a href="/client/services/{{params.id}}/actions/?action=start" class="boot">Démarrer</a>
+        <a href="/client/services/{{params.id}}/actions/?action=restart" class="reboot">Redémarrer</a>
+        <a href="/client/services/{{params.id}}/actions/?action=stop" class="stop">Stopper</a>
+        <a href="/client/services/{{params.id}}/actions/?action=kill" class="kill">Tuer</a>
+    </div>
+
+    <div class="consol">
+        <div class="commands">
+            <input type="text" name="consolCommande" id="consolCommande"
+                placeholder="Tapez une commande....">
+        </div>
+    </div>
+
+</section>
+
+<section class="profile_bar">
+    <div class="server">
+        <span> Nom : {{server.name}}</span>
+        <span> IP : {{server.ip}} </span>
+        <span> Port : {{server.port}}</span>
+        <span> Node : {{server.node}}</span>
+    </div>
+    <div class="menu">
+        <span class="title">Raccourcis</span>
+        <ul>
+            <li>
+                <a href="">
+                    <div class="icon">
+                        <ion-icon name="server-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Ouvrir PhpMyAdmin</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/client/services/{{params.id}}/files">
+                    <div class="icon">
+                        <ion-icon name="folder-open-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Gestionaire de fichier</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <div class="icon">
+                        <ion-icon name="rocket-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Option de démarage</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <div class="icon">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Sous-Utilisateurs</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>

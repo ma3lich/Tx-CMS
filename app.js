@@ -1,4 +1,12 @@
+console.clear()
+const ora = require("ora");
+const chalk = require("chalk");
+
+const spinner = ora();
+spinner.start(`${chalk.yellow("Lancement de TxCMS sur le serveur")}`);
+
 const LicenseKey = require("./private/license.js");
+const db = require("./config/database.js");
 const txcms = require("./config/app.json");
 
 // Lancer l'application en cas de validité de la license
@@ -12,11 +20,10 @@ LicenseKey.then((license) => {
 function main() {
   /*Importation des modules nodeJS*/
   const express = require("express");
-  const db = require("./config/database.js");
   const path = require("path");
   const session = require("express-session");
   const passport = require("passport");
-  const bodyParser = require('body-parser'); // parser middleware
+  const bodyParser = require("body-parser"); // parser middleware
   const cookieParser = require("cookie-parser");
   const MySQLStore = require("express-mysql-session")(session);
   const hbs = require("express-handlebars");
@@ -38,9 +45,8 @@ function main() {
   app.use(cookieParser());
   app.use(
     session({
-      key: "txcms-cookie",
-      secret: "anything",
-      cookie: { maxAge: 60 * (60 * 1000) },
+      key: "txcms-session",
+      secret: "txcms>clientxcms",
       store: sessionStore,
       saveUninitialized: false,
       resave: false,
@@ -52,11 +58,11 @@ function main() {
 
   app.use(flash());
 
-  app.use(function(req, res, next){
-    res.locals.success_messages = req.flash('success_messages');
-    res.locals.error_messages = req.flash('error_messages');
+  app.use(function (req, res, next) {
+    res.locals.success_messages = req.flash("success_messages");
+    res.locals.error_messages = req.flash("error_messages");
     next();
-});
+  });
 
   /* Gestion des view (handlebars)*/
 
@@ -82,18 +88,23 @@ function main() {
 
   /*Lancement de l'application web */
   app.listen(txcms.config.system.port, () => {
-    console.log(
-      "TxCMS est lancer !" +
-        "\n\n" +
-        "http://" +
-        serverIP +
-        ":" +
-        txcms.config.system.port +
-        "\n" +
-        "https://" +
-        txcms.config.system.hostname +
-        ":" +
-        txcms.config.system.port
+    spinner.succeed(
+      `${chalk.green(
+        "Lancement de TxCMS réussi sur : " +
+          chalk.dim.white(
+            "\n\n" +
+              "   http://" +
+              serverIP +
+              ":" +
+              txcms.config.system.port +
+              "\n" +
+              "   https://" +
+              txcms.config.system.hostname +
+              ":" +
+              txcms.config.system.port +
+              "\n"
+          )
+      )}`
     );
   });
 }

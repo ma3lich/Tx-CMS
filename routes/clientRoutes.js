@@ -13,7 +13,11 @@ const {
   removeFromCart,
   checkoutCart,
   successCheckout,
-  cancelCheckout
+  cancelCheckout,
+  getServiceByID,
+  PteroActions,
+  PteroFiles,
+  PteroFilesByDirectory
 } = require("../controllers/clientController.js");
 
 router.all("/*", isUserAuthenticated, (req, res, next) => {
@@ -40,6 +44,12 @@ router.route("/shop/cart/checkout").post(checkoutCart)
 
 router.route("/shop/cart/checkout/success").get(successCheckout);
 router.route("/shop/cart/checkout/cancel").get(cancelCheckout);
+
+router.route("/services/:id").get(getServiceByID)
+router.route("/services/:id/actions").get(PteroActions)
+router.route("/services/:id/files").get(PteroFiles)
+router.route("/services/:id/files/:directory").get(PteroFilesByDirectory)
+
 
 
 module.exports = router;

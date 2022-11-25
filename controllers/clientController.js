@@ -9,7 +9,14 @@ const paymentsSettings = require("../config/payments-gateways.json");
 const paypal = require("paypal-rest-sdk");
 const stripe = require("stripe")(paymentsSettings.config.stripe.secretKey);
 const easyinvoice = require("easyinvoice");
-const { getUserStats } = require("../config/customFunction");
+const {
+  getUserStats,
+  getPterodactylServerInfo,
+  timeSince,
+  getFileExtension,
+} = require("../config/customFunction");
+const { pterodactylApp, pterodactylClient } = require("../private/servers");
+const { response } = require("express");
 
 var productsInTheCart = [];
 paypal.configure({
@@ -21,8 +28,7 @@ paypal.configure({
 module.exports = {
   /* Méthode Get pour la page client/index */
   index: (req, res) => {
-    getUserStats(req.user[0] , function(userStats) {
-      console.log(userStats.wallet)
+    getUserStats(req.user[0], function (userStats) {
       res.render("client/index", {
         title: app.config.company.name + " - Espace Client",
         action: "info",
@@ -31,7 +37,7 @@ module.exports = {
         app: app,
         system: package_json,
       });
-    })
+    });
   },
 
   /* Méthode Post pour la page client/index */
@@ -69,7 +75,7 @@ module.exports = {
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(req.body.newPassword, 10, (err, hash) => {
           db.query(
-            `UPDATE users SET name = '${req.body.name}', lastname = '${req.body.lastname}', password = '${hash}', sex = '${req.body.sex}', usernote = '${req.body.userNote}' , logo = '${req.body.logo}' WHERE id = ${req.user[0].id}`,
+            `UPDATE users SET name = '${req.body.name}', lastname = '${req.body.lastname}', password = '${hash}', usernote = '${req.body.userNote}' , logo = '${req.body.logo}' WHERE id = ${req.user[0].id}`,
             function (success, err) {
               req.flash("success-message", "Utilisateur Créé !"),
                 res.redirect("/client/profile");
@@ -79,7 +85,7 @@ module.exports = {
       });
     } else {
       db.query(
-        `UPDATE users SET name = '${req.body.name}', lastname = '${req.body.lastname}', sex = '${req.body.sex}', usernote = '${req.body.userNote}' , logo = '${req.body.logo}' WHERE id = ${req.user[0].id}`,
+        `UPDATE users SET name = '${req.body.name}', lastname = '${req.body.lastname}', usernote = '${req.body.userNote}' , logo = '${req.body.logo}' WHERE id = ${req.user[0].id}`,
         function (success, err) {
           req.flash("success-message", "Utilisateur Créé !"),
             res.redirect("/client/profile");
@@ -474,5 +480,149 @@ module.exports = {
         );
       }
     );
+  },
+
+  getServiceByID: (req, res) => {
+    getPterodactylServerInfo("de76cb37", function (server) {
+      res.render("client/services", {
+        title:
+          app.config.company.name + " - Gestion du service : " + server.name,
+        user: req.user[0],
+        app: app,
+        params: req.params,
+        server: server,
+        system: package_json,
+      });
+    });
+  },
+
+  PteroActions: (req, res) => {
+    const Nodeactyl = require("Nodeactyl");
+    let client = new Nodeactyl.NodeactylClient(
+      "https://panel.txhost.fr",
+      "ptlc_XBGDCNGtKCt49rWQ0c4SGhEHic3HBOfCK83ou36ykgB"
+    );
+
+    switch (req.query.action) {
+      case "start":
+        client.startServer("de76cb37").then((response) => {
+          res.redirect(`/client/services/${req.params.id}`);
+        });
+        break;
+
+      case "restart":
+        client.restartServer("de76cb37").then((response) => {
+          res.redirect(`/client/services/${req.params.id}`);
+        });
+        break;
+
+      case "stop":
+        client.stopServer("de76cb37").then((response) => {
+          res.redirect(`/client/services/${req.params.id}`);
+        });
+        break;
+
+      case "kill":
+        client.killServer("de76cb37").then((response) => {
+          res.redirect(`/client/services/${req.params.id}`);
+        });
+        break;
+
+      default:
+        res.redirect(`/client/services/${req.params.id}`);
+        break;
+    }
+  },
+
+  PteroFiles: (req, res) => {
+    const Nodeactyl = require("Nodeactyl");
+    let client = new Nodeactyl.NodeactylClient(
+      "https://panel.txhost.fr",
+      "ptlc_XBGDCNGtKCt49rWQ0c4SGhEHic3HBOfCK83ou36ykgB"
+    );
+
+    let files = [];
+    let directorys = [];
+
+    getPterodactylServerInfo("de76cb37", function (server) {
+      client.getServerFiles("de76cb37", "").then((response) => {
+        response.forEach((file) => {
+          console.log(file)
+          if (file.attributes.mimetype == "inode/directory") {
+            directorys.push({
+              name: file.attributes.name,
+              size: file.attributes.size,
+              type: "Dossier",
+              modified_at: timeSince(new Date(file.attributes.modified_at)),
+            });
+          } else {
+            files.push({
+              name: file.attributes.name,
+              size: file.attributes.size,
+              type: getFileExtension(file.attributes.name),
+              modified_at: timeSince(new Date(file.attributes.modified_at)),
+            });
+          }
+        });
+
+
+        res.render("client/services/files", {
+          title: app.config.company.name + " - Gestionaire de fichiers ",
+          user: req.user[0],
+          app: app,
+          params: req.params,
+          server,
+          files,
+          directorys,
+          system: package_json,
+        });
+      });
+    });
+  },
+
+  PteroFilesByDirectory : (req, res) => {
+    const Nodeactyl = require("Nodeactyl");
+    let client = new Nodeactyl.NodeactylClient(
+      "https://panel.txhost.fr",
+      "ptlc_XBGDCNGtKCt49rWQ0c4SGhEHic3HBOfCK83ou36ykgB"
+    );
+
+    let files = [];
+    let directorys = [];
+
+    getPterodactylServerInfo("de76cb37", function (server) {
+      client.getServerFiles("de76cb37", req.params.directory).then((response) => {
+        response.forEach((file) => {
+          console.log(file)
+          if (file.attributes.mimetype == "inode/directory") {
+            directorys.push({
+              name: file.attributes.name,
+              size: file.attributes.size,
+              type: "Dossier",
+              modified_at: timeSince(new Date(file.attributes.modified_at)),
+            });
+          } else {
+            files.push({
+              name: file.attributes.name,
+              size: file.attributes.size,
+              type: getFileExtension(file.attributes.name),
+              modified_at: timeSince(new Date(file.attributes.modified_at)),
+            });
+          }
+        });
+
+
+        res.render("client/services/files", {
+          title: app.config.company.name + " - Gestionaire de fichiers ",
+          user: req.user[0],
+          app: app,
+          params: req.params,
+          server,
+          files,
+          directorys,
+          system: package_json,
+        });
+      });
+    });
   },
 };

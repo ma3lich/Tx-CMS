@@ -620,6 +620,10 @@ nav .menu li.active {
   padding: 4px 16px;
   color: rgb(255, 255, 255);
 }
+.container .tables table tbody tr td.icon {
+  font-size: 2rem;
+  text-align: center;
+}
 .container .tables table tbody tr td:last-child form {
   display: inline-block;
 }
@@ -742,7 +746,8 @@ nav .menu li.active {
   width: 100%;
   margin-top: 3%;
 }
-.container .actions button {
+.container .actions button,
+.container .actions a {
   width: 24%;
   border: none;
   background-color: transparent;
@@ -751,60 +756,80 @@ nav .menu li.active {
   color: rgb(255, 255, 255);
   box-shadow: 5px 5px 18px rgb(255, 255, 255), -5px -5px 18px rgb(255, 255, 255);
   transition: all 0.3s;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
-.container .actions button.boot {
+.container .actions button:hover,
+.container .actions a:hover {
+  font-weight: 700;
+}
+.container .actions button.boot,
+.container .actions a.boot {
   background: rgb(122, 245, 167);
 }
-.container .actions button.boot:hover {
-  background: rgb(39, 99, 189);
+.container .actions button.boot:hover,
+.container .actions a.boot:hover {
+  background: rgb(30, 163, 79);
   transform: scale(1.05);
   letter-spacing: 1px;
 }
-.container .actions button.reboot {
+.container .actions button.reboot,
+.container .actions a.reboot {
   background: rgb(245, 202, 123);
 }
-.container .actions button.reboot:hover {
+.container .actions button.reboot:hover,
+.container .actions a.reboot:hover {
   background: rgb(240, 186, 87);
   transform: scale(1.05);
   letter-spacing: 1px;
 }
-.container .actions button.stop {
+.container .actions button.stop,
+.container .actions a.stop {
   background: rgb(245, 123, 148);
 }
-.container .actions button.stop:hover {
+.container .actions button.stop:hover,
+.container .actions a.stop:hover {
   background: rgb(230, 78, 86);
   transform: scale(1.05);
   letter-spacing: 1px;
 }
-.container .actions button.kill {
+.container .actions button.kill,
+.container .actions a.kill {
   background: #ec4f4f;
 }
-.container .actions button.kill:hover {
+.container .actions button.kill:hover,
+.container .actions a.kill:hover {
   background: #f03333;
   transform: scale(1.05);
   letter-spacing: 1px;
 }
-.container .actions button.backup {
+.container .actions button.backup,
+.container .actions a.backup {
   background: rgb(74, 142, 245);
 }
-.container .actions button.backup:hover {
+.container .actions button.backup:hover,
+.container .actions a.backup:hover {
   background: rgb(39, 99, 189);
   transform: scale(1.05);
   letter-spacing: 1px;
 }
-.container .actions button:nth-child(1) {
+.container .actions button:nth-child(1),
+.container .actions a:nth-child(1) {
   -webkit-animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.1s forwards;
           animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.1s forwards;
 }
-.container .actions button:nth-child(2) {
+.container .actions button:nth-child(2),
+.container .actions a:nth-child(2) {
   -webkit-animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.2s forwards;
           animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.2s forwards;
 }
-.container .actions button:nth-child(3) {
+.container .actions button:nth-child(3),
+.container .actions a:nth-child(3) {
   -webkit-animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.3s forwards;
           animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.3s forwards;
 }
-.container .actions button:nth-child(4) {
+.container .actions button:nth-child(4),
+.container .actions a:nth-child(4) {
   -webkit-animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.4s forwards;
           animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.4s forwards;
 }
@@ -1264,11 +1289,11 @@ nav .menu li.active {
   border-radius: 20px;
   background: rgb(255, 255, 255);
   margin: 10% 0;
-  padding: 10%;
+  padding: 7.5%;
 }
 .profile_bar .server span {
   text-align: left;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: rgb(105, 12, 12);
   height: auto;
   margin-bottom: 1%;
@@ -1292,6 +1317,14 @@ nav .menu li.active {
   outline-offset: 0px;
   outline: none;
 }
+.profile_bar .title {
+  width: 100%;
+  padding: 5% 0 0 7.5%;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgb(105, 12, 12);
+}
 .profile_bar .menu {
   display: flex;
   flex-direction: column;
@@ -1302,6 +1335,8 @@ nav .menu li.active {
   font-size: 1.1rem;
   font-weight: 600;
   color: rgb(105, 12, 12);
+  width: auto;
+  padding: 0;
 }
 .profile_bar .menu ul {
   display: flex;

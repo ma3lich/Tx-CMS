@@ -1,3 +1,9 @@
+const ora = require("ora");
+const chalk = require("chalk");
+
+const spinner = ora();
+spinner.start(`${chalk.yellow("Vérification de la clé de license...")}`);
+
 /* Importation de la clé dans le fichier config*/
 const app = require("../config/app.json");
 
@@ -20,10 +26,18 @@ var result = key.Activate(
 /* Vérification de la clé */
 result
   .then((license) => {
-    console.log("\nLa clé : " + license.Key + " est bien valide !");
+    spinner.succeed(
+      `${chalk.green(
+        "La vérification de la clé de license a réussi !"
+      )} ${chalk.dim("(" + license.Key + ")")}`
+    );
+    console.log;
   })
   .catch((error) => {
     console.log(error.message);
+    spinner.fail(
+      `${chalk.red("La vérification de la clé de license a échoué !")}`
+    );
   });
 
 /* Exportation du résultats*/

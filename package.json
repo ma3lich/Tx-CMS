@@ -4,7 +4,7 @@
   "description": "Un cms fait par l'hébergeur TxHost spécialement pour les hébergeur ",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon --no-deprecation app.js"
   },
   "author": "Ma3lich",
   "license": "ISC",
@@ -12,6 +12,7 @@
     "@handlebars/allow-prototype-access": "^1.0.5",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
+    "chalk": "^4.1.2",
     "config": "^3.3.8",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
@@ -40,10 +41,13 @@
     "nodeactyl": "^3.3.0",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
+    "ora": "^5.4.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "paypal-node-sdk": "^2.0.3",
     "paypal-rest-sdk": "^1.8.1",
-    "stripe": "^10.17.0"
+    "socket.io": "^4.5.4",
+    "stripe": "^10.17.0",
+    "ws": "^8.11.0"
   }
 }

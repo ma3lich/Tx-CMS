@@ -7,9 +7,15 @@ const nodemailer = require("nodemailer");
 const db = require("./database");
 
 const Nodeactyl = require("nodeactyl");
+const { pterodactylApp, pterodactylClient } = require("../private/servers");
 const application = new Nodeactyl.NodeactylApplication(
   "https://panel.txhost.fr",
   "ptla_nm9keWWAnHOaAM2EKVtiRhoXNqTz3Hmr8e4E5v7PqGC"
+);
+
+let client = new Nodeactyl.NodeactylClient(
+  "https://panel.txhost.fr",
+  "ptlc_XBGDCNGtKCt49rWQ0c4SGhEHic3HBOfCK83ou36ykgB"
 );
 
 module.exports = {
@@ -41,7 +47,6 @@ module.exports = {
     db.query(
       `SELECT COUNT(*) AS transactionsCount FROM transactions`,
       function (err, data) {
-        console.log(JSON.parse(JSON.stringify(data))[0].transactionsCount);
         stats.push({
           wallet: user.wallet.toLocaleString("fr-FR", {
             minimumIntegerDigits: 2,
@@ -56,7 +61,6 @@ module.exports = {
           }),
           tickets: "",
         });
-        console.log(stats[0]);
         return callback(stats[0]);
       }
     );
@@ -136,14 +140,33 @@ module.exports = {
     let eggs = [];
 
     application.getAllEggs().then((result) => {
-      for (const egg of result) {
-        eggs.push({
-          id: egg.attributes.id,
-          name: egg.attributes.name,
-        });
-      }
-
       return callback(eggs);
+    });
+  },
+
+  getPterodactylServerInfo: (id, callback) => {
+    let server = [];
+
+    client.getServerDetails(id).then((details) => {
+      client.getConsoleWebSocket(id).then((socket) => {
+        client.getServerUsages(id).then((usages) => {
+          server.push({
+            name: details.name,
+            id: details.identifier,
+            uuid: details.uuid,
+            node: details.node,
+            ip: details.sftp_details.ip,
+            port: details.sftp_details.port,
+            state: usages.current_state,
+            resources: usages.resources,
+            console: socket,
+          });
+
+          console.log(server[0].console)
+
+          return callback(server[0]);
+        });
+      });
     });
   },
 
@@ -159,4 +182,36 @@ module.exports = {
       }
     });
   },
+
+  timeSince : (date) => {
+
+    var seconds = Math.floor((new Date() - date) / 1000);
+    
+    var interval = seconds / 31536000;
+  
+    if (interval > 1) {
+      return Math.floor(interval) + " ans";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return Math.floor(interval) + " mois";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return Math.floor(interval) + " jours";
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return Math.floor(interval) + " heures";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return Math.floor(interval) + " minutes";
+    }
+    return Math.floor(seconds) + " secondes";
+  },
+
+  getFileExtension: (filename) => {
+    return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
+}
 };

@@ -1,5 +1,4 @@
 const express = require("express");
-const adminLogs = require('logger').createLogger('./logs/admin_logs.log');
 const router = express.Router();
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -7,7 +6,6 @@ const bcrypt = require("bcrypt");
 const db = require("../config/database");
 const { sendMail } = require("../config/customFunction");
 const { Login } = require("../templates/emails/templates_emails");
-const nodemailer = require("nodemailer");
 
 const {
   loginGet,
@@ -42,9 +40,7 @@ passport.use(
               if (err) return err;
               if (!passwordMatched) return done(null, false, { message: 'Incorrect username or password.' });;
 
-              adminLogs.setLevel('debug');
-              adminLogs.debug(` : l'utilisateur : ${userData.email}, vien de se connecter !`);
-              sendMail(userData.email, "Nouvelle connexion", "", Login);
+              //sendMail(userData.email, "Nouvelle connexion", "", Login);
               return done(null, user);
             }
           );
