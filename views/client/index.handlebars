@@ -85,12 +85,11 @@
                 <tbody>
                     {{#each services}}
                     <tr>
-                        <td>1</td>
-                        <td>TX-2 Game</td>
-                        <td>22 Jours</td>
+                        <td>{{id}}</td>
+                        <td>{{name}}</td>
+                        <td>{{time}} Jours</td>
                         <td class="state actif"> <label for="">Actif</label></td>
-                        <td><button
-                                onclick="location.href='/manager/pterodactyl.html'">Gérer</button></td>
+                        <td><a href="/client/services/{{id}}/">Gérer</a></td>
                     </tr>
                     {{else}}
 

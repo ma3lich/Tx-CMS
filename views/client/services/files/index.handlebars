@@ -24,10 +24,6 @@
             </div>
             <div class="text">
                 <span class="value" id="cpu_rate">
-                    <script>
-                        let cpu_rate = Number({{server.resources.cpu_absolute}}).toFixed(2)
-                        document.getElementById("cpu_rate").innerHTML = cpu_rate + " %";
-                    </script>
                 </span>
                 <p class="desc">
                     Utilisation du CPU
@@ -40,13 +36,9 @@
             </div>
             <div class="text">
                 <span class="value" id="ram_rate">
-                    <script>
-                        let ram_rate = Number(Number({{server.resources.memory_bytes}}) / 1073741824).toFixed(2);
-                        document.getElementById("ram_rate").innerHTML = ram_rate + " Go";
-                    </script>
                 </span>
                 <p class="desc">
-                    Utilisation du RAM
+                    Utilisation de la RAM
                 </p>
             </div>
         </a>
@@ -56,10 +48,6 @@
             </div>
             <div class="text">
                 <span class="value" id="disk_rate">
-                    <script>
-                        let disk_rate = Number(Number({{server.resources.disk_bytes}}) / 1073741824).toFixed(2);
-                        document.getElementById("disk_rate").innerHTML = disk_rate + " Go";
-                    </script>
                 </span>
                 <p class="desc">
                     Utilisation du Disque
@@ -72,55 +60,176 @@
             </div>
             <div class="text">
                 <span class="value" id="net_rate">
-                    <script>
-                        let net_rate = Number(Number(Number(Number(Number({{server.resources.network_rx_bytes}}) / 1024000) + Number(Number({{server.resources.network_tx_bytes}}) / 1024000))) / 2).toFixed(2)
-                        document.getElementById("net_rate").innerHTML = net_rate + " Mb/s";
-                    </script>
                 </span>
                 <p class="desc">
                     Utilisation Traffic réseau
                 </p>
             </div>
         </a>
-    </div>
-    <div class="services">
-        <span class="title">Gestionaire de fichiers</span>
 
-        <div class="tables">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 10%;"></th>
-                        <th  style="text-align: left;">Nom</th>
-                        <th  style="text-align: left;">Dérniere modification</th>
-                        <th  style="text-align: left;">Type</th>
-                        <th  style="text-align: left;">Taille</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each directorys}}
-                    <tr onclick="location.href='/client/services/{{params.id}}2/files/{{name}}'">
-                        <td style="width: 10%;" class="icon"><ion-icon name="folder-outline"></ion-icon></td>
-                        <td style="text-align: left;">{{name}}</td>
-                        <td style="text-align: left;">il ya {{modified_at}}</td>
-                        <td style="text-align: left;">{{type}}</td>
-                        <td style="text-align: left;"></td>
-                        <td></td>
-                    </tr>
-                    {{/each}}
+<script>
+            $(document).ready(async function () {
+                await WebSocketActions();
+                await FileManager("");
+            });
 
+            function formatSizeUnits(bytes) {
+                if (bytes >= 1073741824) {
+                bytes = (bytes / 1073741824).toFixed(2) + " Gb";
+                } else if (bytes >= 1048576) {
+                bytes = (bytes / 1048576).toFixed(2) + " Mb";
+                } else if (bytes >= 1024) {
+                bytes = (bytes / 1024).toFixed(2) + " Kb";
+                } else {
+                bytes = "0 Kb";
+                }
+                return bytes;
+            }
 
-                        {{#each files}}
-                        <tr onclick="">
-                            <td style="width: 10%;" class="icon"><ion-icon name="document-text-outline"></ion-icon></td>
-                            <td style="text-align: left;">{{name}}</td>
-                            <td style="text-align: left;">il ya {{modified_at}}</td>
-                            <td style="text-align: left;">Fichier ({{type}})</td>
-                            <td style="text-align: left;">{{size}} Mb</td>
-                            <td></td>
-                        </tr>
-                        {{/each}}
+            function FileManager(directory) {
+                console.log(directory)
+
+                $("#tablesButtons").html(`
+                        <button onclick=FileManager("`+directory.split('/').slice(0, -1).join("/")+`")><ion-icon name="return-down-back-outline"></ion-icon></button>
+                        <button onclick=FileManager("`+directory+`")><ion-icon name="reload-outline"></ion-icon></button>
+                        <span id="route">{{server.name}}/`+directory.slice(1)+`</span>
+                        <button onclick=FileManager("`+directory+`")><ion-icon name="document-outline"></ion-icon></button>
+                        <button onclick=FileManager("`+directory+`")><ion-icon name="folder-outline"></ion-icon></button>
+                        <button onclick=FileManager("`+directory+`")><ion-icon name="push-outline"></ion-icon></button>
+                        <button onclick=FileManager("`+directory+`")><ion-icon name="cloud-upload-outline"></ion-icon></button>
+                `)
+
+                $.ajax({
+                    url: `${origin}/client/services/{{params.id}}/files?directory=${directory}`,
+                    method: "POST",
+                    data: { action: "fetch" },
+                    dataType: "JSON",    
+                    async: true,
+                    timeout: 5000,
+                    success: function (data){
+                        $("#loader").show();
+                        var html = ``
+                        for (var i = 0; i < data.directorys.length; i++) {
+                            html += `
+                                <tr onclick=FileManager("`+data.route+`/`+data.directorys[i].name+`")>
+                                    <td class="icon"><ion-icon name="folder-outline"></ion-icon></td>
+                                    <td style="text-align: left;">`+data.directorys[i].name+`</td>
+                                    <td style="text-align: left;">il ya `+data.directorys[i].modified_at+`</td>
+                                    <td style="text-align: left;">`+data.directorys[i].type+`</td>
+                                    <td style="text-align: left;"></td>
+                                    <td class="dots" id="dots"><ion-icon name="ellipsis-vertical-outline"></ion-icon></td>
+                                    <td class="dropdown" id="dropdown">
+                                        <ul>
+                                            <li>
+                                                <ion-icon name="brush-outline"></ion-icon>
+                                            </li>
+                                            <li>
+                                                <ion-icon name="clipboard-outline"></ion-icon>
+                                            </li>
+                                            <li>
+                                                <ion-icon name="trash-outline"></ion-icon>
+                                            </li>
+                                            <li>
+                                                <ion-icon name="cloud-download-outline"></ion-icon>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            `
+                            $('#tbody').html(html)
+                        }
+                        
+                        for (var i = 0; i < data.files.length; i++) {
+                            html += `
+                                <tr>
+                                    <td class="icon"><ion-icon name="document-text-outline"></ion-icon></td>
+                                    <td style="text-align: left;">`+data.files[i].name+`</td>
+                                    <td style="text-align: left;">il ya `+data.files[i].modified_at+`</td>
+                                    <td style="text-align: left;">Fichier `+data.files[i].type+`</td>
+                                    <td style="text-align: right;">`+formatSizeUnits(data.files[i].size)+`</td>
+                                    <td class="dots"><ion-icon name="ellipsis-vertical-outline"></ion-icon></td>
+                                    <td class="dropdown">
+                                        <ul>
+                                            <li>
+                                                <ion-icon name="brush-outline"></ion-icon>
+                                            </li>
+                                            <li>
+                                                <ion-icon name="clipboard-outline"></ion-icon>
+                                            </li>
+                                            <li>
+                                                <ion-icon name="trash-outline"></ion-icon>
+                                            </li>
+                                            <li>
+                                                <ion-icon name="cloud-download-outline"></ion-icon>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            `
+                            $('#tbody').html(html)
+                        }
+                        $("#loader").hide();
+                    }
+                })
+            }
+
+            function WebSocketActions() {
+                $.ajax({
+                    url: `${origin}/client/services/{{params.id}}/terminal`,
+                    method: "POST",
+                    data: { action: "fetch" },
+                    dataType: "JSON",
+                    success: function () {
+                    const ws = new WebSocket("ws://localhost:2005");
+
+                    ws.onopen = () => {
+                        ws.onmessage = (msg) => {
+                            let messages = msg.data;
+
+                            if (messages.includes("cpu_absolute")) {
+                                let ressources = JSON.parse(JSON.parse(messages)[0]);
+                                let cpu_rate = Number(ressources.cpu_absolute).toFixed(2);
+
+                                $("#disk_rate").html(formatSizeUnits(ressources.disk_bytes));
+                                $("#ram_rate").html(formatSizeUnits(ressources.memory_bytes));
+                                $("#cpu_rate").html(cpu_rate + " %");
+                                $("#net_rate").html(
+                                formatSizeUnits(
+                                    Number(
+                                    ressources.network.rx_bytes + ressources.network.tx_bytes
+                                    ) / 2
+                                ) + "/s"
+                                );
+                            }
+                        };
+                    };
+                    ws.onerror = function connection(err) {
+                        console.error(err);
+                    };
+                    },
+                });    
+            }
+        </script>
+        </div>
+            <div class="services">
+                <span class="title">Gestionaire de fichiers</span>
+
+                <div class="tables">
+                    <div class="tablesButtons" id="tablesButtons">
+                    </div>
+                    <table id="fileManager">
+                        <div class="loader" id="loader"></div>
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;"></th>
+                                <th style="text-align: left;">Nom</th>
+                                <th style="text-align: left;">Dérniere modification</th>
+                                <th style="text-align: left;">Type</th>
+                                <th style="text-align: right;">Taille</th>
+                                <th style="width: 10%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">                            
                         </tbody>
                     </table>
                 </div>

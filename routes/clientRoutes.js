@@ -15,9 +15,10 @@ const {
   successCheckout,
   cancelCheckout,
   getServiceByID,
-  PteroActions,
-  PteroFiles,
-  PteroFilesByDirectory
+  PostTerminal,
+  PteroFilesByDirectory,
+  FileManager,
+  PteroFileEditor
 } = require("../controllers/clientController.js");
 
 router.all("/*", isUserAuthenticated, (req, res, next) => {
@@ -46,10 +47,9 @@ router.route("/shop/cart/checkout/success").get(successCheckout);
 router.route("/shop/cart/checkout/cancel").get(cancelCheckout);
 
 router.route("/services/:id").get(getServiceByID)
-router.route("/services/:id/actions").get(PteroActions)
-router.route("/services/:id/files").get(PteroFiles)
-router.route("/services/:id/files/:directory").get(PteroFilesByDirectory)
-
+router.route("/services/:id/terminal").post(PostTerminal)
+router.route("/services/:id/files").get(FileManager).post(PteroFilesByDirectory)
+router.route("/services/:id/files/edit").get(PteroFileEditor)
 
 
 module.exports = router;

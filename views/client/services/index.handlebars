@@ -14,8 +14,9 @@
     </ul>
 </nav>
 
-<section class="container">
-    <span style="margin-bottom: 2%;" class="title">Gestion du service : {{server.name}}</span>
+<section class="container" id="entry-template">
+    <span style="margin-bottom: 2%;" class="title">Gestion du service :
+        {{server.name}}</span>
 
     <div class="info">
         <a href="" class="card perf">
@@ -24,10 +25,6 @@
             </div>
             <div class="text">
                 <span class="value" id="cpu_rate">
-                    <script>
-                        let cpu_rate = Number({{server.resources.cpu_absolute}}).toFixed(2)
-                        document.getElementById("cpu_rate").innerHTML = cpu_rate + " %";
-                    </script>
                 </span>
                 <p class="desc">
                     Utilisation du CPU
@@ -40,13 +37,9 @@
             </div>
             <div class="text">
                 <span class="value" id="ram_rate">
-                    <script>
-                        let ram_rate = Number(Number({{server.resources.memory_bytes}}) / 1073741824).toFixed(2);
-                        document.getElementById("ram_rate").innerHTML = ram_rate + " Go";
-                    </script>
                 </span>
                 <p class="desc">
-                    Utilisation du RAM
+                    Utilisation de la RAM
                 </p>
             </div>
         </a>
@@ -56,10 +49,6 @@
             </div>
             <div class="text">
                 <span class="value" id="disk_rate">
-                    <script>
-                        let disk_rate = Number(Number({{server.resources.disk_bytes}}) / 1073741824).toFixed(2);
-                        document.getElementById("disk_rate").innerHTML = disk_rate + " Go";
-                    </script>
                 </span>
                 <p class="desc">
                     Utilisation du Disque
@@ -72,28 +61,131 @@
             </div>
             <div class="text">
                 <span class="value" id="net_rate">
-                    <script>
-                        let net_rate = Number(Number(Number(Number(Number({{server.resources.network_rx_bytes}}) / 1024000) + Number(Number({{server.resources.network_tx_bytes}}) / 1024000))) / 2).toFixed(2)
-                        document.getElementById("net_rate").innerHTML = net_rate + " Mb/s";
-                    </script>
                 </span>
                 <p class="desc">
                     Utilisation Traffic réseau
                 </p>
             </div>
         </a>
+
+        <script>
+            $(document).ready(async function () {
+                await WebSocketActions();
+            });
+
+            function WebSocketActions() {
+                $.ajax({
+                    url: `${origin}/client/services/{{params.id}}/terminal`,
+                    method: "POST",
+                    data: { action: "fetch" },
+                    dataType: "JSON",
+                    success: function () {
+                    $("#terminalCommande").focus();
+
+                    const ws = new WebSocket("ws://localhost:2005");
+                    var term = new Terminal(),
+                        fit = new FitAddon.FitAddon();
+
+                    term.loadAddon(fit);
+
+                    ws.onopen = () => {
+                        term.open(document.getElementById("terminal"));
+                        term.write(
+                        "\033[95m[TxCMS]\033[39m Connexion vers votre container pterodactyl.... \n\r"
+                        );
+                        ws.onmessage = (msg) => {
+                        let messages = msg.data;
+
+                        function formatSizeUnits(bytes) {
+                            if (bytes >= 1073741824) {
+                            bytes = (bytes / 1073741824).toFixed(2) + " Gb";
+                            } else if (bytes >= 1048576) {
+                            bytes = (bytes / 1048576).toFixed(2) + " Mb";
+                            } else if (bytes >= 1024) {
+                            bytes = (bytes / 1024).toFixed(2) + " Kb";
+                            } else {
+                            bytes = "0 Kb";
+                            }
+                            return bytes;
+                        }
+
+                        if (messages.includes("cpu_absolute")) {
+                            let ressources = JSON.parse(JSON.parse(messages)[0]);
+                            let cpu_rate = Number(ressources.cpu_absolute).toFixed(2);
+
+                            $("#disk_rate").html(formatSizeUnits(ressources.disk_bytes));
+                            $("#ram_rate").html(formatSizeUnits(ressources.memory_bytes));
+                            $("#cpu_rate").html(cpu_rate + " %");
+                            $("#net_rate").html(
+                            formatSizeUnits(
+                                Number(
+                                ressources.network.rx_bytes + ressources.network.tx_bytes
+                                ) / 2
+                            ) + "/s"
+                            );
+                        } else {
+                            term.write(messages + "\r\n");
+                        }
+                        fit.fit();
+                        };
+
+                        $('#bootBTN').click(() => {
+                            ws.send(JSON.stringify({ event:"set state", args: ["start"]}))
+                        })
+
+                        
+                        $('#rebootBTN').click(() => {
+                            ws.send(JSON.stringify({ event:"set state", args: ["restart"]}))
+                        })
+
+                        
+                        $('#stopBTN').click(() => {
+                            ws.send(JSON.stringify({ event:"set state", args: ["stop"]}))
+                        })
+
+                        
+                        $('#killBTN').click(() => {
+                            ws.send(JSON.stringify({ event:"set state", args: ["kill"]}))
+                        })
+
+                        $('#terminalCommande').keypress(function(event){
+                            var keycode = (event.keyCode ? event.keyCode : event.which);
+                            if(keycode == '13'){
+                            ws.send(JSON.stringify({ event:"send command", args: [$(this).val()]}))
+                            $(this).val('')
+                        }
+                        });
+
+                    };
+                    ws.onerror = function connection(err) {
+                        console.error(err);
+                    };
+                    },
+                });
+                }
+        </script>
     </div>
 
     <div class="actions">
-        <a href="/client/services/{{params.id}}/actions/?action=start" class="boot">Démarrer</a>
-        <a href="/client/services/{{params.id}}/actions/?action=restart" class="reboot">Redémarrer</a>
-        <a href="/client/services/{{params.id}}/actions/?action=stop" class="stop">Stopper</a>
-        <a href="/client/services/{{params.id}}/actions/?action=kill" class="kill">Tuer</a>
+        <button id="bootBTN"
+            class="boot">Démarrer</button>
+        <button id="rebootBTN"
+            class="reboot">Redémarrer</button>
+        <button id="stopBTN"
+            class="stop">Stopper</button>
+        <button id="killBTN"
+            class="kill">Tuer</button>
     </div>
 
-    <div class="consol">
+
+    <div class="terminalConsole">
+        <div class="console" id="terminal"></div>
         <div class="commands">
-            <input type="text" name="consolCommande" id="consolCommande"
+            <div class="icon">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+            </div>
+            <input type="text" name="terminalCommande" id="terminalCommande"
+                autocomplete="off" autocapitalize="off"
                 placeholder="Tapez une commande....">
         </div>
     </div>

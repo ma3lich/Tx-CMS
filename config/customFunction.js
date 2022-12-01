@@ -8,6 +8,7 @@ const db = require("./database");
 
 const Nodeactyl = require("nodeactyl");
 const { pterodactylApp, pterodactylClient } = require("../private/servers");
+const { json } = require("body-parser");
 const application = new Nodeactyl.NodeactylApplication(
   "https://panel.txhost.fr",
   "ptla_nm9keWWAnHOaAM2EKVtiRhoXNqTz3Hmr8e4E5v7PqGC"
@@ -47,21 +48,31 @@ module.exports = {
     db.query(
       `SELECT COUNT(*) AS transactionsCount FROM transactions`,
       function (err, data) {
-        stats.push({
-          wallet: user.wallet.toLocaleString("fr-FR", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          }),
-          services: "",
-          transactions: JSON.parse(
-            JSON.stringify(data)
-          )[0].transactionsCount.toLocaleString("fr-FR", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          }),
-          tickets: "",
-        });
-        return callback(stats[0]);
+        db.query(
+          `SELECT COUNT(*) AS servicesCount FROM services`,
+          function (err, res) {
+            stats.push({
+              wallet: user.wallet.toLocaleString("fr-FR", {
+                minimumIntegerDigits: 2,
+                useGrouping: false,
+              }),
+              services: JSON.parse(
+                JSON.stringify(res)
+              )[0].servicesCount.toLocaleString("fr-FR", {
+                minimumIntegerDigits: 2,
+                useGrouping: false,
+              }),
+              transactions: JSON.parse(
+                JSON.stringify(data)
+              )[0].transactionsCount.toLocaleString("fr-FR", {
+                minimumIntegerDigits: 2,
+                useGrouping: false,
+              }),
+              tickets: "",
+            });
+            return callback(stats[0]);
+          }
+        );
       }
     );
   },
@@ -145,11 +156,15 @@ module.exports = {
   },
 
   getPterodactylServerInfo: (id, callback) => {
-    let server = [];
+    db.query(`SELECT * FROM services WHERE id = ${id}`, function (err, data) {
+      if (err) console.debug(err);
 
-    client.getServerDetails(id).then((details) => {
-      client.getConsoleWebSocket(id).then((socket) => {
-        client.getServerUsages(id).then((usages) => {
+      var result = JSON.parse(JSON.stringify(data));
+      var service = result[0];
+      let server = [];
+
+      client.getServerDetails(service.serverID).then((details) => {
+        client.getConsoleWebSocket(service.serverID).then((socket) => {
           server.push({
             name: details.name,
             id: details.identifier,
@@ -157,12 +172,8 @@ module.exports = {
             node: details.node,
             ip: details.sftp_details.ip,
             port: details.sftp_details.port,
-            state: usages.current_state,
-            resources: usages.resources,
             console: socket,
           });
-
-          console.log(server[0].console)
 
           return callback(server[0]);
         });
@@ -183,12 +194,11 @@ module.exports = {
     });
   },
 
-  timeSince : (date) => {
-
+  timeSince: (date) => {
     var seconds = Math.floor((new Date() - date) / 1000);
-    
+
     var interval = seconds / 31536000;
-  
+
     if (interval > 1) {
       return Math.floor(interval) + " ans";
     }
@@ -211,7 +221,20 @@ module.exports = {
     return Math.floor(seconds) + " secondes";
   },
 
+  calcDate: (startDate, endDate) => {
+    const date = new Date(startDate.getTime());
+
+    const dates = [];
+
+    while (date <= endDate) {
+      dates.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+
+    return dates.length;
+  },
+
   getFileExtension: (filename) => {
-    return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
-}
+    return /[.]/.exec(filename) ? /[^.]+$/.exec(filename) : undefined;
+  },
 };

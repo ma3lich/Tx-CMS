@@ -1,0 +1,100 @@
+
+
+
+<nav class="">
+    <div class="logo">
+        <img src="{{app.config.company.logo}}" alt="">
+    </div>
+    <ul class="menu">
+        <li class="active"><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        <li><a href="/client/shop"><ion-icon name="cart-outline"></ion-icon></a></li>
+    </ul>
+
+    <ul class="menu">
+    </ul>
+</nav>
+
+
+
+<section class="container">
+
+    <div class="code">
+
+        <textarea name="editor" id="editor">{{code}}</textarea>
+
+        <script>
+            var editor = CodeMirror.fromTextArea(document.getElementById('editor'),{
+                lineNumbers: true,
+                readOnly: false,
+                lineNumbers: true,
+                lineWrapping: false,
+                tabSize: 5,
+                mode: {name: "javascript", globalVars: true},
+                extraKeys: {"Ctrl-Space": "autocomplete"},
+            })
+        </script>
+        <div class="createButtons">
+            <a href="/admin/plans/create">Enregistrer</a>
+        </div>
+
+    </div>
+
+    <footer>
+        <span>Copyright © {{app.config.company.name}}</span>
+        <span>TxCMS - {{system.version}}</span>
+    </footer>
+</section>
+
+<section class="profile_bar">
+    <div class="server">
+        <span> Nom : {{server.name}}</span>
+        <span> IP : {{server.ip}} </span>
+        <span> Port : {{server.port}}</span>
+        <span> Node : {{server.node}}</span>
+    </div>
+    <div class="menu">
+        <span class="title">Raccourcis</span>
+        <ul>
+            <li>
+                <a href="">
+                    <div class="icon">
+                        <ion-icon name="server-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Ouvrir PhpMyAdmin</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/client/services/{{params.id}}/files">
+                    <div class="icon">
+                        <ion-icon name="terminal-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Terminal de commandes</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <div class="icon">
+                        <ion-icon name="rocket-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Option de démarage</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <div class="icon">
+                        <ion-icon name="people-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Sous-Utilisateurs</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>

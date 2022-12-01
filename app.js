@@ -17,6 +17,8 @@ LicenseKey.then((license) => {
   console.log(error.message);
 });
 
+main()
+
 function main() {
   /*Importation des modules nodeJS*/
   const express = require("express");

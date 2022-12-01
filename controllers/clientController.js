@@ -9,14 +9,25 @@ const paymentsSettings = require("../config/payments-gateways.json");
 const paypal = require("paypal-rest-sdk");
 const stripe = require("stripe")(paymentsSettings.config.stripe.secretKey);
 const easyinvoice = require("easyinvoice");
+const WebSocket = require("ws");
+const txws = new WebSocket.Server({ port: 2005 });
+
+const Nodeactyl = require("Nodeactyl");
+let client = new Nodeactyl.NodeactylClient(
+  "https://panel.txhost.fr",
+  "ptlc_XBGDCNGtKCt49rWQ0c4SGhEHic3HBOfCK83ou36ykgB"
+);
+
 const {
   getUserStats,
   getPterodactylServerInfo,
   timeSince,
   getFileExtension,
+  calcDate,
 } = require("../config/customFunction");
 const { pterodactylApp, pterodactylClient } = require("../private/servers");
 const { response } = require("express");
+const { json } = require("body-parser");
 
 var productsInTheCart = [];
 paypal.configure({
@@ -29,14 +40,46 @@ module.exports = {
   /* Méthode Get pour la page client/index */
   index: (req, res) => {
     getUserStats(req.user[0], function (userStats) {
-      res.render("client/index", {
-        title: app.config.company.name + " - Espace Client",
-        action: "info",
-        user: req.user[0],
-        userStats,
-        app: app,
-        system: package_json,
-      });
+      db.query(
+        `SELECT * FROM services WHERE owner = ${req.user[0].id}`,
+        function (err, servicesJson) {
+          let servicesRow = JSON.parse(JSON.stringify(servicesJson));
+          let services = [];
+          for (let i = 0; i < servicesRow.length; i++) {
+            db.query(
+              `SELECT * FROM plans WHERE id = ${servicesRow[i].plan}`,
+              function (err, planJson) {
+                let planRow = JSON.parse(JSON.stringify(planJson));
+                let dateC = new Date(
+                  servicesRow[i].created_at.split("/")[2],
+                  servicesRow[i].created_at.split("/")[1]-1,
+                  +servicesRow[i].created_at.split("/")[0]
+                );
+                let dateF = new Date(
+                  servicesRow[i].finish_at.split("/")[2],
+                  servicesRow[i].finish_at.split("/")[1]-1,
+                  +servicesRow[i].finish_at.split("/")[0] 
+                );
+                services.push({
+                  id: servicesRow[i].id,
+                  name: planRow[0].name,
+                  time: calcDate(dateC, dateF),
+
+                });
+              }
+            );
+          }
+          res.render("client/index", {
+            title: app.config.company.name + " - Espace Client",
+            action: "info",
+            user: req.user[0],
+            userStats,
+            services,
+            app: app,
+            system: package_json,
+          });
+        }
+      );
     });
   },
 
@@ -482,146 +525,171 @@ module.exports = {
     );
   },
 
+  PostTerminal: (req, res, next) => {
+    getPterodactylServerInfo(req.params.id, async function (server) {
+      const pteroWS = new WebSocket(server.console.socket, {
+        origin: "https://panel.txhost.fr",
+      });
+
+      txws.on("connection", (ws) => {
+        ws.send("\033[95m[TxCMS]\033[39m Connexion réussite ! \n\r");
+        pteroWS.on(`open`, () => {
+          pteroWS.send(
+            JSON.stringify({ event: "auth", args: [server.console.token] })
+          );
+
+          pteroWS.send(JSON.stringify({ event: "send stats", args: [null] }));
+
+          pteroWS.on("message", function incoming(msg) {
+            msg = JSON.parse(msg.toString());
+            if (msg.event.includes("console")) {
+              let outpout;
+              outpout = !!msg.args ? msg.args.join(" ") : "";
+              ws.send(outpout);
+            }
+            if (msg.event.includes("stats")) {
+              ws.send(JSON.stringify(msg.args));
+            }
+          });
+
+          ws.on("message", function incoming(msg) {
+            const message = JSON.parse(msg.toString());
+
+            if (message.event.includes("set state")) {
+              let state = JSON.stringify(message.args)
+                .replace('["', "")
+                .replace('"]', "");
+              pteroWS.send(
+                JSON.stringify({ event: "set state", args: [state] })
+              );
+            }
+
+            if (message.event.includes("send command")) {
+              let commande = JSON.stringify(message.args)
+                .replace('["', "")
+                .replace('"]', "");
+              pteroWS.send(
+                JSON.stringify({ event: "send command", args: [commande] })
+              );
+            }
+          });
+        });
+        pteroWS.on("error", function connection(err) {
+          console.error(err);
+        });
+      });
+
+      res.json({
+        success: true,
+      });
+    });
+  },
+
   getServiceByID: (req, res) => {
-    getPterodactylServerInfo("de76cb37", function (server) {
+    getPterodactylServerInfo(req.params.id, async function (server) {
       res.render("client/services", {
         title:
           app.config.company.name + " - Gestion du service : " + server.name,
         user: req.user[0],
-        app: app,
+        app,
         params: req.params,
-        server: server,
+        server,
         system: package_json,
       });
     });
   },
 
-  PteroActions: (req, res) => {
-    const Nodeactyl = require("Nodeactyl");
-    let client = new Nodeactyl.NodeactylClient(
-      "https://panel.txhost.fr",
-      "ptlc_XBGDCNGtKCt49rWQ0c4SGhEHic3HBOfCK83ou36ykgB"
-    );
-
-    switch (req.query.action) {
-      case "start":
-        client.startServer("de76cb37").then((response) => {
-          res.redirect(`/client/services/${req.params.id}`);
+  PteroFilesByDirectory: (req, res) => {
+    let files = [];
+    let directorys = [];
+    if (req.query.directory == "" || req.query.directory === undefined) {
+      getPterodactylServerInfo(req.params.id, function (server) {
+        client.getServerFiles(server.id, "").then((response) => {
+          response.forEach((file) => {
+            if (file.attributes.mimetype == "inode/directory") {
+              directorys.push({
+                name: file.attributes.name,
+                size: file.attributes.size,
+                type: "Dossier",
+                modified_at: timeSince(new Date(file.attributes.modified_at)),
+              });
+            } else {
+              files.push({
+                name: file.attributes.name,
+                size: file.attributes.size,
+                type: getFileExtension(file.attributes.name),
+                modified_at: timeSince(new Date(file.attributes.modified_at)),
+              });
+            }
+          });
+          res.json({
+            files,
+            route: req.query.directory,
+            directorys,
+          });
         });
-        break;
-
-      case "restart":
-        client.restartServer("de76cb37").then((response) => {
-          res.redirect(`/client/services/${req.params.id}`);
-        });
-        break;
-
-      case "stop":
-        client.stopServer("de76cb37").then((response) => {
-          res.redirect(`/client/services/${req.params.id}`);
-        });
-        break;
-
-      case "kill":
-        client.killServer("de76cb37").then((response) => {
-          res.redirect(`/client/services/${req.params.id}`);
-        });
-        break;
-
-      default:
-        res.redirect(`/client/services/${req.params.id}`);
-        break;
+      });
+    } else {
+      getPterodactylServerInfo(req.params.id, function (server) {
+        client
+          .getServerFiles(server.id, req.query.directory)
+          .then((response) => {
+            response.forEach((file) => {
+              if (file.attributes.mimetype == "inode/directory") {
+                directorys.push({
+                  name: file.attributes.name,
+                  size: file.attributes.size,
+                  type: "Dossier",
+                  modified_at: timeSince(new Date(file.attributes.modified_at)),
+                  in_folder: req.query.directory,
+                });
+              } else {
+                files.push({
+                  name: file.attributes.name,
+                  size: file.attributes.size,
+                  type: getFileExtension(file.attributes.name),
+                  modified_at: timeSince(new Date(file.attributes.modified_at)),
+                  in_folder: req.query.directory,
+                });
+              }
+            });
+            res.json({
+              files,
+              route: req.query.directory,
+              directorys,
+            });
+          });
+      });
     }
   },
 
-  PteroFiles: (req, res) => {
-    const Nodeactyl = require("Nodeactyl");
-    let client = new Nodeactyl.NodeactylClient(
-      "https://panel.txhost.fr",
-      "ptlc_XBGDCNGtKCt49rWQ0c4SGhEHic3HBOfCK83ou36ykgB"
-    );
-
-    let files = [];
-    let directorys = [];
-
-    getPterodactylServerInfo("de76cb37", function (server) {
-      client.getServerFiles("de76cb37", "").then((response) => {
-        response.forEach((file) => {
-          console.log(file)
-          if (file.attributes.mimetype == "inode/directory") {
-            directorys.push({
-              name: file.attributes.name,
-              size: file.attributes.size,
-              type: "Dossier",
-              modified_at: timeSince(new Date(file.attributes.modified_at)),
-            });
-          } else {
-            files.push({
-              name: file.attributes.name,
-              size: file.attributes.size,
-              type: getFileExtension(file.attributes.name),
-              modified_at: timeSince(new Date(file.attributes.modified_at)),
-            });
-          }
-        });
-
-
-        res.render("client/services/files", {
-          title: app.config.company.name + " - Gestionaire de fichiers ",
-          user: req.user[0],
-          app: app,
-          params: req.params,
-          server,
-          files,
-          directorys,
-          system: package_json,
-        });
+  FileManager: (req, res) => {
+    getPterodactylServerInfo(req.params.id, function (server) {
+      res.render("client/services/files", {
+        title: app.config.company.name + " - Gestionaire de fichiers ",
+        user: req.user[0],
+        app: app,
+        params: req.params,
+        server,
+        system: package_json,
       });
     });
   },
 
-  PteroFilesByDirectory : (req, res) => {
+  PteroFileEditor: (req, res) => {
     const Nodeactyl = require("Nodeactyl");
     let client = new Nodeactyl.NodeactylClient(
       "https://panel.txhost.fr",
       "ptlc_XBGDCNGtKCt49rWQ0c4SGhEHic3HBOfCK83ou36ykgB"
     );
 
-    let files = [];
-    let directorys = [];
-
-    getPterodactylServerInfo("de76cb37", function (server) {
-      client.getServerFiles("de76cb37", req.params.directory).then((response) => {
-        response.forEach((file) => {
-          console.log(file)
-          if (file.attributes.mimetype == "inode/directory") {
-            directorys.push({
-              name: file.attributes.name,
-              size: file.attributes.size,
-              type: "Dossier",
-              modified_at: timeSince(new Date(file.attributes.modified_at)),
-            });
-          } else {
-            files.push({
-              name: file.attributes.name,
-              size: file.attributes.size,
-              type: getFileExtension(file.attributes.name),
-              modified_at: timeSince(new Date(file.attributes.modified_at)),
-            });
-          }
-        });
-
-
-        res.render("client/services/files", {
-          title: app.config.company.name + " - Gestionaire de fichiers ",
-          user: req.user[0],
-          app: app,
-          params: req.params,
-          server,
-          files,
-          directorys,
-          system: package_json,
-        });
+    client.getFileContent(req.params.id, req.query.file).then((response) => {
+      res.render("client/services/files/edit", {
+        title: app.config.company.name + " - Editeur de code ",
+        user: req.user[0],
+        app: app,
+        code: response,
+        system: package_json,
       });
     });
   },

@@ -23,14 +23,14 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: theme.$colored_back_1;
+    background: rgba(theme.$colored_back_1, 0.3);
     border-radius: 12px;
     transition: all 0.3s;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: theme.$dark_text_color;
+    background: rgba(theme.$colored_back_1, 0.6);
     border-radius: 12px;
     transition: all 0.3s;
 }
@@ -88,6 +88,7 @@
 
 body {
     font-size: 10px;
+    background-color: theme.$light_back;
 }
 
 nav {
@@ -272,6 +273,42 @@ nav {
         }
     }
 }
+
+.CodeMirror {
+    background: transparent !important;
+    color: theme.$mid_text_color !important;
+    font-size: 0.9rem !important;
+    line-height: 1.5rem;
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    text-align: left !important;
+    height: 700px !important;
+    .CodeMirror-vscrollbar,
+    .CodeMirror-hscrollbar {
+        display: none;
+    }
+
+    .CodeMirror-line {
+        padding-left: 1.25% !important;
+    }
+
+    .CodeMirror-cursor {
+        border: 1px solid theme.$mid_text_color;
+    }
+
+    .CodeMirror-linenumber {
+        color: #fff !important;
+        padding-right: 1.25%;
+    }
+
+    .CodeMirror-gutters {
+        background: linear-gradient(145deg, theme.$colored_back_1, theme.$colored_back_2) !important;
+        box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.3), -5px -5px 15px rgba(theme.$colored_back_1, 0.3) !important;
+    }
+}
+
 .container {
     display: flex;
     text-align: center;
@@ -284,6 +321,13 @@ nav {
     height: auto !important;
     min-height: 100%;
     animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76);
+    background-color: theme.$light_back;
+
+    #code {
+        display: flex;
+        text-align: left;
+        align-items: left;
+    }
 
     .title {
         text-align: left;
@@ -635,6 +679,39 @@ nav {
         box-shadow: 7px 7px 14px rgba(theme.$colored_back_1, 0.15);
         padding-left: 2%;
 
+        .tablesButtons {
+            display: flex;
+            align-items: center;
+            padding: 2% 4%;
+            span {
+                background: linear-gradient(145deg, rgba(theme.$colored_back_1, 0.3), rgba(theme.$colored_back_2, 0.3));
+                box-shadow: 7px 7px 14px rgba(theme.$colored_back_1, 0.15);
+                color: theme.$light_text_color;
+                padding: 6px 20px;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                text-align: left;
+                width: 100%;
+            }
+            button {
+                font-size: 1.4rem;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 6px;
+                margin: 0 10px;
+                border-radius: 13px;
+                border: none;
+                color: theme.$light_text_color;
+                background: linear-gradient(145deg, rgba(theme.$colored_back_1, 0.6), rgba(theme.$colored_back_2, 0.6));
+                box-shadow: 7px 7px 14px rgba(theme.$colored_back_1, 0.15);
+                transition: 0.2s all;
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+
         table {
             border: none !important;
             overflow: hidden;
@@ -642,6 +719,15 @@ nav {
             color: theme.$dark_text_color;
             width: 100%;
             border-radius: 20px;
+            overflow: hidden;
+
+            .loader {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                background: rgba(theme.$dark_border_color, 0.2);
+                z-index: 5000;
+            }
 
             thead {
                 font-size: 1rem;
@@ -684,9 +770,58 @@ nav {
                         color: theme.$light_text_color;
                     }
 
-                    td.icon{
+                    td.icon {
                         font-size: 2rem;
                         text-align: center;
+                        width: 10%;
+                    }
+
+                    td.dots {
+                        font-size: 1.5rem;
+                        text-align: center;
+                        width: 10%;
+
+                        &:hover > .dropdown {
+                            display: none;
+                        }
+                    }
+
+                    .dropdown {
+                        transform: scale(0.9);
+                        border-radius: 20px;
+                        position: absolute;
+                        bottom: 6%;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        z-index: 45;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 1% 1.5%;
+                        width: 50%;
+                        ul {
+                            display: flex;
+                            li {
+                                font-size: 1.5rem;
+                                display: flex;
+                                justify-content: flex-start;
+                                align-items: center;
+                                padding: 8px;
+                                margin: 0 10px;
+                                border-radius: 13px;
+                                color: theme.$light_text_color;
+                                background: linear-gradient(
+                                    145deg,
+                                    rgba(theme.$colored_back_1, 0.6),
+                                    rgba(theme.$colored_back_2, 0.6)
+                                );
+                                box-shadow: 7px 7px 14px rgba(theme.$colored_back_1, 0.15);
+                                transition: 0.2s all;
+                                &:hover {
+                                    transform: scale(1.1);
+                                }
+                            }
+                        }
                     }
 
                     td:last-child {
@@ -836,9 +971,9 @@ nav {
             padding: 1%;
             border-radius: 12px;
             color: theme.$light_text_color;
-            box-shadow: 5px 5px 18px theme.$light_text_color, -5px -5px 18px theme.$light_text_color;
+            box-shadow: 5px 5px 18px theme.$light_border_color, -5px -5px 18px theme.$light_border_color;
             transition: all 0.3s;
-            font-size: .8rem;
+            font-size: 0.8rem;
             font-weight: 600;
 
             &:hover {
@@ -856,6 +991,7 @@ nav {
             }
             &.reboot {
                 background: theme.$orange;
+
                 &:hover {
                     background: theme.$dark_orange;
                     transform: scale(1.05);
@@ -864,6 +1000,7 @@ nav {
             }
             &.stop {
                 background: theme.$red;
+
                 &:hover {
                     background: theme.$dark_red;
                     transform: scale(1.05);
@@ -872,6 +1009,7 @@ nav {
             }
             &.kill {
                 background: #ec4f4f;
+
                 &:hover {
                     background: #f03333;
                     transform: scale(1.05);
@@ -906,35 +1044,73 @@ nav {
         }
     }
 
-    .consol {
-        height: 350px;
+    .terminalConsole {
+        height: 475px;
         border-radius: 20px;
         background: linear-gradient(145deg, rgba(theme.$light_back, 1), rgba(theme.$colored_back_1, 0.1));
         box-shadow: 7px 7px 25px rgba(theme.$colored_back_1, 0.25);
         width: 100%;
         margin-top: 3%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        overflow: hidden;
+        padding: 1% 2% 3% 2%;
+        .console {
+            height: 85%;
+            width: 100%;
+            margin-bottom: 20px;
+            .terminal {
+                margin: 1%;
+                text-align: left !important;
+                position: relative;
+                .xterm-viewport {
+                    background-color: transparent !important;
+                }
+                .xterm-screen {
+                    padding: 5px;
+                    width: 97.5% !important;
+                    overflow: hidden !important;
+
+                    .xterm-rows {
+                        color: rgb(52, 50, 58) !important;
+                    }
+                }
+            }
+        }
 
         .commands {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            top: 80%;
-            width: 100%;
-
-            input {
-                padding: 1.5% 2%;
+            margin: auto;
+            width: 98%;
+            height: 15%;
+            border-radius: 12px;
+            transition: all 0.3s;
+            color: theme.$dark_text_color;
+            box-shadow: 4px 4px 10px rgba(theme.$colored_back_1, 0.01);
+            background: theme.$light_back;
+            border: 1px solid transparent;
+            .icon {
                 border: none;
-                border-radius: 12px;
-                width: 90%;
-                transition: all 0.3s;
+                background: transparent;
+                border: none;
+                width: 3%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
                 color: theme.$dark_text_color;
-                box-shadow: 4px 4px 10px rgba(theme.$colored_back_1, 0.01);
-                border: 1px solid transparent;
+                font-size: 1rem;
+            }
+            input {
+                width: 100%;
+                padding: 1.5% 1.5% 1.5% 0.5%;
+                border: none;
+                background: transparent;
+                border: none;
 
                 &:focus {
-                    border: 1px solid theme.$dark_border_color;
+                    border: none;
                     box-shadow: 4px 4px 10px rgba(theme.$colored_back_1, 0.01),
                         -4px -4px 10px rgba(theme.$colored_back_1, 0.01);
                     outline-offset: 0px;
@@ -1936,4 +2112,110 @@ nav {
         opacity: 1;
         perspective: 0px;
     }
+}
+
+.cm-s-default {
+    background: transparent !important;
+    color: rgb(28, 27, 31) !important;
+    font-weight: 300 !important;
+    line-height: 1.6 !important;
+    letter-spacing: 0.425px !important;
+}
+
+.cm-s-default .CodeMirror-cursor {
+    border-color: #fff !important;
+    outline: 1px solid #fff !important;
+}
+
+.cm-s-default .CodeMirror-activeline-background {
+    background: rgba(240, 240, 255, 0.8) !important;
+}
+
+.cm-s-default .CodeMirror-selected {
+    background: rgba(theme.$colored_back_1, 0.1) !important;
+}
+
+.cm-s-default .cm-comment {
+    font-style: italic;
+    color: #525355 !important;
+}
+
+.cm-s-default .cm-operator {
+    color: theme.$dark_orange !important;
+}
+
+.cm-s-default .cm-string {
+    color: theme.$colored_back_2 !important;
+}
+
+.cm-s-default .cm-string-2 {
+    color: theme.$colored_back_1 !important;
+}
+
+.cm-s-default .cm-tag {
+    color: theme.$dark_red !important;
+}
+
+.cm-s-default .cm-meta {
+    color: theme.$blue !important;
+}
+
+.cm-s-default .cm-number {
+    color: theme.$dark_green !important;
+}
+
+.cm-s-default .cm-atom {
+    color: theme.$dark_blue !important;
+}
+
+.cm-s-default .cm-keyword {
+    color: theme.$blue !important ;
+}
+
+.cm-s-default .cm-variable {
+    color: theme.$dark_red !important ;
+}
+
+.cm-s-default .cm-variable-2 {
+    color: theme.$dark_red !important;
+}
+
+.cm-s-default .cm-variable-3,
+.cm-s-default .cm-type {
+    color: theme.$dark_red !important;
+}
+
+.cm-s-default .cm-def {
+    color: theme.$mid_text_color !important;
+}
+
+.cm-s-default .cm-property {
+    color: theme.$blue !important;
+}
+
+.cm-s-default .cm-unit {
+    color: theme.$green !important;
+}
+
+.cm-s-default .cm-attribute {
+    color: theme.$red !important;
+}
+
+.cm-s-default .CodeMirror-matchingbracket {
+    border-bottom: 1px dotted #19f9d8 !important;
+    padding-bottom: 2px !important;
+    color: #e6e6e6 !important;
+}
+
+.cm-s-default .CodeMirror-gutters {
+    border-right-color: rgba(19, 19, 37, 0) !important;
+    width: 40px !important;
+    margin-right: 9px !important;
+}
+
+.cm-s-default .CodeMirror-linenumber {
+    opacity: 0.75 !important;
+    padding: 0 10px 0 4px !important;
+    font-size: 14px !important;
+    border-top: 2px solid transparent !important;
 }
