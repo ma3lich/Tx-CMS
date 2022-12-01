@@ -1,6 +1,6 @@
 {
   "name": "txcms",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Un cms fait par l'hébergeur TxHost spécialement pour les hébergeur ",
   "main": "app.js",
   "scripts": {
