@@ -603,19 +603,12 @@ nav .menu li.active {
   width: 75%;
   text-align: left;
 }
-.container .tables {
-  width: 100%;
-  border-radius: 20px;
-  background: linear-gradient(145deg, white, rgba(167, 109, 233, 0.08));
-  box-shadow: 7px 7px 14px rgba(167, 109, 233, 0.15);
-  padding-left: 2%;
-}
-.container .tables .tablesButtons {
+.container .tablesButtons {
   display: flex;
   align-items: center;
   padding: 2% 4%;
 }
-.container .tables .tablesButtons span {
+.container .tablesButtons span {
   background: linear-gradient(145deg, rgba(167, 109, 233, 0.3), rgba(154, 92, 196, 0.3));
   box-shadow: 7px 7px 14px rgba(167, 109, 233, 0.15);
   color: rgb(255, 255, 255);
@@ -625,7 +618,7 @@ nav .menu li.active {
   text-align: left;
   width: 100%;
 }
-.container .tables .tablesButtons button {
+.container .tablesButtons button, .container .tablesButtons a {
   font-size: 1.4rem;
   display: flex;
   justify-content: flex-start;
@@ -639,8 +632,15 @@ nav .menu li.active {
   box-shadow: 7px 7px 14px rgba(167, 109, 233, 0.15);
   transition: 0.2s all;
 }
-.container .tables .tablesButtons button:hover {
+.container .tablesButtons button:hover, .container .tablesButtons a:hover {
   transform: scale(1.1);
+}
+.container .tables {
+  width: 100%;
+  border-radius: 20px;
+  background: linear-gradient(145deg, white, rgba(167, 109, 233, 0.08));
+  box-shadow: 7px 7px 14px rgba(167, 109, 233, 0.15);
+  padding-left: 2%;
 }
 .container .tables table {
   border: none !important;
@@ -674,6 +674,8 @@ nav .menu li.active {
   border: none !important;
   transition: all 0.3s;
   overflow: hidden;
+  -webkit-animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.3s forwards;
+          animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.3s forwards;
 }
 .container .tables table tbody tr:hover {
   background: rgb(255, 255, 255);
@@ -710,6 +712,7 @@ nav .menu li.active {
   display: none;
 }
 .container .tables table tbody tr .dropdown {
+  display: none;
   transform: scale(0.9);
   border-radius: 20px;
   position: absolute;

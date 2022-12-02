@@ -22,12 +22,18 @@
 
 
 
-<section class="container">
-
-
+<section class="container register">
+    <div class="notice">
+        <span class="title">Informations : </span>
+        <ul>
+            <li>Ne pas mettre des noms de catégorie dupliqué. </li>
+            <li>Merci de bien activer le serveur de catégorie sélectioner.</li>
+            <li>Choisir un des trois serveurs : Pterodactyl, Proxmox, Plesk.</li>
+        </ul>
+    </div>
 </section>
 
-<section class="profile register">
+<section class="profile_bar register">
     <div class="logoText">
         <img src="/images/logo-text.png" classe="" alt="">
         <h2>Crée une offre</h2>
@@ -45,7 +51,7 @@
                 <select style="text-transform:capitalize;" name="server"
                     id="server">
                     {{#each server}}
-                    <option value={{name}}>{{name}}</option>
+                    <option value={{id}}>{{name}}</option>
                     {{/each}}
                 </select>
             </div>

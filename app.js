@@ -1,4 +1,4 @@
-console.clear()
+console.clear();
 const ora = require("ora");
 const chalk = require("chalk");
 
@@ -9,15 +9,19 @@ const LicenseKey = require("./private/license.js");
 const db = require("./config/database.js");
 const txcms = require("./config/app.json");
 
-// Lancer l'application en cas de validité de la license
+/*// Lancer l'application en cas de validité de la license
 LicenseKey.then((license) => {
   main();
 }).catch(function (error) {
   // Return une erreur en cas d'invalidité de la license
   console.log(error.message);
-});
+  spinner.fail(
+    `${chalk.red("Le lancement de TxCMS sur le serveur a échoué !")}`
+  );
+});*/
 
-main()
+main();
+
 
 function main() {
   /*Importation des modules nodeJS*/

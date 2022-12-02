@@ -17,11 +17,15 @@
 
 
 <section class="container">
-
+    <div class="tablesButtons" id="tablesButtons">
+        <a href="/client/services/{{params.id}}/files"><ion-icon
+                name="return-down-back-outline"></ion-icon></a>
+        <a href="/client/services/{{params.id}}/files/edit?file={{route}}"><ion-icon
+                name="reload-outline"></ion-icon></a>
+        <span id="route">{{server.name}}/{{route}}</span>
+    </div>
     <div class="code">
-
         <textarea name="editor" id="editor">{{code}}</textarea>
-
         <script>
             var editor = CodeMirror.fromTextArea(document.getElementById('editor'),{
                 lineNumbers: true,
@@ -36,7 +40,6 @@
         <div class="createButtons">
             <a href="/admin/plans/create">Enregistrer</a>
         </div>
-
     </div>
 
     <footer>

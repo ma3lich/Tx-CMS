@@ -293,7 +293,6 @@ module.exports = {
 
     getPterodactylNodes(function (nodes) {
       getPterodactylEggs(function (eggs) {
-
         db.query(`SELECT * FROM plans WHERE id = ${id}`, function (err, data) {
           data.forEach((item) => {
             db.query(
@@ -345,17 +344,32 @@ module.exports = {
 
   /* Méthode Get pour la page admin/categories */
   getCategories: (req, res) => {
-    db.query(`SELECT * FROM categories ORDER BY id`, function (err, data) {
+    db.query(`SELECT * FROM categories ORDER BY id DESC`, function (err, data) {
       if (err) req.flash("error-message", err);
-      else
-        res.render("admin/categories/index", {
-          title: app.config.company.name + " - Catégories",
-          action: "list",
-          categorie: data,
-          user: req.user[0],
-          app: app,
-          system: package_json,
-        });
+      let categorys = [];
+      data.forEach((category) => {
+        db.query(
+          `SELECT * FROM servers WHERE id = ${category.server}`,
+          function (err, servers) {
+            servers.forEach((server) => {
+              categorys.push({
+                id: category.id,
+                name: category.name,
+                server: server.name,
+                auto: category.auto,
+              });
+            });
+          }
+        );
+      });
+      res.render("admin/categories/index", {
+        title: app.config.company.name + " - Liste des catégories",
+        action: "list",
+        category: categorys,
+        user: req.user[0],
+        app: app,
+        system: package_json,
+      });
     });
   },
 
@@ -374,8 +388,9 @@ module.exports = {
 
   /* Méthode Post pour la page admin/categories/create */
   submitCreatedCategory: (req, res) => {
+    console.log(req.body)
     db.query(
-      `INSERT INTO categories ( name, server, auto) VALUES ('${req.body.name}', '${req.body.server}', '${req.body.auto}')`,
+      `INSERT INTO categories (name, server, auto) VALUES ('${req.body.name}', '${req.body.server}', '${req.body.auto}')`,
       function (success, err) {
         if (err) {
           req.flash("error-message", err);
@@ -395,14 +410,14 @@ module.exports = {
     db.query(`SELECT * FROM categories WHERE id = ${id}`, function (err, data) {
       if (err) throw err;
       else {
-        db.query(`SELECT * FROM servers ORDER BY id`, function (err, results) {
+        db.query(`SELECT * FROM servers ORDER BY id`, function (err, server) {
           if (err) req.flash("error-message", err);
           else {
             res.render("admin/categories/edit", {
               title: app.config.company.name + " Plans Edit",
               action: "edit",
-              server: results,
-              categorie: JSON.parse(JSON.stringify(data))[0],
+              server,
+              category: JSON.parse(JSON.stringify(data))[0],
             });
           }
         });

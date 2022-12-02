@@ -52,19 +52,18 @@ module.exports = {
                 let planRow = JSON.parse(JSON.stringify(planJson));
                 let dateC = new Date(
                   servicesRow[i].created_at.split("/")[2],
-                  servicesRow[i].created_at.split("/")[1]-1,
+                  servicesRow[i].created_at.split("/")[1] - 1,
                   +servicesRow[i].created_at.split("/")[0]
                 );
                 let dateF = new Date(
                   servicesRow[i].finish_at.split("/")[2],
-                  servicesRow[i].finish_at.split("/")[1]-1,
-                  +servicesRow[i].finish_at.split("/")[0] 
+                  servicesRow[i].finish_at.split("/")[1] - 1,
+                  +servicesRow[i].finish_at.split("/")[0]
                 );
                 services.push({
                   id: servicesRow[i].id,
                   name: planRow[0].name,
                   time: calcDate(dateC, dateF),
-
                 });
               }
             );
@@ -532,12 +531,12 @@ module.exports = {
       });
 
       txws.on("connection", (ws) => {
-        ws.send("\033[95m[TxCMS]\033[39m Connexion réussite ! \n\r");
         pteroWS.on(`open`, () => {
+          ws.send("\033[95m[TxCMS]\033[39m Connexion réussite ! \n\r");
           pteroWS.send(
             JSON.stringify({ event: "auth", args: [server.console.token] })
           );
-
+          pteroWS.send(JSON.stringify({ event: "send logs", args: [null] }));
           pteroWS.send(JSON.stringify({ event: "send stats", args: [null] }));
 
           pteroWS.on("message", function incoming(msg) {
@@ -549,6 +548,16 @@ module.exports = {
             }
             if (msg.event.includes("stats")) {
               ws.send(JSON.stringify(msg.args));
+            }
+
+            if (msg.event.includes("token expiring")) {
+              console.log(JSON.stringify(msg.args));
+            }
+
+            if (msg.event.includes("token expired")) {
+              pteroWS.send(
+                JSON.stringify({ event: "auth", args: [server.console.token] })
+              );
             }
           });
 
@@ -586,16 +595,20 @@ module.exports = {
   },
 
   getServiceByID: (req, res) => {
-    getPterodactylServerInfo(req.params.id, async function (server) {
-      res.render("client/services", {
-        title:
-          app.config.company.name + " - Gestion du service : " + server.name,
-        user: req.user[0],
-        app,
-        params: req.params,
-        server,
-        system: package_json,
-      });
+    getPterodactylServerInfo(req.params.id, req.user[0].id, function (server) {
+      if(server) {
+        res.render("client/services", {
+          title:
+            app.config.company.name + " - Gestion du service : " + server.name,
+          user: req.user[0],
+          app,
+          params: req.params,
+          server,
+          system: package_json,
+        });
+      }else{
+        res.redirect("/client/")
+      }
     });
   },
 
@@ -603,37 +616,11 @@ module.exports = {
     let files = [];
     let directorys = [];
     if (req.query.directory == "" || req.query.directory === undefined) {
-      getPterodactylServerInfo(req.params.id, function (server) {
-        client.getServerFiles(server.id, "").then((response) => {
-          response.forEach((file) => {
-            if (file.attributes.mimetype == "inode/directory") {
-              directorys.push({
-                name: file.attributes.name,
-                size: file.attributes.size,
-                type: "Dossier",
-                modified_at: timeSince(new Date(file.attributes.modified_at)),
-              });
-            } else {
-              files.push({
-                name: file.attributes.name,
-                size: file.attributes.size,
-                type: getFileExtension(file.attributes.name),
-                modified_at: timeSince(new Date(file.attributes.modified_at)),
-              });
-            }
-          });
-          res.json({
-            files,
-            route: req.query.directory,
-            directorys,
-          });
-        });
-      });
-    } else {
-      getPterodactylServerInfo(req.params.id, function (server) {
-        client
-          .getServerFiles(server.id, req.query.directory)
-          .then((response) => {
+      getPterodactylServerInfo(
+        req.params.id,
+        req.user[0].id,
+        function (server) {
+          client.getServerFiles(server.id, "").then((response) => {
             response.forEach((file) => {
               if (file.attributes.mimetype == "inode/directory") {
                 directorys.push({
@@ -641,7 +628,6 @@ module.exports = {
                   size: file.attributes.size,
                   type: "Dossier",
                   modified_at: timeSince(new Date(file.attributes.modified_at)),
-                  in_folder: req.query.directory,
                 });
               } else {
                 files.push({
@@ -649,7 +635,6 @@ module.exports = {
                   size: file.attributes.size,
                   type: getFileExtension(file.attributes.name),
                   modified_at: timeSince(new Date(file.attributes.modified_at)),
-                  in_folder: req.query.directory,
                 });
               }
             });
@@ -659,12 +644,52 @@ module.exports = {
               directorys,
             });
           });
-      });
+        }
+      );
+    } else {
+      getPterodactylServerInfo(
+        req.params.id,
+        req.user[0].id,
+        function (server) {
+          client
+            .getServerFiles(server.id, req.query.directory)
+            .then((response) => {
+              response.forEach((file) => {
+                if (file.attributes.mimetype == "inode/directory") {
+                  directorys.push({
+                    name: file.attributes.name,
+                    size: file.attributes.size,
+                    type: "Dossier",
+                    modified_at: timeSince(
+                      new Date(file.attributes.modified_at)
+                    ),
+                    in_folder: req.query.directory,
+                  });
+                } else {
+                  files.push({
+                    name: file.attributes.name,
+                    size: file.attributes.size,
+                    type: getFileExtension(file.attributes.name),
+                    modified_at: timeSince(
+                      new Date(file.attributes.modified_at)
+                    ),
+                    in_folder: req.query.directory,
+                  });
+                }
+              });
+              res.json({
+                files,
+                route: req.query.directory,
+                directorys,
+              });
+            });
+        }
+      );
     }
   },
 
   FileManager: (req, res) => {
-    getPterodactylServerInfo(req.params.id, function (server) {
+    getPterodactylServerInfo(req.params.id, req.user[0].id, function (server) {
       res.render("client/services/files", {
         title: app.config.company.name + " - Gestionaire de fichiers ",
         user: req.user[0],
@@ -677,19 +702,18 @@ module.exports = {
   },
 
   PteroFileEditor: (req, res) => {
-    const Nodeactyl = require("Nodeactyl");
-    let client = new Nodeactyl.NodeactylClient(
-      "https://panel.txhost.fr",
-      "ptlc_XBGDCNGtKCt49rWQ0c4SGhEHic3HBOfCK83ou36ykgB"
-    );
-
-    client.getFileContent(req.params.id, req.query.file).then((response) => {
-      res.render("client/services/files/edit", {
-        title: app.config.company.name + " - Editeur de code ",
-        user: req.user[0],
-        app: app,
-        code: response,
-        system: package_json,
+    getPterodactylServerInfo(req.params.id, req.user[0].id, function (server) {
+      client.getFileContent(server.id, req.query.file).then((code) => {
+        res.render("client/services/files/edit", {
+          title: app.config.company.name + " - Editeur de code ",
+          user: req.user[0],
+          app: app,
+          params: req.params,
+          code,
+          route: req.query.file,
+          server,
+          system: package_json,
+        });
       });
     });
   },

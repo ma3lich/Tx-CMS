@@ -155,30 +155,34 @@ module.exports = {
     });
   },
 
-  getPterodactylServerInfo: (id, callback) => {
-    db.query(`SELECT * FROM services WHERE id = ${id}`, function (err, data) {
-      if (err) console.debug(err);
-
-      var result = JSON.parse(JSON.stringify(data));
-      var service = result[0];
-      let server = [];
-
-      client.getServerDetails(service.serverID).then((details) => {
-        client.getConsoleWebSocket(service.serverID).then((socket) => {
-          server.push({
-            name: details.name,
-            id: details.identifier,
-            uuid: details.uuid,
-            node: details.node,
-            ip: details.sftp_details.ip,
-            port: details.sftp_details.port,
-            console: socket,
+  getPterodactylServerInfo: (serviceID, userID, callback) => {
+    db.query(
+      `SELECT * FROM services WHERE owner = ${userID} AND id = ${serviceID} `,
+      function (err, data) {
+        if(data.length > 0){
+          var service = JSON.parse(JSON.stringify(data))[0];
+          let server = [];
+  
+          client.getServerDetails(service.serverID).then((details) => {
+            client.getConsoleWebSocket(service.serverID).then((socket) => {
+              server.push({
+                name: details.name,
+                id: details.identifier,
+                uuid: details.uuid,
+                node: details.node,
+                ip: details.sftp_details.ip,
+                port: details.sftp_details.port,
+                console: socket,
+              });
+  
+              return callback(server[0]);
+            });
           });
-
-          return callback(server[0]);
-        });
-      });
-    });
+        }else{
+          return callback(false);
+        }
+      }
+    );
   },
 
   serverIP: ip.address(),

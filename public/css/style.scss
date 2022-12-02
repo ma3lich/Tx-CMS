@@ -672,45 +672,45 @@ nav {
         }
     }
 
+    .tablesButtons {
+        display: flex;
+        align-items: center;
+        padding: 2% 4%;
+        span {
+            background: linear-gradient(145deg, rgba(theme.$colored_back_1, 0.3), rgba(theme.$colored_back_2, 0.3));
+            box-shadow: 7px 7px 14px rgba(theme.$colored_back_1, 0.15);
+            color: theme.$light_text_color;
+            padding: 6px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            text-align: left;
+            width: 100%;
+        }
+        button, a {
+            font-size: 1.4rem;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 6px;
+            margin: 0 10px;
+            border-radius: 13px;
+            border: none;
+            color: theme.$light_text_color;
+            background: linear-gradient(145deg, rgba(theme.$colored_back_1, 0.6), rgba(theme.$colored_back_2, 0.6));
+            box-shadow: 7px 7px 14px rgba(theme.$colored_back_1, 0.15);
+            transition: 0.2s all;
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+
     .tables {
         width: 100%;
         border-radius: 20px;
         background: linear-gradient(145deg, rgba(theme.$light_back, 1), rgba(theme.$colored_back_1, 0.08));
         box-shadow: 7px 7px 14px rgba(theme.$colored_back_1, 0.15);
         padding-left: 2%;
-
-        .tablesButtons {
-            display: flex;
-            align-items: center;
-            padding: 2% 4%;
-            span {
-                background: linear-gradient(145deg, rgba(theme.$colored_back_1, 0.3), rgba(theme.$colored_back_2, 0.3));
-                box-shadow: 7px 7px 14px rgba(theme.$colored_back_1, 0.15);
-                color: theme.$light_text_color;
-                padding: 6px 20px;
-                border-radius: 8px;
-                font-size: 0.9rem;
-                text-align: left;
-                width: 100%;
-            }
-            button {
-                font-size: 1.4rem;
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                padding: 6px;
-                margin: 0 10px;
-                border-radius: 13px;
-                border: none;
-                color: theme.$light_text_color;
-                background: linear-gradient(145deg, rgba(theme.$colored_back_1, 0.6), rgba(theme.$colored_back_2, 0.6));
-                box-shadow: 7px 7px 14px rgba(theme.$colored_back_1, 0.15);
-                transition: 0.2s all;
-                &:hover {
-                    transform: scale(1.1);
-                }
-            }
-        }
 
         table {
             border: none !important;
@@ -744,6 +744,8 @@ nav {
                     border: none !important;
                     transition: all 0.3s;
                     overflow: hidden;
+                    animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.3s forwards;
+
 
                     &:hover {
                         background: theme.$light_back;
@@ -787,6 +789,7 @@ nav {
                     }
 
                     .dropdown {
+                        display: none;
                         transform: scale(0.9);
                         border-radius: 20px;
                         position: absolute;

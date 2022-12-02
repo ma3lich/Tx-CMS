@@ -4,8 +4,10 @@
         <img src="{{app.config.company.logo}}" alt="">
     </div>
     <ul class="menu">
-        <li class="active"><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
         <li><a href="/client/shop"><ion-icon name="cart-outline"></ion-icon></a></li>
+        <li class="active"><a href=""><ion-icon name="albums-outline"></ion-icon></a></li>
+
     </ul>
 
     <ul class="menu">
@@ -88,7 +90,6 @@
 
             function FileManager(directory) {
                 console.log(directory)
-
                 $("#tablesButtons").html(`
                         <button onclick=FileManager("`+directory.split('/').slice(0, -1).join("/")+`")><ion-icon name="return-down-back-outline"></ion-icon></button>
                         <button onclick=FileManager("`+directory+`")><ion-icon name="reload-outline"></ion-icon></button>
@@ -106,9 +107,20 @@
                     dataType: "JSON",    
                     async: true,
                     timeout: 5000,
-                    success: function (data){
+                    beforeSend: ()=>{
                         $("#loader").show();
+                    },
+                    success: function (data){
+                        $("#loader").hide();
                         var html = ``
+                        if(data.directorys.length < 1 && data.files.length < 1){
+                            
+                            $('#tbody').html(`
+                            <tr>
+                                <td colspan="5">Ce répertoire semble être vide.</td>
+                            </tr>
+                            `)
+                        }
                         for (var i = 0; i < data.directorys.length; i++) {
                             html += `
                                 <tr onclick=FileManager("`+data.route+`/`+data.directorys[i].name+`")>
@@ -141,11 +153,11 @@
                         
                         for (var i = 0; i < data.files.length; i++) {
                             html += `
-                                <tr>
+                                <tr onclick="location.href='/client/services/{{params.id}}/files/edit?file=`+directory+"/"+data.files[i].name+`'">
                                     <td class="icon"><ion-icon name="document-text-outline"></ion-icon></td>
                                     <td style="text-align: left;">`+data.files[i].name+`</td>
                                     <td style="text-align: left;">il ya `+data.files[i].modified_at+`</td>
-                                    <td style="text-align: left;">Fichier `+data.files[i].type+`</td>
+                                    <td style="text-align: left;">Fichier (`+data.files[i].type+`)</td>
                                     <td style="text-align: right;">`+formatSizeUnits(data.files[i].size)+`</td>
                                     <td class="dots"><ion-icon name="ellipsis-vertical-outline"></ion-icon></td>
                                     <td class="dropdown">
@@ -168,7 +180,6 @@
                             `
                             $('#tbody').html(html)
                         }
-                        $("#loader").hide();
                     }
                 })
             }
@@ -265,7 +276,7 @@
                 </a>
             </li>
             <li>
-                <a href="/client/services/{{params.id}}/files">
+                <a href="/client/services/{{params.id}}">
                     <div class="icon">
                         <ion-icon name="terminal-outline"></ion-icon>
                     </div>
