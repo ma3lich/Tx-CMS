@@ -212,64 +212,60 @@ nav {
 }
 
 .notif {
-    margin: 70px auto;
-    padding: 20px;
     background: theme.$light_back;
-    border-radius: 8px;
-    width: 90%;
-    transition: all 5s ease-in-out;
-    z-index: 1000;
-    position: absolute;
+    border-radius: 12px;
+    position: fixed;
     bottom: 3%;
-
-    h2 {
-        text-align: left;
-        color: theme.$dark_text_color;
-        margin-top: 3.5px;
-        font-size: 1rem;
-        margin-bottom: 10px;
-    }
-
-    .close {
-        background: none;
-        border: none;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        transition: all 0.3s;
-        font-size: 2rem;
-        font-weight: bold;
-        text-decoration: none;
-        color: #333;
-
-        &:hover {
-            color: theme.$dark_text_color;
+    padding: 1%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    animation: top 0.3s cubic-bezier(0.36, -0.64, 0.34, 1.76);
+    &.error {
+        box-shadow: 7px 7px 25px rgba(theme.$dark_red, 0.15);
+        border: 2px solid theme.$red;
+        .title {
+            margin: 0 !important;
+            margin-bottom: 1% !important;
+            color: theme.$dark_red !important;
+            font-size: 1.1rem !important;
         }
-    }
+        .message {
+            font-size: 0.9rem !important;
+            color: theme.$red !important;
+        }
 
-    .content {
-        margin-top: 20px;
-        text-align: left;
-        font-weight: 500;
-        font-size: 1rem;
-        width: 95%;
+        .close {
+            position: absolute;
+            top: 7%;
+            right: 4%;
+            font-size: 1.2rem;
+            color: theme.$dark_red !important;
+        }
     }
 
     &.success {
-        background: theme.$green;
-        color: theme.$light_text_color;
-        h2,
-        button {
-            color: theme.$dark_green;
+        box-shadow: 7px 7px 25px rgba(theme.$dark_green, 0.15);
+        border: 2px solid theme.$green;
+        .title {
+            margin: 0 !important;
+            margin-bottom: 1% !important;
+            color: theme.$dark_green !important;
+            font-size: 1.1rem !important;
         }
-    }
+        .message {
+            font-size: 0.9rem !important;
+            color: theme.$green !important;
+        }
 
-    &.error {
-        background: theme.$red;
-        color: theme.$light_text_color;
-        h2,
-        button {
-            color: theme.$dark_red;
+        .close {
+            position: absolute;
+            top: 7%;
+            right: 4%;
+            font-size: 1.2rem;
+            color: theme.$dark_green !important;
         }
     }
 }
@@ -323,6 +319,31 @@ nav {
     animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76);
     background-color: theme.$light_back;
 
+    .stats {
+        margin-top: 3%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        .statBox {
+            width: 30%;
+            padding: 2%;
+            margin: 1%;
+            background: linear-gradient(145deg, rgba(theme.$light_back, 1), rgba(theme.$colored_back_1, 0.1));
+            box-shadow: 7px 7px 25px rgba(theme.$colored_back_1, 0.15);
+            border-radius: 12px;
+
+            span {
+                font-size: 1.2rem;
+            }
+
+            div {
+                width: 100%;
+                height: 200px;
+                margin: 5% 0;
+            }
+        }
+    }
     #code {
         display: flex;
         text-align: left;
@@ -686,7 +707,8 @@ nav {
             text-align: left;
             width: 100%;
         }
-        button, a {
+        button,
+        a {
             font-size: 1.4rem;
             display: flex;
             justify-content: flex-start;
@@ -745,7 +767,6 @@ nav {
                     transition: all 0.3s;
                     overflow: hidden;
                     animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.3s forwards;
-
 
                     &:hover {
                         background: theme.$light_back;
@@ -1476,7 +1497,7 @@ nav {
     bottom: 3%;
     width: 17.5%;
     border-radius: 20px;
-    background: linear-gradient(145deg, rgba(theme.$colored_back_1, 0.3), rgba(theme.$colored_back_2, 0.3));
+    background: linear-gradient(145deg, rgba(theme.$colored_back_1, 0.3), rgba(theme.$colored_back_1, 0.3));
     box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5);
     animation: right 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.2s forwards;
 

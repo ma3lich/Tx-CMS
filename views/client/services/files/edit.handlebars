@@ -3,7 +3,7 @@
 
 <nav class="">
     <div class="logo">
-        <img src="{{app.config.company.logo}}" alt="">
+        <img src="{{config.host.logo}}" alt="">
     </div>
     <ul class="menu">
         <li class="active"><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
@@ -22,7 +22,7 @@
                 name="return-down-back-outline"></ion-icon></a>
         <a href="/client/services/{{params.id}}/files/edit?file={{route}}"><ion-icon
                 name="reload-outline"></ion-icon></a>
-        <span id="route">{{server.name}}/{{route}}</span>
+        <span id="route">{{server.name}}{{route}}</span>
     </div>
     <div class="code">
         <textarea name="editor" id="editor">{{code}}</textarea>

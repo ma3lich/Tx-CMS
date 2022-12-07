@@ -2,12 +2,10 @@
 const bcrypt = require("bcrypt");
 const db = require("../config/database");
 const nodemailer = require("nodemailer");
-const config = require("config");
-const mailserver = require("../config/mail");
+const {MailServer} = require("../config/mailservice");
 const app = require("../config/app.json");
 const social = require("../config/social.json");
 const package_json = require("../package.json");
-const adminLogs = require("logger").createLogger("./logs/admin_logs.log");
 
 /* Configuration passport par email */
 
@@ -55,7 +53,7 @@ module.exports = {
 
   /* Méthode Post pour la page index */
   loginPost: async function (req, res) {
-    let info = await mailserver.sendMail({
+    let info = await MailServer.sendMail({
       from: `"${config.get("TxCMS.company.name")}" ${config.get(
         "TxCMS.mail.auth.user"
       )}`,

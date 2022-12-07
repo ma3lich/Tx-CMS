@@ -1,88 +1,230 @@
+<nav class="">
+    <div class="logo">
+        <img src="{{config.host.logo}}" alt="">
+    </div>
+    <ul class="menu">
+        <li class="active"><a href="/admin">
+                <ion-icon name="speedometer-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li><a href="/admin/users">
+                <ion-icon name="people-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li><a href="/admin/plans">
+                <ion-icon name="storefront-outline"></ion-icon>
+            </a></li>
+        <li><a href="/admin/categories">
+                <ion-icon name="copy-outline"></ion-icon>
+            </a></li>
+        <li><a href="/admin/servers">
+                <ion-icon name="server-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li><a href="/admin/settings">
+                <ion-icon name="cog-outline"></ion-icon>
+            </a></li>
 
-    <nav class="">
-        <div class="logo">
-            <img src="{{app.config.company.logo}}" alt="">
+    </ul>
+
+    <ul class="menu">
+        <li style="visibility: hidden;"></li>
+    </ul>
+</nav>
+
+<section class="container">
+    <div class="info">
+        <a href="" class="card">
+            <div class="icon">
+                <ion-icon name="hand-right-outline"></ion-icon>
+            </div>
+            <div class="text">
+                <span class="value" id="usersCount">
+                    {{hostStats.users}}
+                </span>
+                <p class="desc">
+                    Utilisateurs inscrits
+                </p>
+            </div>
+        </a>
+        <a href="" class="card">
+            <div class="icon">
+                <ion-icon name="happy-outline"></ion-icon>
+            </div>
+            <div class="text">
+                <span class="value">
+                    {{hostStats.clients}}
+                </span>
+                <p class="desc">
+                    Transactions effectuées
+                </p>
+            </div>
+        </a>
+        <a href="" class="card">
+            <div class="icon">
+                <ion-icon name="layers-outline"></ion-icon>
+            </div>
+            <div class="text">
+                <span class="value">
+                    {{hostStats.services}}
+                </span>
+                <p class="desc">
+                    Services actifs
+                </p>
+            </div>
+        </a>
+        <a href="" class="card">
+            <div class="icon">
+                <ion-icon name="speedometer-outline"></ion-icon>
+            </div>
+            <div class="text">
+                <span class="value">
+                    {{hostStats.tickets}}
+                </span>
+                <p class="desc">
+                    Tickets d'ouvers
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <div class="stats">
+        <div class="statBox">
+            <span class="title">Résumé des utilisateurs</span>
+            <div id="usersChart"></div>
         </div>
-        <ul class="menu">
-            <li  class="active"><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
-            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
-            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
 
-        </ul>
+        <div class="infoBox">
 
-        <ul class="menu">
-            <li style="visibility: hidden;"></li>
-        </ul>
-    </nav>
+        </div>
 
-    <section class="container">
-        <form  method="get" action="/" class="info">
-            <a href="" class="card">
-                <div class="icon">
-                    <ion-icon name="hand-right-outline"></ion-icon>                
-                </div>
-                <div class="text">
-                    <span class="value" id="usersCount">
-                        {{hostStats.users}}
-                    </span>
-                    <p class="desc">
-                        Utilisateurs inscrits
-                    </p>
-                </div>
-            </a>
-            <a href=""  class="card">
-                <div class="icon">
-                    <ion-icon name="happy-outline"></ion-icon>                
-                </div>
-                <div class="text">
-                    <span class="value">
-                        {{hostStats.clients}}
-                    </span>
-                    <p class="desc">
-                        Client satisfait
-                    </p>
-                </div>
-            </a>
-            <a href="" class="card">
-                <div class="icon">
-                    <ion-icon name="layers-outline"></ion-icon>
-                </div>
-                <div class="text">
-                    <span class="value">
-                        {{hostStats.services}}
-                    </span>
-                    <p class="desc">
-                        Services actifs
-                    </p>
-                </div>
-            </a>
-            <a href=""  class="card">
-                <div class="icon">
-                    <ion-icon name="speedometer-outline"></ion-icon>
-                </div>
-                <div class="text">
-                    <span class="value">
-                        {{hostStats.servers}}
-                    </span>
-                    <p class="desc">
-                        Serveur en production
-                    </p>
-                </div>
-            </a>
-        </form>
+        <div class="statBox">
+            <span class="title">Résumé des services</span>
+            <div id="serviceChart"></div>
+        </div>
+    </div>
 
-        <footer>
-            <span>Copyright © {{app.config.company.name}}</span>
-            <span>TxCMS - {{system.version}}</span>
-        </footer>
+    <script>
+        am5.ready(function () {
+            var usersChart = am5.Root.new("usersChart");
+            var serviceChart = am5.Root.new("serviceChart");
 
-    </section>
+            var TxTheme = am5.Theme.new(usersChart, serviceChart);
+
+            TxTheme.rule("Label").setAll({
+                fill: "black",
+                fontSize: ".8rem"
+            });
+
+            usersChart.setThemes([
+                am5themes_Animated.new(usersChart),
+                TxTheme
+            ]);
+
+            serviceChart.setThemes([
+                am5themes_Animated.new(serviceChart),
+                TxTheme
+            ]);
+
+            var Uchart = usersChart.container.children.push(am5percent.PieChart.new(usersChart, {
+                layout: usersChart.verticalLayout,
+                innerRadius: am5.percent(75)
+            }));
+
+            var Schart = serviceChart.container.children.push(am5percent.PieChart.new(serviceChart, {
+                layout: serviceChart.verticalLayout,
+                innerRadius: am5.percent(75)
+            }));
+
+
+            var Useries = Uchart.series.push(am5percent.PieSeries.new(usersChart, {
+                name: "users",
+                valueField: "value",
+                categoryField: "category",
+                alignLabels: false
+            }));
+
+            Useries.labels.template.setAll({
+                textType: "circular",
+                centerX: 0,
+                centerY: 0
+            });
+
+            Useries.data.setAll([
+                { value: {{ hostStats.clients }}, category: "Clients" },
+            { value: {{ hostStats.users }}, category: "Utilisateurs" },
+            ]);
+
+        Useries.appear(1000, 100);
+
+        var Sseries = Schart.series.push(am5percent.PieSeries.new(serviceChart, {
+            name: "users",
+            valueField: "value",
+            categoryField: "category",
+            alignLabels: false
+        }));
+
+        Sseries.labels.template.setAll({
+            textType: "circular",
+            centerX: 0,
+            centerY: 0
+        });
+
+        Sseries.data.setAll([
+            { value: 5, category: "Actifs" },
+            { value: 3, category: "Expiré" },
+            { value: 2, category: "En attente" },
+        ]);
+
+        Sseries.appear(1000, 100);
+        });
+
+    </script>
+
+    <span class="title">Produits les plus vendu : </span>
+    <div class="tables">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom du produit</th>
+                    <th>Catégorie</th>
+                    <th>Commandes effectuées</th>
+                    <th>État du stock</th>
+                    <th>Prix /U</th>
+                    <th>Total des revenus</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each bestSelling}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td style="text-transform:capitalize;">{{category}}</td>
+                    <td>{{sold}}</td>
+                    {{#if stock}}
+                    <td class="state actif"> <label for="">En stock : {{stock}}</label></td>
+                    {{else}}
+                    <td class="state inactif"> <label for="">Repture de stock</label></td>
+                    {{/if}}
+                    <td>{{price}}€</td>
+                    <td>{{incomme}}€</td>
+                </tr>
+
+                {{else}}
+
+                <tr>
+                    <td colspan="6">Aucune offre n'a était créé...</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <span>Copyright © {{config.host.name}}</span>
+        <span>TxCMS - {{system.version}}</span>
+    </footer>
+
+</section>
 
 
 <section class="profile_bar">
@@ -91,20 +233,20 @@
         <a class="logo" href="/client/profile">
             <img id="userlogo" src="" alt="">
             <script>
-                    if("{{user.logo}}" == ""){
-                        
-                        if("{{user.sex}}" == "male"){
-                            document.getElementById('userlogo').src = "/images/male-logo.png"
-                        } 
+                if ("{{user.logo}}" == "") {
 
-                        if("{{user.sex}}" == "female"){
-                            document.getElementById('userlogo').src = "/images/female-logo.png"
-                        }
-
-                    }else{
-                        document.getElementById('userlogo').src = "{{user.logo}}"
+                    if ("{{user.sex}}" == "male") {
+                        document.getElementById('userlogo').src = "/images/male-logo.png"
                     }
-                </script>
+
+                    if ("{{user.sex}}" == "female") {
+                        document.getElementById('userlogo').src = "/images/female-logo.png"
+                    }
+
+                } else {
+                    document.getElementById('userlogo').src = "{{user.logo}}"
+                }
+            </script>
             <span class="username">{{user.lastname}} {{user.name}}</span>
         </a>
         <div>
@@ -162,15 +304,6 @@
                     </div>
                 </a>
             </li>
-                <script>
-                    if("{{user.role}}" == "admin"){
-                        document.getElementById("admin").style.display = "block";
-                    }else{
-                        document.getElementById("admin").style.display = "none";
-                    }
-                </script>
         </ul>
     </div>
 </section>
-
-

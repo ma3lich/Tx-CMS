@@ -1,6 +1,6 @@
     <nav class="">
         <div class="logo">
-            <img src="{{app.config.company.logo}}" alt="">
+            <img src="{{config.host.logo}}" alt="">
         </div>
         <ul class="menu">
             <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
@@ -38,7 +38,7 @@
                     <div>
                         <label for="lastname">Nom</label>
                         <br>
-                        <input required type="text" name="lastname" id="lastname" maxlength="25" disabled>
+                        <input required type="text" name="lastname" id="lastname" maxlength="25" readonly>
                         <script>
                             document.getElementById('lastname').value = `{{user.lastname}}` 
                         </script>
@@ -46,7 +46,7 @@
                     <div>
                         <label for="name">Prénom</label>
                         <br>
-                        <input required type="text" name="name" id="name" maxlength="25" disabled>
+                        <input required type="text" name="name" id="name" maxlength="25" readonly>
                         <script>
                             document.getElementById('name').value = `{{user.name}}` 
                         </script>
@@ -57,7 +57,7 @@
                     <div>
                         <label for="email">Email</label>
                         <br>
-                        <input required type="email" name="email" id="email" maxlength="25" disabled>
+                        <input required type="email" name="email" id="email" maxlength="25" readonly>
                         <script>
                             document.getElementById('email').value = `{{user.email}}` 
                         </script>

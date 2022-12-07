@@ -1,25 +1,77 @@
-const fs = require("fs");
-var ip = require("ip");
-const mailserver = require("./mail.js");
+const ip = require("ip");
 const app = require("./app.json");
-const smtp = require("./smtp.json");
-const nodemailer = require("nodemailer");
 const db = require("./database");
+const bcrypt = require("bcrypt");
+
+
+const fs = require("fs");
 
 const Nodeactyl = require("nodeactyl");
-const { pterodactylApp, pterodactylClient } = require("../private/servers");
-const { json } = require("body-parser");
+const { getEnVvalue } = require("./config");
+const MailServer = require("./mailservice");
+
 const application = new Nodeactyl.NodeactylApplication(
   "https://panel.txhost.fr",
   "ptla_nm9keWWAnHOaAM2EKVtiRhoXNqTz3Hmr8e4E5v7PqGC"
 );
 
-let client = new Nodeactyl.NodeactylClient(
-  "https://panel.txhost.fr",
-  "ptlc_XBGDCNGtKCt49rWQ0c4SGhEHic3HBOfCK83ou36ykgB"
-);
-
 module.exports = {
+  GetConfigVariables: (callback) => {
+    let config = {
+      system: {
+        hostname: getEnVvalue("APP_URL"),
+        port: getEnVvalue("APP_PORT"),
+        license: getEnVvalue("APP_LICENSE_KEY"),
+        locale: getEnVvalue("APP_LOCALE"),
+        timezone: getEnVvalue("APP_TIMEZONE"),
+      },
+      database: {
+        hostname: getEnVvalue("DB_HOST"),
+        port: getEnVvalue("DB_PORT"),
+        database: getEnVvalue("DB_DATABASE"),
+        username: getEnVvalue("DB_USERNAME"),
+        password: getEnVvalue("DB_PASSWORD"),
+      },
+      mail: {
+        hostname: getEnVvalue("MAIL_HOST"),
+        port: getEnVvalue("MAIL_PORT"),
+        secure: getEnVvalue("MAIL_SECURE"),
+        username: getEnVvalue("MAIL_USERNAME"),
+        password: getEnVvalue("MAIL_PASSWORD"),
+      },
+      host: {
+        name: getEnVvalue("HOST_NAME"),
+        description: getEnVvalue("HOST_DESCRIPTION"),
+        logo: getEnVvalue("HOST_LOGO"),
+        hostname: getEnVvalue("HOST_HOSTNAME"),
+        address: getEnVvalue("HOST_ADDRESS"),
+        zip: getEnVvalue("HOST_ZIP"),
+        city: getEnVvalue("HOST_CITY"),
+        country: getEnVvalue("HOST_COUNTRY"),
+        legals: getEnVvalue("HOST_LEGALS"),
+        privacy: getEnVvalue("HOST_PRIVACY")
+      },
+      addons: {
+        paypal: {
+          enable: getEnVvalue("PAYPAL"),
+          public: getEnVvalue("PAYPAL_PUBLIC"),
+          secret: getEnVvalue("PAYPAL_SECRET"),
+        },
+        stripe: {
+          enable: getEnVvalue("STRIPE"),
+          public: getEnVvalue("STRIPE_PUBLIC"),
+          secret: getEnVvalue("STRIPE_SECRET"),
+        },
+
+        wallet: {
+          enable: getEnVvalue("WALLET"),
+        }
+      }
+    };
+
+    return callback(config);
+  },
+
   isUserAuthenticated: (req, res, next) => {
     if (req.isAuthenticated()) next();
     else res.redirect("/");
@@ -30,17 +82,31 @@ module.exports = {
     else res.redirect("/client");
   },
 
-  sendMail: async (to, subject, text, html) => {
-    let info = await mailserver.sendMail({
-      from: `"${app.config.company.name}" <${smtp.config.auth.user}>`,
+  sendEmail: (to, subject, text, html, callback) => {
+    let options = {
+      from: `"${getEnVvalue('HOST_NAME')}" <${getEnVvalue('MAIL_USERNAME')}>`,
       to: to,
       subject: subject,
       text,
       html,
+    }
+
+
+    MailServer.sendMail(options, function (err, response) {
+      if (err) {
+        console.log(err);
+        return callback({
+          type: 'error',
+          message: "E-mail n'a pas été envoyé !",
+        });
+      } else {
+        console.log(response);
+        return callback({
+          type: 'success',
+          message: "E-mail a été envoyé !",
+        });
+      }
     });
-    console.log("Message sent: %s", info.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-    console.log(`Email sent from ${smtp.config.auth.user} to ${to}`);
   },
 
   getUserStats: (user, callback) => {
@@ -90,10 +156,9 @@ module.exports = {
             (err, servicesCount) => {
               if (err) throw err;
               db.query(
-                "SELECT COUNT(*) AS serversCount FROM servers",
-                (err, serversCount) => {
+                "SELECT COUNT(*) AS ticketsCount FROM tickets",
+                (err, ticketsCount) => {
                   if (err) throw err;
-
                   stats.push({
                     users: JSON.parse(
                       JSON.stringify(usersCount)
@@ -113,9 +178,9 @@ module.exports = {
                       minimumIntegerDigits: 2,
                       useGrouping: false,
                     }),
-                    servers: JSON.parse(
-                      JSON.stringify(serversCount)
-                    )[0].serversCount.toLocaleString("fr-FR", {
+                    tickets: JSON.parse(
+                      JSON.stringify(ticketsCount)
+                    )[0].ticketsCount.toLocaleString("fr-FR", {
                       minimumIntegerDigits: 2,
                       useGrouping: false,
                     }),
@@ -129,6 +194,31 @@ module.exports = {
         }
       );
     });
+  },
+
+  getBestSelledProducts: (callback) => {
+    let plans = [];
+    db.query("SELECT * FROM plans ORDER BY sold DESC LIMIT 3", (err, data) => {
+      if (err) req.flash("error-message", err);
+      else
+        data.forEach(plan => {
+          db.query(`SELECT * FROM categories WHERE id = ${plan.category}`, (err, result) => {
+            if (err) req.flash("error-message", err);
+            else
+              result.forEach(category => {
+                plans.push({
+                  name: plan.name,
+                  category: category.name,
+                  sold: plan.sold,
+                  stock: plan.stock,
+                  price: plan.price,
+                  incomme: Number(Number(plan.price) * Number(plan.sold)).toFixed(2).toString()
+                })
+              })
+          })
+          return callback(plans)
+        });
+    })
   },
 
   getPterodactylNodes: (callback) => {
@@ -153,36 +243,6 @@ module.exports = {
     application.getAllEggs().then((result) => {
       return callback(eggs);
     });
-  },
-
-  getPterodactylServerInfo: (serviceID, userID, callback) => {
-    db.query(
-      `SELECT * FROM services WHERE owner = ${userID} AND id = ${serviceID} `,
-      function (err, data) {
-        if(data.length > 0){
-          var service = JSON.parse(JSON.stringify(data))[0];
-          let server = [];
-  
-          client.getServerDetails(service.serverID).then((details) => {
-            client.getConsoleWebSocket(service.serverID).then((socket) => {
-              server.push({
-                name: details.name,
-                id: details.identifier,
-                uuid: details.uuid,
-                node: details.node,
-                ip: details.sftp_details.ip,
-                port: details.sftp_details.port,
-                console: socket,
-              });
-  
-              return callback(server[0]);
-            });
-          });
-        }else{
-          return callback(false);
-        }
-      }
-    );
   },
 
   serverIP: ip.address(),

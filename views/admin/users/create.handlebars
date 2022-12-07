@@ -1,6 +1,6 @@
 <nav class="">
     <div class="logo">
-        <img src="{{app.config.company.logo}}" alt="">
+        <img src="{{config.host.logo}}" alt="">
     </div>
     <ul class="menu">
         <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
@@ -31,8 +31,6 @@
         <h2>Créé un nouvel utilisateur</h2>
     </div>
     <form action="/admin/users/create" method="post" autocomplete="off">
-        <input style="display:none" type="text" name="id" id="id"
-            value={{user.id}}>
         <section class="formInput">
             <div>
                 <label for="lastname">Nom</label>
@@ -53,7 +51,7 @@
                 <label for="name">Email</label>
                 <br>
                 <input required type="email" name="email" id="email"
-                    maxlength="25">
+                    maxlength="35">
             </div>
             <div>
                 <label for="lastname">Mot De Passe</label>
@@ -104,5 +102,4 @@
             </div>
         </section>
         <button type="submit">Sauvegarder</button>
-    </form>
 </section>

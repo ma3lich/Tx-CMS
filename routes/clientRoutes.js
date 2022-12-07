@@ -12,13 +12,13 @@ const {
   addToCart,
   removeFromCart,
   checkoutCart,
-  successCheckout,
-  cancelCheckout,
-  getServiceByID,
-  PostTerminal,
+  SuccesCheckoutPage,
+  CancelCheckoutPage,
+  PterodactylPanel,
+  PterodactylWebSocket,
   PteroFilesByDirectory,
-  FileManager,
-  PteroFileEditor
+  PterodactylFileManager,
+  PterodactylFileEditor
 } = require("../controllers/clientController.js");
 
 router.all("/*", isUserAuthenticated, (req, res, next) => {
@@ -43,13 +43,14 @@ router.route("/shop/cart").get(getCart);
 
 router.route("/shop/cart/checkout").post(checkoutCart)
 
-router.route("/shop/cart/checkout/success").get(successCheckout);
-router.route("/shop/cart/checkout/cancel").get(cancelCheckout);
+router.route("/shop/cart/checkout/success").get(SuccesCheckoutPage);
+router.route("/shop/cart/checkout/cancel").get(CancelCheckoutPage);
 
-router.route("/services/:id").get(getServiceByID)
-router.route("/services/:id/terminal").post(PostTerminal)
-router.route("/services/:id/files").get(FileManager).post(PteroFilesByDirectory)
-router.route("/services/:id/files/edit").get(PteroFileEditor)
+// Gestion d'un service Pterodactyl 
+router.route("/services/:id").get(PterodactylPanel)
+router.route("/services/:id/websocket").post(PterodactylWebSocket)
+router.route("/services/:id/files").get(PterodactylFileManager).post(PteroFilesByDirectory)
+router.route("/services/:id/files/edit").get(PterodactylFileEditor)
 
 
 module.exports = router;

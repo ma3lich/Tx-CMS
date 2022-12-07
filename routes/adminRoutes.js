@@ -6,13 +6,13 @@ const {
 const router = express.Router();
 const {
   index,
-  getUsers,
-  createUser,
-  submitCreatedUser,
-  editUser,
-  submitEditedUser,
-  mailUser,
-  SendMailUser,
+  getUsersListePage,
+  getCreateUserPage,
+  postCreateUser,
+  getEditUserPage,
+  postEditUser,
+  getMailUserPage,
+  postMailUser,
   deleteUser,
   getPlans,
   createPlan,
@@ -45,13 +45,13 @@ router.all("/*", isUserAuthenticated, isUserAdmin, (req, res, next) => {
 
 router.route("/").get(index);
 
-router.route("/users").get(getUsers);
+router.route("/users").get(getUsersListePage);
 
-router.route("/users/create").get(createUser).post(submitCreatedUser);
+router.route("/users/create").get(getCreateUserPage).post(postCreateUser);
 
-router.route("/users/edit/:id").get(editUser).post(submitEditedUser);
+router.route("/users/edit/:id").get(getEditUserPage).post(postEditUser);
 
-router.route("/users/mail/:email").get(mailUser).post(SendMailUser);
+router.route("/users/mail/:id").get(getMailUserPage).post(postMailUser);
 
 router.route("/users/delete/:id").post(deleteUser);
 

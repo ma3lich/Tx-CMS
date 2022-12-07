@@ -1,123 +1,171 @@
-    <nav class="">
-        <div class="logo">
-            <img src="{{app.config.company.logo}}" alt="">
-        </div>
-        <ul class="menu">
-            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
-            <hr>
-            <li  class="active"><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
-            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
-            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+<nav class="">
+    <div class="logo">
+        <img src="{{config.host.logo}}" alt="">
+    </div>
+    <ul class="menu">
+        <li><a href="/admin">
+                <ion-icon name="speedometer-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li class="active"><a href="/admin/users">
+                <ion-icon name="people-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li><a href="/admin/plans">
+                <ion-icon name="storefront-outline"></ion-icon>
+            </a></li>
+        <li><a href="/admin/categories">
+                <ion-icon name="copy-outline"></ion-icon>
+            </a></li>
+        <li><a href="/admin/servers">
+                <ion-icon name="server-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li><a href="/admin/settings">
+                <ion-icon name="cog-outline"></ion-icon>
+            </a></li>
 
-        </ul>
+    </ul>
 
-        <ul class="menu">
-            <li style="visibility: hidden;"></li>
-        </ul>
-    </nav>
-    
-    
-    <section class="container">
+    <ul class="menu">
+        <li style="visibility: hidden;"></li>
+    </ul>
+</nav>
 
-        <div class="tables">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nom</th>
-                            <th>Email</th>
-                            <th>sex</th>
-                            <th>Date de naissance</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <style>
 
-                            table {
-                                 page-break-before:always; 
-                                 align-content: center;
-                            }
+<section class="container">
 
-                            td {
-                                text-transform: capitalize;
-                                width: auto;
-                            }
+    {{#if success_messages}}
+    <div class="notif success">
+        <span class="title">Bravo ! </span>
+        <span class="message">{{success_messages}}</span>
+        <span class="close" id="close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+    </div>
 
-                            td.logo {
-                                width: 10%;
-                                margin: auto;
-                            }
+    <script>
+        $('#close').click(() => {
+            $('.notif').fadeTo(300, 0.01, function () {
+                $(this).slideUp(300, function () {
+                    $(this).remove();
+                });
+            });
+        })
+    </script>
+    {{/if}}
 
-                            td.logo img {
-                                width: 40%;
-                                border-radius: 100%;
-                            }
+    {{#if error_messages}}
+    <div class="notif error">
+        <span class="title">Messages d'erreur ! </span>
+        <span class="message">{{error_messages}}</span>
+        <span class="close" id="close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+    </div>
 
-                        </style>
-                        {{#each users}}
-                            <tr>
-                                <td>{{id}}</td>
-                                <td>{{name}} {{lastname}}</td>
-                                <td style="text-transform:inherit;">{{email}}</td>
-                                <td>{{sex}}</td>
-                                <td>{{birthday}}</td>
-                                <td>{{role}}</td>
-                                <td>
-                                    <a href="/admin/users/edit/{{id}}">Gérer</a>
-                                    <a class="normal" href="/admin/users/mail/{{email}}">Mail</a>
-                                    <form  action="/admin/users/delete/{{id}}" method="post">
-                                        <button class="danger" type="submit">Suprimé</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            {{else}}
+    <script>
+        $('#close').click(() => {
+            $('.notif').fadeTo(300, 0.01, function () {
+                $(this).slideUp(300, function () {
+                    $(this).remove();
+                });
+            });
+        })
+    </script>
+    {{/if}}
 
-                            <tr>
-                                <td colspan="7">Aucun utilisateurs n'est inscrit sur votre TxCMS</td>
-                            </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="tables">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>sex</th>
+                    <th>Date de naissance</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <style>
+                    table {
+                        page-break-before: always;
+                        align-content: center;
+                    }
 
-        <div class="createButtons">
-            <a href="/admin/users/create">Crée un utilisateur</a>
-        </div>
+                    td {
+                        text-transform: capitalize;
+                        width: auto;
+                    }
 
-        <footer>
-            <span>Copyright © {{app.config.company.name}}</span>
-            <span>TxCMS - {{system.version}}</span>
-        </footer>
+                    td.logo {
+                        width: 10%;
+                        margin: auto;
+                    }
 
-    </section>
+                    td.logo img {
+                        width: 40%;
+                        border-radius: 100%;
+                    }
+                </style>
+                {{#each users}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{name}} {{lastname}}</td>
+                    <td style="text-transform:inherit;">{{email}}</td>
+                    <td>{{sex}}</td>
+                    <td>{{birthday}}</td>
+                    <td>{{role}}</td>
+                    <td>
+                        <a href="/admin/users/edit/{{id}}">Gérer</a>
+                        <a class="normal" href="/admin/users/mail/{{id}}">Mail</a>
+                        <form action="/admin/users/delete/{{id}}" method="post">
+                            <button class="danger" type="submit">Suprimé</button>
+                        </form>
+                    </td>
+                </tr>
+                {{else}}
+
+                <tr>
+                    <td colspan="7">Aucun utilisateurs n'est inscrit sur votre TxCMS</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <div class="createButtons">
+        <a href="/admin/users/create">Crée un utilisateur</a>
+    </div>
+
+    <footer>
+        <span>Copyright © {{app.config.company.name}}</span>
+        <span>TxCMS - {{system.version}}</span>
+    </footer>
+
+</section>
 
 <section class="profile_bar">
-
     <div class="user">
         <a class="logo" href="/client/profile">
             <img id="userlogo" src="" alt="">
             <script>
-                    if("{{user.logo}}" == ""){
-                        
-                        if("{{user.sex}}" == "male"){
-                            document.getElementById('userlogo').src = "/images/male-logo.png"
-                        } 
-
-                        if("{{user.sex}}" == "female"){
-                            document.getElementById('userlogo').src = "/images/female-logo.png"
-                        }
-
-                    }else{
-                        document.getElementById('userlogo').src = "{{user.logo}}"
+                if ("{{user.logo}}" == "") {
+                    switch ("{{user.sex}}") {
+                        case "male":
+                            $('#userlogo').attr('src', "/images/male-logo.png");
+                            break;
+                        case "female":
+                            $('#userlogo').attr('src', "/images/female-logo.png");
+                            break;
                     }
-                </script>
+                } else {
+                    $('#userlogo').attr('src', "{{user.logo}}")
+                }
+            </script>
             <span class="username">{{user.lastname}} {{user.name}}</span>
         </a>
         <div>
@@ -175,13 +223,6 @@
                     </div>
                 </a>
             </li>
-                <script>
-                    if("{{user.role}}" == "admin"){
-                        document.getElementById("admin").style.display = "block";
-                    }else{
-                        document.getElementById("admin").style.display = "none";
-                    }
-                </script>
         </ul>
     </div>
 </section>

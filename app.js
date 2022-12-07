@@ -5,20 +5,11 @@ const chalk = require("chalk");
 const spinner = ora();
 spinner.start(`${chalk.yellow("Lancement de TxCMS sur le serveur")}`);
 
-const LicenseKey = require("./private/license.js");
 const db = require("./config/database.js");
 const txcms = require("./config/app.json");
+const { getEnVvalue } = require("./config/config.js");
 
-/*// Lancer l'application en cas de validité de la license
-LicenseKey.then((license) => {
-  main();
-}).catch(function (error) {
-  // Return une erreur en cas d'invalidité de la license
-  console.log(error.message);
-  spinner.fail(
-    `${chalk.red("Le lancement de TxCMS sur le serveur a échoué !")}`
-  );
-});*/
+
 
 main();
 
@@ -30,7 +21,6 @@ function main() {
   const session = require("express-session");
   const passport = require("passport");
   const bodyParser = require("body-parser"); // parser middleware
-  const cookieParser = require("cookie-parser");
   const MySQLStore = require("express-mysql-session")(session);
   const hbs = require("express-handlebars");
   const flash = require("connect-flash");
@@ -48,7 +38,6 @@ function main() {
 
   /*Flash And Session*/
 
-  app.use(cookieParser());
   app.use(
     session({
       key: "txcms-session",
@@ -64,11 +53,13 @@ function main() {
 
   app.use(flash());
 
-  app.use(function (req, res, next) {
-    res.locals.success_messages = req.flash("success_messages");
-    res.locals.error_messages = req.flash("error_messages");
-    next();
-  });
+  app.use(
+    (req, res, next) => {
+      res.locals.success_messages = req.flash("success-message");
+      res.locals.error_messages = req.flash("error-message");
+      next();
+    }
+  );
 
   /* Gestion des view (handlebars)*/
 
@@ -93,23 +84,23 @@ function main() {
   app.use("/client", clientRoutes);
 
   /*Lancement de l'application web */
-  app.listen(txcms.config.system.port, () => {
+  app.listen(getEnVvalue('APP_PORT'), () => {
     spinner.succeed(
       `${chalk.green(
         "Lancement de TxCMS réussi sur : " +
-          chalk.dim.white(
-            "\n\n" +
-              "   http://" +
-              serverIP +
-              ":" +
-              txcms.config.system.port +
-              "\n" +
-              "   https://" +
-              txcms.config.system.hostname +
-              ":" +
-              txcms.config.system.port +
-              "\n"
-          )
+        chalk.dim.white(
+          "\n\n" +
+          "   http://" +
+          serverIP +
+          ":" +
+          getEnVvalue('APP_PORT') +
+          "\n" +
+          "   https://" +
+          getEnVvalue('APP_URL') +
+          ":" +
+          getEnVvalue('APP_PORT') +
+          "\n"
+        )
       )}`
     );
   });

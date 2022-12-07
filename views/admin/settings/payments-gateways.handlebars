@@ -1,124 +1,158 @@
-    <nav class="">
-        <div class="logo">
-            <img src="{{app.config.company.logo}}" alt="">
-        </div>
-        <ul class="menu">
-            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
-            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
-            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
-            <hr>
-            <li  class="active"><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+<nav class="">
+    <div class="logo">
+        <img src="{{config.host.logo}}" alt="">
+    </div>
+    <ul class="menu">
+        <li><a href="/admin">
+                <ion-icon name="speedometer-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li><a href="/admin/users">
+                <ion-icon name="people-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li><a href="/admin/plans">
+                <ion-icon name="storefront-outline"></ion-icon>
+            </a></li>
+        <li><a href="/admin/categories">
+                <ion-icon name="copy-outline"></ion-icon>
+            </a></li>
+        <li><a href="/admin/servers">
+                <ion-icon name="server-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li class="active"><a href="/admin/settings">
+                <ion-icon name="cog-outline"></ion-icon>
+            </a></li>
 
+    </ul>
+
+    <ul class="menu">
+        <li><a href="/client">
+                <ion-icon name="home-outline"></ion-icon>
+            </a></li>
+    </ul>
+</nav>
+
+<section class="container register">
+    <div class="notice">
+        <span class="title">Informations : </span>
+        <ul>
+            <li>
+                <a href="https://developer.paypal.com/dashboard/">ici</a>
+            </li>
+            <li>
+                <a href="https://dashboard.stripe.com/">ici</a>
+            </li>
         </ul>
+    </div>
+</section>
 
-        <ul class="menu">
-            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
-        </ul>
-    </nav>
-    
-    <section class="container register">
-        <div class="notice">
-            <span class="title">Informations : </span>
-            <ul>
-                <li>
-                    <a href="https://developer.paypal.com/dashboard/">ici</a> </li>
-                <li>Définir SWAP sur 0 le déactivera et sur -1 autorisera une
-                    <a href="https://dashboard.stripe.com/">ici</a></li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="profile_bar register">
-        <div class="logoText">
-            <img src="/images/logo-text.png" classe=""alt="">
-            <h2>Gérer les moyens de paiements</h2>
-        </div>
-        <form   action="/admin/settings/payments-gateways" method="post">
-                <h2>Paypal :</h2>
-
-                <section class="formInput">
-                    <div>
-                        <label for="PaypalPublicKey">Clé public</label>
-                        <br>
-                        <input type="text" name="PaypalPublicKey" id="PaypalPublicKey" value={{paymentsGateways.config.paypal.client_id}}>
-                    </div>
-                </section>
-
-                <section class="formInput">
-                    <div>
-                        <label for="PaypalSecretKey">Clé Privé</label>
-                        <br>
-                        <input type="text" name="PaypalSecretKey" id="PaypalSecretKey" value="{{paymentsGateways.config.paypal.client_secret}}">
-                    </div>
-                </section>
+<section class="profile_bar register">
+    <div class="logoText">
+        <img src="/images/logo-text.png" classe="" alt="">
+        <h2>Gérer les moyens de paiements</h2>
+    </div>
 
 
-                <section class="formInput">
-                    <div>
-                        <div class="switchInput">
-                            <label class="toggler-wrapper style-1">
-                                <input type="checkbox" id="PaypalEnabled" name="PaypalEnabled" >
-                                <div class="toggler-slider">
-                                    <div class="toggler-knob"></div>
-                                </div>
-                            </label>
-                            <label for="paypal">Autoriser les paiements Paypal</label>
+
+    <form action="/admin/settings/payments-gateways" method="post">
+
+        <h2>Paypal :</h2>
+
+        <section class="formInput">
+            <div>
+                <label for="paypalPublic">Clé public</label>
+                <br>
+                <input type="password" name="paypalPublic" id="paypalPublic">
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="paypalSecret">Clé Privé</label>
+                <br>
+                <input type="password" name="paypalSecret" id="paypalSecret">
+            </div>
+        </section>
+
+
+        <section class="formInput">
+            <div>
+                <div class="switchInput">
+                    <label class="toggler-wrapper style-1">
+                        <input type="checkbox" id="paypal" name="paypal">
+                        <div class="toggler-slider">
+                            <div class="toggler-knob"></div>
                         </div>
-                        <script>
-                                if({{paymentsGateways.config.stripe.enabled}} == true) {
-                                    document.getElementById('PaypalEnabled').checked = true
-                                }else{
-                                    document.getElementById('PaypalEnabled').checked = false
-                                }
-                        </script>
-                    </div>
-                </section>  
+                    </label>
+                    <label for="paypal">Autoriser les paiements avec Paypal</label>
+                </div>
+            </div>
+        </section>
 
-                <hr>
+        <hr>
 
-                <h2>Stripe (carte bancaire) :</h2>
+        <h2>Stripe :</h2>
 
-                <section class="formInput">
-                    <div>
-                        <label for="StripePublicKey">Clé public</label>
-                        <br>
-                        <input type="text" name="StripePublicKey" id="StripePublicKey" value="{{paymentsGateways.config.stripe.publicKey}}">
-                    </div>
-                </section>
+        <section class="formInput">
+            <div>
+                <label for="stripePublic">Clé public</label>
+                <br>
+                <input type="password" name="stripePublic" id="stripePublic">
+            </div>
+        </section>
 
-                <section class="formInput">
-                    <div>
-                        <label for="StripeSecretKey">Clé Privé</label>
-                        <br>
-                        <input type="text" name="StripeSecretKey" id="StripeSecretKey" value="{{paymentsGateways.config.stripe.secretKey}}">
-                    </div>
-                </section>
+        <section class="formInput">
+            <div>
+                <label for="stripeSecret">Clé Privé</label>
+                <br>
+                <input type="password" name="stripeSecret" id="stripeSecret" </div>
+        </section>
 
-                <section class="formInput">
-                    <div>
-                        <div class="switchInput">
-                            <label class="toggler-wrapper style-1">
-                                <input type="checkbox" id="StripeEnabled" name="StripeEnabled" >
-                                <div class="toggler-slider">
-                                    <div class="toggler-knob"></div>
-                                </div>
-                            </label>
-                            <label for="paypal">Autoriser les paiements Stripe</label>
+        <section class="formInput">
+            <div>
+                <div class="switchInput">
+                    <label class="toggler-wrapper style-1">
+                        <input type="checkbox" id="stripe" name="stripe">
+                        <div class="toggler-slider">
+                            <div class="toggler-knob"></div>
                         </div>
-                        <script>
-                                if({{paymentsGateways.config.stripe.enabled}} == true) {
-                                    document.getElementById('StripeEnabled').checked = true
-                                }else{
-                                    document.getElementById('StripeEnabled').checked = false
-                                }
-                        </script>
-                    </div>
-                </section>
-                
-                <button type="submit">Sauvegarder</button>
-        </form>
-    </section>
+                    </label>
+                    <label for="stripe">Autoriser les paiements avec Stripe</label>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+        
+        <h2>Portefeuille :</h2>
+
+        <section class="formInput">
+            <div>
+                <div class="switchInput">
+                    <label class="toggler-wrapper style-1">
+                        <input type="checkbox" id="wallet" name="wallet">
+                        <div class="toggler-slider">
+                            <div class="toggler-knob"></div>
+                        </div>
+                    </label>
+                    <label for="wallet">Autoriser les paiements avec le Portefeuille</label>
+                </div>
+            </div>
+        </section>
+
+        <button type="submit">Sauvegarder</button>
+        <script>
+            $('#paypal').prop("checked", {{ config.addons.paypal.enable }});
+            $('#paypalSecret').val('{{config.addons.paypal.secret}}');
+            $('#paypalPublic').val('{{config.addons.paypal.public}}');
+
+            $('#stripe').prop("checked", {{ config.addons.stripe.enable }});
+            $('#stripeSecret').val('{{config.addons.stripe.secret}}');
+            $('#stripePublic').val('{{config.addons.stripe.public}}');
+
+            $('#wallet').prop("checked", {{ config.addons.wallet.enable}});
+        </script>
+    </form>
+</section>
