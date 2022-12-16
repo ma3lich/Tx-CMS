@@ -1,0 +1,176 @@
+<nav class="">
+    <div class="logo">
+        <img src="{{config.host.logo}}" alt="">
+    </div>
+    <ul class="menu">
+        <li><a href="/admin">
+                <ion-icon name="speedometer-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li><a href="/admin/users">
+                <ion-icon name="people-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li><a href="/admin/plans">
+                <ion-icon name="storefront-outline"></ion-icon>
+            </a></li>
+        <li><a href="/admin/categories">
+                <ion-icon name="copy-outline"></ion-icon>
+            </a></li>
+        <li><a href="/admin/servers">
+                <ion-icon name="server-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li class="active"><a href="/admin/settings">
+                <ion-icon name="cog-outline"></ion-icon>
+            </a></li>
+
+    </ul>
+
+    <ul class="menu">
+        <li><a href="/client">
+                <ion-icon name="home-outline"></ion-icon>
+            </a></li>
+    </ul>
+</nav>
+
+<section class="container">
+
+    <script>
+        console.log("{{colors.$light_border_color}}")
+    </script>
+</section>
+
+<section class="profile_bar register">
+    <div class="logoText">
+        <img src="/images/logo-text.png" classe="" alt="">
+        <h2>Gestion du thème : TxCMS</h2>
+    </div>
+    <form action="/admin/settings/themes" method="post">
+        <section class="formInput">
+            <div>
+                <label for="colored_back_1">Couleur de fond primaire</label>
+                <br>
+                <input type="color" name="colored_back_1" id="colored_back_1" required>
+            </div>
+            <div>
+                <label for="colored_back_2">Couleur de fond secondaire</label>
+                <br>
+                <input type="color" name="colored_back_2" id="colored_back_2" required>
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="light_back">Couleur de fond claire</label>
+                <br>
+                <input type="color" name="light_back" id="light_back" required>
+            </div>
+            <div>
+                <label for="mid_text_color">Couleur de text moyenne</label>
+                <br>
+                <input type="color" name="mid_text_color" id="mid_text_color" required>
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="light_text_color">Couleur de text claire</label>
+                <br>
+                <input type="color" name="light_text_color" id="light_text_color" required>
+            </div>
+            <div>
+                <label for="dark_text_color">Couleur de text sombre</label>
+                <br>
+                <input type="color" name="dark_text_color" id="dark_text_color" required>
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="light_border_color">Couleur de bordure claire</label>
+                <br>
+                <input type="color" name="light_border_color" id="light_border_color" required>
+            </div>
+            <div>
+                <label for="dark_border_color">Couleur de bordure sombre</label>
+                <br>
+                <input type="color" name="dark_border_color" id="dark_border_color" required>
+            </div>
+        </section>
+
+        <hr>
+
+        <section class="formInput">
+            <div>
+                <label for="blue">Couleur blue</label>
+                <br>
+                <input type="color" name="blue" id="blue" required>
+            </div>
+            <div>
+                <label for="dark_blue">Couleur blue sombre</label>
+                <br>
+                <input type="color" name="dark_blue" id="dark_blue" required>
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="green">Couleur vert</label>
+                <br>
+                <input type="color" name="green" id="green" required>
+            </div>
+            <div>
+                <label for="dark_green">Couleur vert sombre</label>
+                <br>
+                <input type="color" name="dark_green" id="dark_green" required>
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="red">Couleur rouge</label>
+                <br>
+                <input type="color" name="red" id="red" required>
+            </div>
+            <div>
+                <label for="dark_red">Couleur rouge sombre</label>
+                <br>
+                <input type="color" name="dark_red" id="dark_red" required>
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="orange">Couleur rouge</label>
+                <br>
+                <input type="color" name="orange" id="orange" required>
+            </div>
+            <div>
+                <label for="dark_orange">Couleur rouge sombre</label>
+                <br>
+                <input type="color" name="dark_orange" id="dark_orange" required>
+            </div>
+        </section>
+
+        <button type="submit">Sauvegarder</button>
+        <script>
+            $('#colored_back_1').val("{{colors.$colored_back_1.value.hex}}")
+            $('#colored_back_2').val("{{colors.$colored_back_2.value.hex}}")
+            $('#light_back').val("{{colors.$light_back.value.hex}}")
+            $('#light_border_color').val("{{colors.$light_border_color.value.hex}}")
+            $('#dark_border_color').val("{{colors.$dark_border_color.value.hex}}")
+            $('#dark_text_color').val("{{colors.$dark_text_color.value.hex}}")
+            $('#light_text_color').val("{{colors.$light_text_color.value.hex}}")
+            $('#mid_text_color').val("{{colors.$mid_text_color.value.hex}}")
+            $('#blue').val("{{colors.$blue.value.hex}}")
+            $('#dark_blue').val("{{colors.$dark_blue.value.hex}}")
+            $('#green').val("{{colors.$green.value.hex}}")
+            $('#dark_green').val("{{colors.$dark_green.value.hex}}")
+            $('#red').val("{{colors.$red.value.hex}}")
+            $('#dark_red').val("{{colors.$dark_red.value.hex}}")
+            $('#orange').val("{{colors.$orange.value.hex}}")
+            $('#dark_orange').val("{{colors.$dark_orange.value.hex}}")
+        </script>
+    </form>
+</section>

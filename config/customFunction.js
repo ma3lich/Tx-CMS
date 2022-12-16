@@ -221,29 +221,6 @@ module.exports = {
     })
   },
 
-  getPterodactylNodes: (callback) => {
-    let nodes = [];
-    application.getNodePage().then((response) => {
-      response.forEach((node) => {
-        nodes.push({
-          id: node.attributes.id,
-          name: node.attributes.name,
-          fqdn: node.attributes.fqdn,
-          memory: node.attributes.memory,
-          disk: node.attributes.disk,
-        });
-      });
-      return callback(nodes);
-    });
-  },
-
-  getPterodactylEggs: (callback) => {
-    let eggs = [];
-
-    application.getAllEggs().then((result) => {
-      return callback(eggs);
-    });
-  },
 
   serverIP: ip.address(),
 
@@ -301,4 +278,10 @@ module.exports = {
   getFileExtension: (filename) => {
     return /[.]/.exec(filename) ? /[^.]+$/.exec(filename) : undefined;
   },
+
+  getDirectories: (path) => {
+    return fs.readdirSync(path).filter(function (file) {
+      return fs.statSync(path + '/' + file).isDirectory();
+    });
+  }
 };

@@ -1,93 +1,91 @@
-    <nav class="">
-        <div class="logo">
-            <img src="{{config.host.logo}}" alt="">
-        </div>
-        <ul class="menu">
-            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
-            <hr>
-            <li  class="active"><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
-            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
-            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+<nav class="">
+    <div class="logo">
+        <img src="{{config.host.logo}}" alt="">
+    </div>
+    <ul class="menu">
+        <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+        <hr>
+        <li class="active"><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+        <hr>
+        <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
+        <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
+        <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+        <hr>
+        <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
 
-        </ul>
+    </ul>
 
-        <ul class="menu">
-            <li style="visibility: hidden;"></li>
-        </ul>
-    </nav>
-
-
-    
-    <section class="container">
+    <ul class="menu">
+        <li style="visibility: hidden;"></li>
+    </ul>
+</nav>
 
 
-    </section>
 
-    <section class="profile_bar register">
-        <div class="logoText">
-            <img src="/images/logo-text.png" classe=""alt="">
-            <h2>Contacter l'utilisateur : {{user.name}} {{user.lastname}}</h2>
-        </div>
-        <form   action="/admin/users/mail/{{user.email}}" method="post">
-                <input style="display:none" type="text" name="id" id="id" value={{user.id}}>
-                <section class="formInput">
-                    <div>
-                        <label for="lastname">Nom</label>
-                        <br>
-                        <input required type="text" name="lastname" id="lastname" maxlength="25" readonly>
-                        <script>
-                            document.getElementById('lastname').value = `{{user.lastname}}` 
-                        </script>
-                    </div>
-                    <div>
-                        <label for="name">Prénom</label>
-                        <br>
-                        <input required type="text" name="name" id="name" maxlength="25" readonly>
-                        <script>
-                            document.getElementById('name').value = `{{user.name}}` 
-                        </script>
-                    </div>
-                </section>
+<section class="container">
 
-                <section class="formInput">
-                    <div>
-                        <label for="email">Email</label>
-                        <br>
-                        <input required type="email" name="email" id="email" maxlength="25" readonly>
-                        <script>
-                            document.getElementById('email').value = `{{user.email}}` 
-                        </script>
-                    </div>
-                </section>
 
-                <section class="formInput">
-                    <div>
-                        <label for="subject">Objet du mail</label>
-                        <br>
-                        <input type="text" name="subject" id="subject" required>
-                    </div>
-                    <div>
-                        <label for="template">Templates de messages</label>
-                        <br>
-                        <select name="template" id="template" required>
-                            <option value="none">Aucune</option>
-                            <option value="female">Femme</option>
-                        </select>
-                    </div>
-                </section>
+</section>
 
-                <section class="formInput">
-                    <div>
-                        <label for="name">Votre message</label>
-                        <br>
-                        <textarea required style="resize: none;" placeholder="Écrivez votre message..." name="message" id="message" cols="30" rows="10"></textarea>
-                    </div>
-                </section>
+<section class="profile_bar register">
+    <div class="logoText">
+        <img src="/images/logo-text.png" classe="" alt="">
+        <h2>Contacter l'utilisateur : {{user.name}} {{user.lastname}}</h2>
+    </div>
+    <form action="/admin/users/mail/{{user.email}}" method="post">
+        <input style="display:none" type="text" name="id" id="id">
+        <section class="formInput">
+            <div>
+                <label for="lastname">Nom</label>
+                <br>
+                <input required type="text" name="lastname" id="lastname" maxlength="25" readonly>
+            </div>
+            <div>
+                <label for="name">Prénom</label>
+                <br>
+                <input required type="text" name="name" id="name" maxlength="25" readonly>
+            </div>
+        </section>
 
-                    <button type="submit">Envoyer</button>
-        </form>
-    </section>
+        <section class="formInput">
+            <div>
+                <label for="email">Email</label>
+                <br>
+                <input required type="email" name="email" id="email" maxlength="25" readonly>
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="subject">Objet du mail</label>
+                <br>
+                <input type="text" name="subject" id="subject" required>
+            </div>
+            <div>
+                <label for="template">Templates de messages</label>
+                <br>
+                <select name="template" id="template" required>
+                    <option value="none">Aucune</option>
+                    <option value="female">Femme</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="name">Votre message</label>
+                <br>
+                <textarea required style="resize: none;" placeholder="Écrivez votre message..." name="message"
+                    id="message" cols="30" rows="10"></textarea>
+            </div>
+        </section>
+
+        <button type="submit">Envoyer</button>
+        <script>
+            $('#id').val('{{user.id}}');
+            $('#name').val('{{user.name}}');
+            $('#lastname').val('{{user.lastname}}');
+            $('#email').val('{{user.email}}');
+        </script>
+    </form>
+</section>

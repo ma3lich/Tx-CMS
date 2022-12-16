@@ -75,6 +75,8 @@
     </script>
     {{/if}}
 
+    <span class="title">Liste des utilisateurs : </span>
+
     <div class="tables">
         <table>
             <thead>
@@ -82,7 +84,7 @@
                     <th>#</th>
                     <th>Nom</th>
                     <th>Email</th>
-                    <th>sex</th>
+                    <th>Sexe</th>
                     <th>Date de naissance</th>
                     <th>Role</th>
                     <th>Action</th>
@@ -114,15 +116,21 @@
                 <tr>
                     <td>{{id}}</td>
                     <td>{{name}} {{lastname}}</td>
-                    <td style="text-transform:inherit;">{{email}}</td>
-                    <td>{{sex}}</td>
+                    <td>{{email}}</td>
+                    <td id="sex">{{sex}}</tdi>
                     <td>{{birthday}}</td>
                     <td>{{role}}</td>
                     <td>
-                        <a href="/admin/users/edit/{{id}}">Gérer</a>
-                        <a class="normal" href="/admin/users/mail/{{id}}">Mail</a>
+                        <button onclick="location.href='/admin/users/edit/{{id}}';">
+                            <ion-icon name="brush-outline"></ion-icon>
+                        </a>
+                        <button class="normal" onclick="location.href='/admin/users/mail/{{id}}';">
+                            <ion-icon name="send-outline"></ion-icon>
+                        </button>
                         <form action="/admin/users/delete/{{id}}" method="post">
-                            <button class="danger" type="submit">Suprimé</button>
+                            <button class="danger" type="submit">
+                                <ion-icon name="trash-outline"></ion-icon>
+                            </button>
                         </form>
                     </td>
                 </tr>
@@ -142,7 +150,7 @@
     </div>
 
     <footer>
-        <span>Copyright © {{app.config.company.name}}</span>
+        <span>Copyright © {{config.host.name}}</span>
         <span>TxCMS - {{system.version}}</span>
     </footer>
 

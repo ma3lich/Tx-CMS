@@ -1,9 +1,39 @@
 const db = require("../../../config/database");
-const { Client } = require("./config")
+const { Application, Client } = require("./config")
 const { timeSince, getFileExtension } = require("../../../config/customFunction");
 
 
 module.exports = {
+  getPterodactylNodes: (callback) => {
+    Application.getNodePage().then((response) => {
+      let nodes = [];
+      response.forEach((node) => {
+        nodes.push({
+          id: node.attributes.id,
+          name: node.attributes.name,
+          fqdn: node.attributes.fqdn,
+          memory: node.attributes.memory,
+          disk: node.attributes.disk,
+        });
+      });
+      return callback(nodes);
+    });
+  },
+
+  getPterodactylNests: (callback) => {
+    Application.getAllNests().then((response) => {
+      return callback(response);
+    })
+  },
+
+  getPterodactylEggsByNestID: (nest, callback) => {
+    Application.getAllEggs(nest).then((result) => {
+      return callback(result);
+    });
+  },
+
+
+
   GetPterodactylServerInfo: (serviceID, userID, callback) => {
     db.query(
       `SELECT * FROM services WHERE owner = ${userID} AND id = ${serviceID} `,

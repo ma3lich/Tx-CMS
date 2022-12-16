@@ -545,6 +545,7 @@ nav {
             font-size: 1rem;
             padding: 10px 20px;
             resize: none;
+            background: transparent;
 
             &:focus {
                 border: 1px solid theme.$dark_border_color;
@@ -849,9 +850,10 @@ nav {
                     }
 
                     td:last-child {
-                        form {
-                            display: inline-block;
-                        }
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 80px;
                     }
 
                     a,
@@ -860,14 +862,22 @@ nav {
                         background: theme.$colored_back_1;
                         box-shadow: 5px 5px 15px rgba(theme.$colored_back_1, 0.5);
                         color: theme.$light_text_color;
-                        padding: 5px 20px;
-                        margin: 0 2%;
+                        width: 35px;
+                        font-size: 1.1rem;
+                        aspect-ratio: 1;
+                        margin: 0 3%;
                         border-radius: 12px;
+                        flex-direction: row;
+                        text-align: center;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                         transition: all 0.3s;
+
                         &:hover {
                             background: theme.$colored_back_2;
                             box-shadow: 5px 5px 15px rgba(theme.$colored_back_2, 0.7);
-                            transform: scale(1.02);
+                            transform: translateY(1px);
                         }
                     }
 
@@ -875,6 +885,7 @@ nav {
                     button.danger {
                         background: theme.$red;
                         box-shadow: 5px 5px 15px rgba(theme.$red, 0.5);
+                        transition: all 0.3s;
 
                         &:hover {
                             background: theme.$dark_red;
@@ -886,6 +897,7 @@ nav {
                     button.normal {
                         background: theme.$blue;
                         box-shadow: 5px 5px 15px rgba(theme.$blue, 0.5);
+                        transition: all 0.3s;
 
                         &:hover {
                             background: theme.$dark_blue;
@@ -1447,13 +1459,14 @@ nav {
             border-radius: 12px;
             color: theme.$light_text_color;
             box-shadow: 5px 5px 18px rgba(theme.$colored_back_1, 0.15), -5px -5px 18px rgba(theme.$colored_back_1, 0.15);
-            transition: all 0.3s;
             background: theme.$colored_back_1;
             width: 20%;
             font-weight: 600;
             margin: 1% 0;
+            transition: all 0.3s;
             &:hover {
                 background-color: theme.$colored_back_2;
+                transform: scale(1.03);
             }
         }
     }
@@ -1507,7 +1520,7 @@ nav {
         justify-content: space-between;
         width: 85%;
         border-radius: 20px;
-        background: theme.$light_text_color;
+        background: theme.$light_back;
         margin-top: 20%;
         margin-bottom: 5%;
 
@@ -1517,7 +1530,6 @@ nav {
             justify-content: space-between;
             width: 100%;
             border-radius: 20px;
-            background: theme.$light_text_color;
         }
 
         .logo {
@@ -1584,6 +1596,7 @@ nav {
             border-radius: 8px;
             transition: all 0.3s;
             width: 85%;
+            background: theme.$light_back;
             margin: auto;
             color: theme.$dark_text_color;
             box-shadow: 4px 4px 10px rgba(theme.$colored_back_1, 0.01);
@@ -1628,6 +1641,7 @@ nav {
                 color: theme.$dark_text_color;
                 box-shadow: 4px 4px 10px rgba(theme.$colored_back_1, 0.01);
                 border: 0px solid transparent;
+                background: transparent;
                 font-weight: 600;
 
                 &:focus {
@@ -1820,6 +1834,14 @@ nav {
                 border: 1px solid theme.$dark_text_color;
                 outline-offset: 0px;
                 outline: none;
+            }
+            &::-moz-color-swatch {
+                border-radius: 8px;
+                border: none;
+            }
+            &::-webkit-color-swatch {
+                border-radius: 8px;
+                border: none;
             }
         }
     }

@@ -1,22 +1,29 @@
- <nav class="">
+<nav class="">
     <div class="logo">
         <img src="{{config.host.logo}}" alt="">
     </div>
     <ul class="menu">
-        <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+        <li><a href="/admin">
+                <ion-icon name="speedometer-outline"></ion-icon>
+            </a></li>
         <hr>
-        <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+        <li><a href="/admin/users">
+                <ion-icon name="people-outline"></ion-icon>
+            </a></li>
         <hr>
-        <li class="active"><a href="/admin/plans"><ion-icon
-                    name="storefront-outline"></ion-icon></a></li>
-        <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
-        <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+        <li class="active"><a href="/admin/plans">
+                <ion-icon name="storefront-outline"></ion-icon>
+        </a></li>
         <hr>
-        <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+        <li><a href="/admin/settings">
+                <ion-icon name="cog-outline"></ion-icon>
+            </a></li>
     </ul>
 
     <ul class="menu">
-        <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        <li><a href="/client">
+                <ion-icon name="home-outline"></ion-icon>
+            </a></li>
     </ul>
 </nav>
 
@@ -30,6 +37,8 @@
         <h2>Gérer une offre Proxmox/Pterodactyl</h2>
     </div>
     <form action="/admin/plans/edit/:id" method="post">
+        <input style="display:none" type="text" name="id" id="id" value={{plan.id}}>
+
         <section class="formInput">
             <div>
                 <label for="name">Nom de l'offre</label>
@@ -39,8 +48,7 @@
             <div>
                 <label for="category">Catégorie</label>
                 <br>
-                <select style="text-transform:capitalize;" name="category"
-                    id="category" disabled>
+                <select style="text-transform:capitalize;" name="category" id="category" disabled>
                     <option selected value={{plan.category}}>{{plan.category}}</option>
                 </select>
 
@@ -51,9 +59,8 @@
             <div>
                 <label for="price">Prix de l'offre (€)</label>
                 <br>
-                <input type="number" name="price" id="price" max="999" min="0"
-                    step="0.01" pattern="^\d+(?:\.\d{1,2})?$" required
-                    value={{plan.price}}>
+                <input type="number" name="price" id="price" max="999" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$"
+                    required value={{plan.price}}>
             </div>
             <div>
                 <label for="stock">État du stock</label>
@@ -79,8 +86,8 @@
                 </select>
 
                 <script>
-                            document.getElementById('state').value = `{{plan.state}}`
-                        </script>
+                    document.getElementById('state').value = `{{plan.state}}`
+                </script>
             </div>
         </section>
         <button type="submit">Sauvegarder</button>
@@ -89,11 +96,11 @@
 
 
 <style>
-        .hide{
-            display: none;
-        }
+    .hide {
+        display: none;
+    }
 
-        .show{
-            display: block;
-        }
-    </style>
+    .show {
+        display: block;
+    }
+</style>

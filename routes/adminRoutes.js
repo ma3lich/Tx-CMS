@@ -14,18 +14,19 @@ const {
   getMailUserPage,
   postMailUser,
   deleteUser,
-  getPlans,
-  createPlan,
-  submitCreatedPlan,
-  editPlan,
-  submitEditedPlan,
-  configPterodactylPlan,
+  getPlansListePage,
+  getCreatePlanPage,
+  postCreatePlan,
+  getEditPlanPage,
+  postEditPlan,
+  getConfigPterodactylPlanPage,
+  postPterodactylConfigPlan,
   deletePlan,
-  getCategories,
-  createCategory,
-  submitCreatedCategory,
-  editCategory,
-  submitEditedCategory,
+  getCategoriesListePage,
+  getCreateCategoriesPage,
+  postCreateCategories,
+  getEditCategoriesPage,
+  postEditCategories,
   deleteCategory,
   getServers,
   getSettings,
@@ -36,6 +37,8 @@ const {
   postMailSettings,
   getPaymentsSettings,
   postPaymentsSettings,
+  getThemesSettings,
+  postThemesSettings,
 } = require("../controllers/adminController.js");
 
 router.all("/*", isUserAuthenticated, isUserAdmin, (req, res, next) => {
@@ -55,28 +58,24 @@ router.route("/users/mail/:id").get(getMailUserPage).post(postMailUser);
 
 router.route("/users/delete/:id").post(deleteUser);
 
-router.route("/plans").get(getPlans);
+router.route("/plans").get(getPlansListePage);
 
-router.route("/plans/create").get(createPlan).post(submitCreatedPlan);
+router.route("/plans/create").get(getCreatePlanPage).post(postCreatePlan);
 
-router.route("/plans/edit/:id").get(editPlan).post(submitEditedPlan);
-router.route("/plans/config/1/:id").get(configPterodactylPlan); //.post(submitConfigPlan);
-
+router.route("/plans/edit/:id").get(getEditPlanPage).post(postEditPlan);
+router.route("/plans/config/1/:id").get(getConfigPterodactylPlanPage).post(postPterodactylConfigPlan)
 router.route("/plans/delete/:id").post(deletePlan);
 
-router.route("/categories").get(getCategories);
-
+router.route("/plans/categories").get(getCategoriesListePage);
 router
-  .route("/categories/create")
-  .get(createCategory)
-  .post(submitCreatedCategory);
-
+  .route("/plans/categories/create")
+  .get(getCreateCategoriesPage)
+  .post(postCreateCategories);
 router
-  .route("/categories/edit/:id")
-  .get(editCategory)
-  .post(submitEditedCategory);
-
-router.route("/categories/delete/:id").post(deleteCategory);
+  .route("/plans/categories/edit/:id")
+  .get(getEditCategoriesPage)
+  .post(postEditCategories);
+router.route("/plans/categories/delete/:id").post(deleteCategory);
 
 router.route("/servers").get(getServers);
 
@@ -85,6 +84,8 @@ router.route("/settings").get(getSettings).post(postSettings);
 router.route("/settings/database").get(getDBSettings).post(postDBSettings);
 
 router.route("/settings/e-mail").get(getMailSettings).post(postMailSettings);
+router.route("/settings/themes").get(getThemesSettings).post(postThemesSettings);
+
 
 router
   .route("/settings/payments-gateways")

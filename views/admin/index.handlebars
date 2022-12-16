@@ -105,6 +105,7 @@
     </div>
 
     <script>
+
         am5.ready(function () {
             var usersChart = am5.Root.new("usersChart");
             var serviceChart = am5.Root.new("serviceChart");
@@ -228,23 +229,21 @@
 
 
 <section class="profile_bar">
-
     <div class="user">
         <a class="logo" href="/client/profile">
             <img id="userlogo" src="" alt="">
             <script>
                 if ("{{user.logo}}" == "") {
-
-                    if ("{{user.sex}}" == "male") {
-                        document.getElementById('userlogo').src = "/images/male-logo.png"
+                    switch ("{{user.sex}}") {
+                        case "male":
+                            $('#userlogo').attr('src', "/images/male-logo.png");
+                            break;
+                        case "female":
+                            $('#userlogo').attr('src', "/images/female-logo.png");
+                            break;
                     }
-
-                    if ("{{user.sex}}" == "female") {
-                        document.getElementById('userlogo').src = "/images/female-logo.png"
-                    }
-
                 } else {
-                    document.getElementById('userlogo').src = "{{user.logo}}"
+                    $('#userlogo').attr('src', "{{user.logo}}")
                 }
             </script>
             <span class="username">{{user.lastname}} {{user.name}}</span>
@@ -307,3 +306,4 @@
         </ul>
     </div>
 </section>
+

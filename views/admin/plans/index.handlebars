@@ -1,107 +1,216 @@
-    <nav class="">
-        <div class="logo">
-            <img src="{{config.host.logo}}" alt="">
+<nav class="">
+    <div class="logo">
+        <img src="{{config.host.logo}}" alt="">
+    </div>
+    <ul class="menu">
+        <li><a href="/admin">
+                <ion-icon name="speedometer-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li><a href="/admin/users">
+                <ion-icon name="people-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li class="active"><a href="/admin/plans">
+                <ion-icon name="storefront-outline"></ion-icon>
+        </a></li>
+        <hr>
+        <li><a href="/admin/settings">
+                <ion-icon name="cog-outline"></ion-icon>
+            </a></li>
+    </ul>
+
+    <ul class="menu">
+        <li><a href="/client">
+                <ion-icon name="home-outline"></ion-icon>
+            </a></li>
+    </ul>
+</nav>
+
+
+
+<section class="container">
+
+
+    {{#if success_messages}}
+    <div class="notif success">
+        <span class="title">Bravo ! </span>
+        <span class="message">{{success_messages}}</span>
+        <span class="close" id="close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+    </div>
+
+    <script>
+        $('#close').click(() => {
+            $('.notif').fadeTo(300, 0.01, function () {
+                $(this).slideUp(300, function () {
+                    $(this).remove();
+                });
+            });
+        })
+    </script>
+    {{/if}}
+
+    {{#if error_messages}}
+    <div class="notif error">
+        <span class="title">Messages d'erreur ! </span>
+        <span class="message">{{error_messages}}</span>
+        <span class="close" id="close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+    </div>
+
+    <script>
+        $('#close').click(() => {
+            $('.notif').fadeTo(300, 0.01, function () {
+                $(this).slideUp(300, function () {
+                    $(this).remove();
+                });
+            });
+        })
+    </script>
+    {{/if}}
+
+
+    <span class="title">Liste de vos offres : </span>
+    <div class="tables">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom du produit</th>
+                    <th>Catégorie</th>
+                    <th>Prix</th>
+                    <th>État du stock</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each plans}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{name}}</td>
+                    <td style="text-transform:capitalize;">{{category}}</td>
+                    <td>{{price}}€</td>
+                    {{#if stock}}
+                    <td class="state actif"> <label for="">En stock : {{stock}}</label></td>
+                    {{else}}
+                    <td class="state inactif"> <label for="">Repture de stock</label></td>
+                    {{/if}}
+
+                    <td>
+                        <button onclick="location.href='/admin/plans/edit/{{id}}';"><ion-icon
+                                name="brush-outline"></ion-icon></button>
+                        <button class="normal"
+                            onclick="location.href='/admin/plans/config/{{server}}/{{id}}';"><ion-icon
+                                name="build-outline"></ion-icon></button>
+                        <form action="/admin/plans/delete/{{id}}" method="post">
+                            <button class="danger" type="submit"><ion-icon name="trash-outline"></ion-icon></button>
+                        </form>
+                    </td>
+                </tr>
+
+                {{else}}
+
+                <tr>
+                    <td colspan="6">Aucune offre n'a était créé...</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <div class="createButtons">
+        <a href="/admin/plans/categories/">Gérer les catégories</a>
+
+        <a href="/admin/plans/create">Crée une nouvelle offre</a>
+
+    </div>
+
+    <footer>
+        <span>Copyright © {{config.host.name}}</span>
+        <span>TxCMS - {{system.version}}</span>
+    </footer>
+
+</section>
+
+<section class="profile_bar">
+    <div class="user">
+        <a class="logo" href="/client/profile">
+            <img id="userlogo" src="" alt="">
+            <script>
+                if ("{{user.logo}}" == "") {
+                    switch ("{{user.sex}}") {
+                        case "male":
+                            $('#userlogo').attr('src', "/images/male-logo.png");
+                            break;
+                        case "female":
+                            $('#userlogo').attr('src', "/images/female-logo.png");
+                            break;
+                    }
+                } else {
+                    $('#userlogo').attr('src', "{{user.logo}}")
+                }
+            </script>
+            <span class="username">{{user.lastname}} {{user.name}}</span>
+        </a>
+        <div>
+            <span class="email">{{user.email}}</span>
+            <br>
+            <span class="id">tx-{{user.id}}</span>
         </div>
-        <ul class="menu">
-            <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
-            <hr>
-            <li  class="active"><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
-            <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
-            <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
-            <hr>
-            <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+
+        <form action="/client/logout" method="post">
+            <button type="submit">Me déconnecter</button>
+        </form>
+
+    </div>
+    <div class="menu">
+        <span class="title">Raccourcis</span>
+        <ul>
+            <li>
+                <a href="/client/shop/cart">
+                    <div class="icon">
+                        <ion-icon name="card-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Panier</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/client/profile/emails">
+                    <div class="icon">
+                        <ion-icon name="mail-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Emails reçus</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/client/help">
+                    <div class="icon">
+                        <ion-icon name="help-buoy-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Centre d'aide</span>
+                    </div>
+                </a>
+            </li>
+
+            <li id="admin">
+                <a href="/client">
+                    <div class="icon">
+                        <ion-icon name="settings-outline"></ion-icon>
+                    </div>
+                    <div class="text">
+                        <span>Espace client</span>
+                    </div>
+                </a>
+            </li>
         </ul>
-
-        <ul class="menu">
-            <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
-        </ul>
-    </nav>
-
-    
-    
-    <section class="container">
-        <span class="title">Liste de vos offres : </span>
-        <div class="tables">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nom du produit</th>
-                            <th>Catégorie</th>
-                            <th>Prix</th>
-                            <th>État du stock</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each plans}}
-                            <tr>
-                                <td>{{id}}</td>
-                                <td>{{name}}</td>
-                                <td style="text-transform:capitalize;">{{category}}</td>
-                                <td>{{price}}€</td>
-                                {{#if stock}}
-                                <td class="state actif"> <label for="">En stock : {{stock}}</label></td>
-                                {{else}}
-                                <td class="state inactif"> <label for="">Repture de stock</label></td>
-                                {{/if}}
-
-                                <td>
-                                    <a href="/admin/plans/edit/{{id}}">Gérer</a>
-                                    <a class="normal" href="/admin/plans/config/{{server}}/{{id}}">Config</a>
-                                    <form  action="/admin/plans/delete/{{id}}" method="post">
-                                        <button class="danger" type="submit">Suprimé</button>
-                                    </form>
-                                </td>
-                            </tr>
-
-                            {{else}}
-
-                            <tr>
-                                <td colspan="6">Aucune offre n'a était créé...</td>
-                            </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="createButtons">
-            <a href="/admin/plans/create">Crée une nouvelle offre</a>
-        </div>
-
-        <footer>
-            <span>Copyright © {{app.config.company.name}}</span>
-            <span>TxCMS - {{system.version}}</span>
-        </footer>
-
-    </section>
-
-    <section class="profile_bar">
-
-        {{#if success_message}}
-
-            <div class="notif success" role="alert">
-                <strong>{{success_message}}</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span>$times;</span>
-                </button>
-            </div>
-
-        {{/if}}
-
-        {{#if error_message}}
-
-            <div class="notif error" role="alert">
-                <strong>{{error_message}}</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span>$times;</span>
-                </button>
-            </div>
-
-        {{/if}}
-
-
-    </section>
+    </div>
+</section>

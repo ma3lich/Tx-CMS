@@ -1,0 +1,159 @@
+<nav class="">
+    <div class="logo">
+        <img src="{{config.host.logo}}" alt="">
+    </div>
+    <ul class="menu">
+        <li><a href="/admin">
+                <ion-icon name="speedometer-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li><a href="/admin/users">
+                <ion-icon name="people-outline"></ion-icon>
+            </a></li>
+        <hr>
+        <li class="active"><a href="/admin/plans">
+                <ion-icon name="storefront-outline"></ion-icon>
+        </a></li>
+        <hr>
+        <li><a href="/admin/settings">
+                <ion-icon name="cog-outline"></ion-icon>
+            </a></li>
+    </ul>
+
+    <ul class="menu">
+        <li><a href="/client">
+                <ion-icon name="home-outline"></ion-icon>
+            </a></li>
+    </ul>
+</nav>
+
+
+
+<section class="container">
+
+
+    {{#if success_messages}}
+    <div class="notif success">
+        <span class="title">Bravo ! </span>
+        <span class="message">{{success_messages}}</span>
+        <span class="close" id="close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+    </div>
+
+    <script>
+        $('#close').click(() => {
+            $('.notif').fadeTo(300, 0.01, function () {
+                $(this).slideUp(300, function () {
+                    $(this).remove();
+                });
+            });
+        })
+    </script>
+    {{/if}}
+
+    {{#if error_messages}}
+    <div class="notif error">
+        <span class="title">Messages d'erreur ! </span>
+        <span class="message">{{error_messages}}</span>
+        <span class="close" id="close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+    </div>
+
+    <script>
+        $('#close').click(() => {
+            $('.notif').fadeTo(300, 0.01, function () {
+                $(this).slideUp(300, function () {
+                    $(this).remove();
+                });
+            });
+        })
+    </script>
+    {{/if}}
+
+
+    <div class="tables">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom de la catégorie</th>
+                    <th>Serveur</th>
+                    <th>Livraison</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each categories}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td style="text-transform:capitalize;">{{name}}</td>
+                    <td style="text-transform:capitalize;">{{server}}</td>
+                    {{#if auto}}
+                    <td class="state actif"> <label for="">Automatique</label></td>
+                    {{else}}
+                    <td class="state inactif"> <label for="">Manuelle</label></td>
+                    {{/if}}
+
+                    <td>
+                        <button onclick="location.href='/admin/plans/categories/edit/{{id}}';"><ion-icon
+                                name="brush-outline"></ion-icon></button>
+                        <form action="/admin/plans/categories/delete/{{id}}" method="post">
+                            <button class="danger" type="submit"><ion-icon name="trash-outline"></ion-icon></button>
+                        </form>
+                    </td>
+                </tr>
+
+                {{else}}
+
+                <tr>
+                    <td colspan="6">Aucun offre n'a était créé sur votre TxCMS</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <div class="createButtons">
+        <a href="/admin/plans/categories/servers">Gérer les serveurs</a>
+        <a href="/admin/plans/categories/create">Crée une nouvelle catégorie</a>
+    </div>
+
+    <footer>
+        <span>Copyright © {{app.config.company.name}}</span>
+        <span>TxCMS - {{system.version}}</span>
+    </footer>
+
+</section>
+
+<section class="profile_bar">
+
+    {{#if success_message}}
+
+    <div class="notif success" role="alert">
+        <h2>Succès</h2>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <ion-icon name="close-outline"></ion-icon>
+        </button>
+        <p class="content">{{success_message}}</p>
+    </div>
+
+    {{/if}}
+
+
+    {{#if error_message}}
+
+    <div class="notif error" role="alert">
+        <h2>Erreur</h2>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <ion-icon name="close-outline"></ion-icon>
+        </button>
+        <p class="content">{{error_message}}</p>
+    </div>
+
+    {{/if}}
+
+
+</section>

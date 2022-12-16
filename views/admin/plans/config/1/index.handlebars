@@ -1,4 +1,4 @@
- <nav class="">
+<nav class="">
     <div class="logo">
         <img src="{{config.host.logo}}" alt="">
     </div>
@@ -7,8 +7,7 @@
         <hr>
         <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
         <hr>
-        <li class="active"><a href="/admin/plans"><ion-icon
-                    name="storefront-outline"></ion-icon></a></li>
+        <li class="active"><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
         <li><a href="/admin/categories"><ion-icon name="copy-outline"></ion-icon></a></li>
         <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
         <hr>
@@ -30,8 +29,7 @@
         <div>
             <label for="">Résulta (Mb)</label>
             <br>
-            <input type="number" id="resulutMB" min="0" max="1024000"
-                value="1024" disabled>
+            <input type="number" id="resulutMB" min="0" max="1024000" value="1024" disabled>
         </div>
         <button id="coppyMB">Copier</button>
     </div>
@@ -46,8 +44,7 @@
         <div>
             <label for="">Résulta (%)</label>
             <br>
-            <input type="number" id="resulutPR" min="0" max="1024000"
-                value="100" disabled>
+            <input type="number" id="resulutPR" min="0" max="1024000" value="100" disabled>
         </div>
         <button id="coppyPR">Copier</button>
     </div>
@@ -69,24 +66,28 @@
         <h2>Configuration de l'offre : {{plan.name}}</h2>
     </div>
     <form action="/admin/plans/config/1/:id" method="post">
+        <input readonly style="display:none" type="text" name="id" id="id">
+
         <section class="formInput">
             <div>
-                <label for="name">Node</label>
+                <label for="node">Node</label>
                 <br>
-                <select style="text-transform:capitalize;" name="egg" id="egg">
+                <select style="text-transform:capitalize;" name="node" id="node">
                     {{#each nodes}}
                     <option value={{id}}>{{name}}</option>
                     {{/each}}
                 </select>
             </div>
             <div>
-                <label for="category">Egg</label>
+                <label for="egg">Egg</label>
+                <input required type="number" name="egg" id="egg" step="1" min="0" max="100" value={{plan.cpu}}>
+
                 <br>
-                <select style="text-transform:capitalize;" name="egg" id="egg">
+                <!--<select style="text-transform:capitalize;" name="egg" id="egg">
                     {{#each eggs}}
                     <option value={{id}}>{{name}}</option>
                     {{/each}}
-                </select>
+                </select>-->
             </div>
         </section>
 
@@ -94,33 +95,33 @@
 
         <section class="formInput">
             <div>
-                <label for="name">CPU (%)</label>
+                <label for="allowed_cpu">CPU (%)</label>
                 <br>
-                <input required type="number" name="cpu" id="cpu" step="5"
-                    min="0" max="100000" value={{plan.cpu}}>
+                <input required type="number" name="allowed_cpu" id="allowed_cpu" step="5" min="0" max="100000"
+                    value={{plan.cpu}}>
             </div>
 
             <div>
-                <label for="name">RAM (Mb)</label>
+                <label for="allowed_ram">RAM (Mb)</label>
                 <br>
-                <input required type="number" name="ram" id="ram" min="0"
-                    max="1024000" value={{plan.ram}}>
+                <input required type="number" name="allowed_ram" id="allowed_ram" min="0" max="1024000"
+                    value={{plan.ram}}>
             </div>
         </section>
 
         <section class="formInput">
             <div>
-                <label for="name">Disque (Mb)</label>
+                <label for="allowed_disk">Disque (Mb)</label>
                 <br>
-                <input required type="number" name="disk" id="disk" min="0"
-                    max="10240000" value={{plan.disk}}>
+                <input required type="number" name="allowed_disk" id="allowed_disk" min="0" max="10240000"
+                    value={{plan.disk}}>
             </div>
 
             <div>
-                <label for="name">Swap (Mb)</label>
+                <label for="allowed_swap">Swap (Mb)</label>
                 <br>
-                <input required type="number" name="swap" id="swap" min="0"
-                    max="10240000" value={{plan.swap}}>
+                <input required type="number" name="allowed_swap" id="allowed_swap" min="0" max="10240000"
+                    value={{plan.swap}}>
             </div>
         </section>
 
@@ -128,23 +129,59 @@
 
         <section class="formInput">
             <div>
-                <label for="name">Base de donneés</label>
+                <label for="allowed_db">Base de donneés</label>
                 <br>
-                <input required type="number" name="disk" id="disk" min="0"
-                    max="100" value={{plan.databases}}>
+                <input required type="number" name="allowed_db" id="allowed_db" min="0" max="100"
+                    value={{plan.databases}}>
             </div>
 
             <div>
-                <label for="name">Backups</label>
+                <label for="allowed_backups">Backups</label>
                 <br>
-                <input required type="number" name="swap" id="swap" min="0"
-                    max="100" value={{plan.backups}}>
+                <input required type="number" name="allowed_backups" id="allowed_backups" min="0" max="100"
+                    value={{plan.backups}}>
             </div>
         </section>
 
         <button type="submit">Sauvegarder</button>
+        <script>
+            $('#id').val('{{plan.id}}');
+            $('#node').val('{{plan.node}}');
+            $('#egg').val('{{plan.egg}}');
+            $('#allowed_cpu').val('{{plan.allowed_cpu}}');
+            $('#allowed_ram').val('{{plan.allowed_ram}}');
+            $('#allowed_disk').val('{{plan.allowed_disk}}');
+            $('#allowed_swap').val('{{plan.allowed_swap}}');
+            $('#allowed_db').val('{{plan.allowed_db}}');
+            $('#allowed_backups').val('{{plan.allowed_backups}}');
+
+
+            function copyToClipboard(text) {
+                var textArea = document.createElement("textarea");
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+
+            $('#inputGB').on('change', function () {
+                $('#resulutMB').val($('#inputGB').val() * 1024)
+            })
+            $('#coppyMB').on('click', function () {
+                copyToClipboard($('#resulutMB').val())
+            })
+
+            $('#inputVC').on('change', function () {
+                $('#resulutPR').val($('#inputVC').val() * 100)
+            })
+
+            $('#coppyPR').on('click', function () {
+                copyToClipboard($('#resulutPR').val())
+            })
+
+        </script>
     </form>
 </section>
 
-    <script src="/js/calculator.js"></script>
-
+<script src="/js/calculator.js"></script>

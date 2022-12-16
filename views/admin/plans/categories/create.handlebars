@@ -1,22 +1,29 @@
- <nav class="">
+<nav class="">
     <div class="logo">
         <img src="{{config.host.logo}}" alt="">
     </div>
     <ul class="menu">
-        <li><a href="/admin"><ion-icon name="speedometer-outline"></ion-icon></a></li>
+        <li><a href="/admin">
+                <ion-icon name="speedometer-outline"></ion-icon>
+            </a></li>
         <hr>
-        <li><a href="/admin/users"><ion-icon name="people-outline"></ion-icon></a></li>
+        <li><a href="/admin/users">
+                <ion-icon name="people-outline"></ion-icon>
+            </a></li>
         <hr>
-        <li><a href="/admin/plans"><ion-icon name="storefront-outline"></ion-icon></a></li>
-        <li class="active"><a href="/admin/categories"><ion-icon
-                    name="copy-outline"></ion-icon></a></li>
-        <li><a href="/admin/servers"><ion-icon name="server-outline"></ion-icon></a></li>
+        <li class="active"><a href="/admin/plans">
+                <ion-icon name="storefront-outline"></ion-icon>
+        </a></li>
         <hr>
-        <li><a href="/admin/settings"><ion-icon name="cog-outline"></ion-icon></a></li>
+        <li><a href="/admin/settings">
+                <ion-icon name="cog-outline"></ion-icon>
+            </a></li>
     </ul>
 
     <ul class="menu">
-        <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
+        <li><a href="/client">
+                <ion-icon name="home-outline"></ion-icon>
+            </a></li>
     </ul>
 </nav>
 
@@ -38,7 +45,7 @@
         <img src="/images/logo-text.png" classe="" alt="">
         <h2>Crée une offre</h2>
     </div>
-    <form action="/admin/categories/create" method="post">
+    <form action="/admin/plans/categories/create" method="post">
         <section class="formInput">
             <div>
                 <label for="name">Nom de la catégorie</label>
@@ -50,7 +57,7 @@
                 <br>
                 <select style="text-transform:capitalize;" name="server"
                     id="server">
-                    {{#each server}}
+                    {{#each servers}}
                     <option value={{id}}>{{name}}</option>
                     {{/each}}
                 </select>
