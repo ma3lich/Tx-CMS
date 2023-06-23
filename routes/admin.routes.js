@@ -28,7 +28,9 @@ const {
   getEditCategoriesPage,
   postEditCategories,
   deleteCategory,
-  getServers,
+  getServersListPage,
+  getEditServersPage,
+  postEditServers,
   getSettings,
   postSettings,
   getDBSettings,
@@ -77,7 +79,9 @@ router
   .post(postEditCategories);
 router.route("/plans/categories/delete/:id").post(deleteCategory);
 
-router.route("/servers").get(getServers);
+router.route("/plans/categories/servers").get(getServersListPage);
+router.route("/plans/categories/servers/edit/:id").get(getEditServersPage).post(postEditServers);
+
 
 router.route("/settings").get(getSettings).post(postSettings);
 

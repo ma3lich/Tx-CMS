@@ -4,8 +4,9 @@ const router = express.Router();
 const {
   index,
   logout,
-  getProfile,
+  getProfilePage,
   submitProfile,
+  getWalletPage,
   getShop,
   getShopByCategory,
   getCart,
@@ -18,7 +19,8 @@ const {
   PterodactylWebSocket,
   PteroFilesByDirectory,
   PterodactylFileManager,
-  PterodactylFileEditor
+  PterodactylFileEditor,
+  generateInvocePage
 } = require("../controllers/clientController.js");
 
 router.all("/*", isUserAuthenticated, (req, res, next) => {
@@ -30,11 +32,12 @@ router.route("/").get(index);
 
 router.route("/logout").post(logout);
 
-router.route("/profile").get(getProfile).post(submitProfile);
+router.route("/profile").get(getProfilePage).post(submitProfile);
+router.route("/profile/wallet").get(getWalletPage)
 
 router.route("/shop").get(getShop);
 
-router.route("/shop/categories/:id").get(getShopByCategory);
+router.route("/shop/categories/:name").get(getShopByCategory);
 
 router.route("/shop/cart/add/:id").post(addToCart)
 router.route("/shop/cart/remove/:id").get(removeFromCart)
@@ -51,6 +54,8 @@ router.route("/services/:id").get(PterodactylPanel)
 router.route("/services/:id/websocket").post(PterodactylWebSocket)
 router.route("/services/:id/files").get(PterodactylFileManager).post(PteroFilesByDirectory)
 router.route("/services/:id/files/edit").get(PterodactylFileEditor)
+
+router.route("/transactions/:id").get(generateInvocePage)
 
 
 module.exports = router;

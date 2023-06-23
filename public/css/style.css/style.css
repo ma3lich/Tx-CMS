@@ -20,14 +20,14 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgba(102, 112, 218, 0.3);
+  background: rgba(98, 111, 223, 0.3);
   border-radius: 12px;
   transition: all 0.3s;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(102, 112, 218, 0.6);
+  background: rgba(98, 111, 223, 0.6);
   border-radius: 12px;
   transition: all 0.3s;
 }
@@ -51,13 +51,13 @@
   display: none;
 }
 .switchInput .toggler-wrapper input[type=checkbox]:checked + .toggler-slider {
-  background-color: #6670da;
+  background-color: #626fdf;
 }
 .switchInput .toggler-wrapper input[type=checkbox]:checked + .toggler-slider .toggler-knob {
   left: calc(100% - 19px - 3px);
 }
 .switchInput .toggler-wrapper .toggler-slider {
-  background-color: rgba(102, 112, 218, 0.3);
+  background-color: rgba(98, 111, 223, 0.3);
   position: absolute;
   border-radius: 100px;
   top: 0;
@@ -97,8 +97,8 @@ nav {
   bottom: 3%;
   width: 7.5%;
   border-radius: 20px;
-  background: linear-gradient(145deg, #6670da, #6670da);
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.5), -5px -5px 15px rgba(102, 112, 218, 0.5);
+  background: linear-gradient(145deg, #626fdf, #6670da);
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.5), -5px -5px 15px rgba(98, 111, 223, 0.5);
   animation: top 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.1s forwards;
 }
 nav hr {
@@ -154,8 +154,8 @@ nav .menu li.active {
   width: 14%;
   opacity: 0;
   border-radius: 0 20px 20px 0;
-  background: linear-gradient(145deg, rgba(102, 112, 218, 0.3), rgba(102, 112, 218, 0.3));
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.5);
+  background: linear-gradient(145deg, rgba(98, 111, 223, 0.3), rgba(102, 112, 218, 0.3));
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.5);
   animation: left2 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.8s forwards;
   transition: 0.3s all;
   color: #6770da;
@@ -187,8 +187,8 @@ nav .menu li.active {
   text-align: center;
 }
 .navShop ul li.active {
-  background: rgba(102, 112, 218, 0.11);
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.1);
+  background: rgba(98, 111, 223, 0.11);
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.1);
   padding: 2% 10%;
   border-radius: 8px;
 }
@@ -274,8 +274,8 @@ nav .menu li.active {
   padding-right: 1.25%;
 }
 .CodeMirror .CodeMirror-gutters {
-  background: linear-gradient(145deg, #6670da, #6670da) !important;
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.3), -5px -5px 15px rgba(102, 112, 218, 0.3) !important;
+  background: linear-gradient(145deg, #626fdf, #6670da) !important;
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.3), -5px -5px 15px rgba(98, 111, 223, 0.3) !important;
 }
 
 .container {
@@ -303,8 +303,8 @@ nav .menu li.active {
   width: 30%;
   padding: 2%;
   margin: 1%;
-  background: linear-gradient(145deg, white, rgba(102, 112, 218, 0.1));
-  box-shadow: 7px 7px 25px rgba(102, 112, 218, 0.15);
+  background: linear-gradient(145deg, white, rgba(98, 111, 223, 0.1));
+  box-shadow: 7px 7px 25px rgba(98, 111, 223, 0.15);
   border-radius: 12px;
 }
 .container .stats .statBox span {
@@ -479,7 +479,7 @@ nav .menu li.active {
   transition: all 0.3s;
   width: 100%;
   color: #6770da;
-  box-shadow: 4px 4px 10px rgba(102, 112, 218, 0.01);
+  box-shadow: 4px 4px 10px rgba(98, 111, 223, 0.01);
   border: 1px solid #6670da;
   font-weight: 500;
   font-size: 1rem;
@@ -504,8 +504,8 @@ nav .menu li.active {
 }
 .container .profile a {
   border: none;
-  background: linear-gradient(145deg, #6670da, #6670da);
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.5);
+  background: linear-gradient(145deg, #626fdf, #6670da);
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.5);
   color: #ffffff;
   width: 100%;
   padding: 10px 20px;
@@ -515,14 +515,14 @@ nav .menu li.active {
   font-weight: 600;
 }
 .container .profile a:hover {
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.7);
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.7);
   transform: scale(1.02);
 }
 .container .profile button {
   margin: 5% 0;
   border: none;
-  background: #6670da;
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.5);
+  background: #626fdf;
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.5);
   color: #ffffff;
   width: 80%;
   padding: 10px 20px;
@@ -533,15 +533,15 @@ nav .menu li.active {
 }
 .container .profile button:hover {
   background: #6670da;
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.7);
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.7);
   transform: scale(1.02);
 }
 .container .header {
   width: 95%;
   height: auto;
   border-radius: 12px;
-  background: linear-gradient(145deg, rgba(102, 112, 218, 0.3), rgba(102, 112, 218, 0.3));
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.3);
+  background: linear-gradient(145deg, rgba(98, 111, 223, 0.3), rgba(102, 112, 218, 0.3));
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.3);
   color: #6770da;
   text-align: left;
   padding: 3% 5%;
@@ -580,8 +580,8 @@ nav .menu li.active {
   width: 90%;
 }
 .container .index .content .social {
-  background: linear-gradient(145deg, white, rgba(102, 112, 218, 0.1));
-  box-shadow: 7px 7px 14px rgba(102, 112, 218, 0.15);
+  background: linear-gradient(145deg, white, rgba(98, 111, 223, 0.1));
+  box-shadow: 7px 7px 14px rgba(98, 111, 223, 0.15);
   text-align: left;
   border-radius: 12px;
   padding: 3%;
@@ -611,7 +611,7 @@ nav .menu li.active {
   justify-content: flex-start;
 }
 .container .index .content .social .parent a ion-icon {
-  color: #6670da;
+  color: #626fdf;
   font-size: 1.7rem;
   width: 25%;
   text-align: center;
@@ -629,8 +629,8 @@ nav .menu li.active {
   padding: 2% 4%;
 }
 .container .tablesButtons span {
-  background: linear-gradient(145deg, rgba(102, 112, 218, 0.3), rgba(102, 112, 218, 0.3));
-  box-shadow: 7px 7px 14px rgba(102, 112, 218, 0.15);
+  background: linear-gradient(145deg, rgba(98, 111, 223, 0.3), rgba(102, 112, 218, 0.3));
+  box-shadow: 7px 7px 14px rgba(98, 111, 223, 0.15);
   color: #ffffff;
   padding: 6px 20px;
   border-radius: 8px;
@@ -649,8 +649,8 @@ nav .menu li.active {
   border-radius: 13px;
   border: none;
   color: #ffffff;
-  background: linear-gradient(145deg, rgba(102, 112, 218, 0.6), rgba(102, 112, 218, 0.6));
-  box-shadow: 7px 7px 14px rgba(102, 112, 218, 0.15);
+  background: linear-gradient(145deg, rgba(98, 111, 223, 0.6), rgba(102, 112, 218, 0.6));
+  box-shadow: 7px 7px 14px rgba(98, 111, 223, 0.15);
   transition: 0.2s all;
 }
 .container .tablesButtons button:hover,
@@ -660,8 +660,8 @@ nav .menu li.active {
 .container .tables {
   width: 100%;
   border-radius: 20px;
-  background: linear-gradient(145deg, white, rgba(102, 112, 218, 0.08));
-  box-shadow: 7px 7px 14px rgba(102, 112, 218, 0.15);
+  background: linear-gradient(145deg, white, rgba(98, 111, 223, 0.08));
+  box-shadow: 7px 7px 14px rgba(98, 111, 223, 0.15);
   padding-left: 2%;
 }
 .container .tables table {
@@ -701,19 +701,19 @@ nav .menu li.active {
 .container .tables table tbody tr:hover {
   background: #ffffff;
 }
-.container .tables table tbody tr td.state.actif label {
+.container .tables table tbody tr td.state.Active label {
   background: #7af5a7;
   border-radius: 12px;
   padding: 4px 16px;
   color: #ffffff;
 }
-.container .tables table tbody tr td.state.padding label {
+.container .tables table tbody tr td.state.Suspended label {
   background: #f1b953;
   border-radius: 12px;
   padding: 4px 16px;
   color: #ffffff;
 }
-.container .tables table tbody tr td.state.inactif label {
+.container .tables table tbody tr td.state.Inactive label {
   background: #f57b94;
   border-radius: 12px;
   padding: 4px 16px;
@@ -759,15 +759,14 @@ nav .menu li.active {
   margin: 0 10px;
   border-radius: 13px;
   color: #ffffff;
-  background: linear-gradient(145deg, rgba(102, 112, 218, 0.6), rgba(102, 112, 218, 0.6));
-  box-shadow: 7px 7px 14px rgba(102, 112, 218, 0.15);
+  background: linear-gradient(145deg, rgba(98, 111, 223, 0.6), rgba(102, 112, 218, 0.6));
+  box-shadow: 7px 7px 14px rgba(98, 111, 223, 0.15);
   transition: 0.2s all;
 }
 .container .tables table tbody tr .dropdown ul li:hover {
   transform: scale(1.1);
 }
 .container .tables table tbody tr td:last-child {
-  display: flex;
   align-items: center;
   justify-content: center;
   height: 80px;
@@ -775,11 +774,11 @@ nav .menu li.active {
 .container .tables table tbody tr a,
 .container .tables table tbody tr button {
   border: none;
-  background: #6670da;
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.5);
+  background: #626fdf;
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.5);
   color: #ffffff;
-  width: 35px;
-  font-size: 1.1rem;
+  width: 40px;
+  font-size: 1.2rem;
   aspect-ratio: 1;
   margin: 0 3%;
   border-radius: 12px;
@@ -833,12 +832,12 @@ nav .menu li.active {
   padding: 2.5% 3%;
   height: 180px;
   border-radius: 20px;
-  background: linear-gradient(145deg, white, rgba(102, 112, 218, 0.1));
-  box-shadow: 7px 7px 25px rgba(102, 112, 218, 0.15);
+  background: linear-gradient(145deg, white, rgba(98, 111, 223, 0.1));
+  box-shadow: 7px 7px 25px rgba(98, 111, 223, 0.15);
   transition: all 0.3s;
 }
 .container .info .card:hover {
-  background: #6670da;
+  background: #626fdf;
   color: #ffffff;
 }
 .container .info .card:hover .icon,
@@ -982,8 +981,8 @@ nav .menu li.active {
 .container .terminalConsole {
   height: 475px;
   border-radius: 20px;
-  background: linear-gradient(145deg, white, rgba(102, 112, 218, 0.1));
-  box-shadow: 7px 7px 25px rgba(102, 112, 218, 0.25);
+  background: linear-gradient(145deg, white, rgba(98, 111, 223, 0.1));
+  box-shadow: 7px 7px 25px rgba(98, 111, 223, 0.25);
   width: 100%;
   margin-top: 3%;
   display: flex;
@@ -1022,7 +1021,7 @@ nav .menu li.active {
   border-radius: 12px;
   transition: all 0.3s;
   color: #6770da;
-  box-shadow: 4px 4px 10px rgba(102, 112, 218, 0.01);
+  box-shadow: 4px 4px 10px rgba(98, 111, 223, 0.01);
   background: #ffffff;
   border: 1px solid transparent;
 }
@@ -1046,7 +1045,7 @@ nav .menu li.active {
 }
 .container .terminalConsole .commands input:focus {
   border: none;
-  box-shadow: 4px 4px 10px rgba(102, 112, 218, 0.01), -4px -4px 10px rgba(102, 112, 218, 0.01);
+  box-shadow: 4px 4px 10px rgba(98, 111, 223, 0.01), -4px -4px 10px rgba(98, 111, 223, 0.01);
   outline-offset: 0px;
   outline: none;
 }
@@ -1095,8 +1094,8 @@ nav .menu li.active {
   font-weight: 600;
   white-space: nowrap;
   margin: 2%;
-  background: #6670da;
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.5);
+  background: #626fdf;
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.5);
 }
 .container .createButtons a:hover {
   background: #6670da;
@@ -1169,8 +1168,8 @@ nav .menu li.active {
   padding: 2.5% 3%;
   height: 400px;
   border-radius: 20px;
-  background: linear-gradient(145deg, #ffffff, rgba(102, 112, 218, 0.08));
-  box-shadow: 7px 7px 25px rgba(102, 112, 218, 0.15), -7px -7px 25px rgba(102, 112, 218, 0.05);
+  background: linear-gradient(145deg, #ffffff, rgba(98, 111, 223, 0.08));
+  box-shadow: 7px 7px 25px rgba(98, 111, 223, 0.15), -7px -7px 25px rgba(98, 111, 223, 0.05);
   transition: all 0.3s;
   color: #6770da;
 }
@@ -1199,7 +1198,7 @@ nav .menu li.active {
   font-weight: 400;
 }
 .container.shop .plans .card .cardHead hr {
-  background: #6670da;
+  background: #626fdf;
   border: none;
   width: 30%;
   margin: auto;
@@ -1228,7 +1227,7 @@ nav .menu li.active {
   margin: 2% 0;
 }
 .container.shop .plans .card .cardBoddy ul li ion-icon {
-  color: #6670da;
+  color: #626fdf;
   font-size: 1.4rem;
   margin-right: 20px;
 }
@@ -1239,12 +1238,12 @@ nav .menu li.active {
   transition: all 0.3s;
   margin: auto;
   color: #6770da;
-  box-shadow: 4px 4px 10px rgba(102, 112, 218, 0.01);
+  box-shadow: 4px 4px 10px rgba(98, 111, 223, 0.01);
   border: 1px solid #6770da;
   font-weight: 600;
 }
 .container.shop .plans .card .cardFotter input:focus {
-  box-shadow: 4px 4px 10px rgba(102, 112, 218, 0.02);
+  box-shadow: 4px 4px 10px rgba(98, 111, 223, 0.02);
   border: 1.1px solid #6770da;
 }
 .container.shop .plans .card .cardFotter button {
@@ -1253,9 +1252,9 @@ nav .menu li.active {
   padding: 2% 15%;
   border-radius: 12px;
   color: #ffffff;
-  box-shadow: 5px 5px 18px rgba(102, 112, 218, 0.15), -5px -5px 18px rgba(102, 112, 218, 0.15);
+  box-shadow: 5px 5px 18px rgba(98, 111, 223, 0.15), -5px -5px 18px rgba(98, 111, 223, 0.15);
   transition: all 0.3s;
-  background: #6670da;
+  background: #626fdf;
   margin-top: 3%;
 }
 .container.shop .plans .card .cardFotter button:hover {
@@ -1298,7 +1297,7 @@ nav .menu li.active {
   transition: all 0.3s;
   width: 60%;
   color: #6770da;
-  box-shadow: 4px 4px 10px rgba(102, 112, 218, 0.01);
+  box-shadow: 4px 4px 10px rgba(98, 111, 223, 0.01);
   border: 1px solid #6770da;
   font-weight: 600;
   font-size: 0.9rem;
@@ -1313,8 +1312,8 @@ nav .menu li.active {
   padding: 2%;
   border-radius: 12px;
   color: #ffffff;
-  box-shadow: 5px 5px 18px rgba(102, 112, 218, 0.15), -5px -5px 18px rgba(102, 112, 218, 0.15);
-  background: #6670da;
+  box-shadow: 5px 5px 18px rgba(98, 111, 223, 0.15), -5px -5px 18px rgba(98, 111, 223, 0.15);
+  background: #626fdf;
   width: 20%;
   font-weight: 600;
   margin: 1% 0;
@@ -1360,8 +1359,8 @@ nav .menu li.active {
   bottom: 3%;
   width: 17.5%;
   border-radius: 20px;
-  background: linear-gradient(145deg, rgba(102, 112, 218, 0.3), rgba(102, 112, 218, 0.3));
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.5);
+  background: linear-gradient(145deg, rgba(98, 111, 223, 0.3), rgba(98, 111, 223, 0.3));
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.5);
   animation: right 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.2s forwards;
 }
 .profile_bar .user {
@@ -1392,7 +1391,7 @@ nav .menu li.active {
 }
 .profile_bar .user .logo .username {
   position: absolute;
-  background: linear-gradient(145deg, #6670da, #6670da);
+  background: linear-gradient(145deg, #626fdf, #6670da);
   font-size: 0.8rem;
   padding: 5px 35px;
   color: #ffffff;
@@ -1442,7 +1441,7 @@ nav .menu li.active {
   background: #ffffff;
   margin: auto;
   color: #6770da;
-  box-shadow: 4px 4px 10px rgba(102, 112, 218, 0.01);
+  box-shadow: 4px 4px 10px rgba(98, 111, 223, 0.01);
   border: 1px solid #6770da;
   font-weight: 600;
 }
@@ -1479,7 +1478,7 @@ nav .menu li.active {
   transition: all 0.3s;
   width: 70%;
   color: #6770da;
-  box-shadow: 4px 4px 10px rgba(102, 112, 218, 0.01);
+  box-shadow: 4px 4px 10px rgba(98, 111, 223, 0.01);
   border: 0px solid transparent;
   background: transparent;
   font-weight: 600;
@@ -1526,7 +1525,7 @@ nav .menu li.active {
   margin: 5% 0;
 }
 .profile_bar .menu ul li a .icon {
-  background: #6670da;
+  background: #626fdf;
   padding: 8px;
   font-size: 1.2rem;
   color: #ffffff;
@@ -1558,8 +1557,8 @@ nav .menu li.active {
   bottom: 3%;
   width: 50%;
   border-radius: 20px;
-  background: linear-gradient(145deg, rgba(102, 112, 218, 0.3), rgba(102, 112, 218, 0.3));
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.5);
+  background: linear-gradient(145deg, rgba(98, 111, 223, 0.3), rgba(102, 112, 218, 0.3));
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.5);
   animation: right 1s cubic-bezier(0.36, -0.64, 0.34, 1.76) 0.2s forwards;
   padding: 2%;
   overflow: scroll;
@@ -1567,7 +1566,7 @@ nav .menu li.active {
 }
 .profile_bar.register hr {
   margin: 5%;
-  border-color: rgba(102, 112, 218, 0.5);
+  border-color: rgba(98, 111, 223, 0.5);
 }
 .profile_bar.register form {
   width: 80%;
@@ -1624,8 +1623,8 @@ nav .menu li.active {
 .profile_bar.register button {
   margin: 5% 0;
   border: none;
-  background: #6670da;
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.5);
+  background: #626fdf;
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.5);
   color: #ffffff;
   width: 50%;
   padding: 10px 20px;
@@ -1713,7 +1712,7 @@ nav .menu li.active {
   border-radius: 12px;
   padding: 3%;
   color: #6770da;
-  background-color: rgba(102, 112, 218, 0.3);
+  background-color: rgba(98, 111, 223, 0.3);
 }
 .profile_bar.cart .user .item .logo .badge {
   position: absolute;
@@ -1722,7 +1721,7 @@ nav .menu li.active {
   align-items: center;
   display: flex;
   justify-content: center;
-  background-color: #6670da;
+  background-color: #626fdf;
   color: #fff;
   border-radius: 100%;
   height: 1.25rem;
@@ -1746,8 +1745,8 @@ nav .menu li.active {
   font-weight: 500;
 }
 .profile_bar.cart .user hr {
-  background: #6670da;
-  border-color: #6670da;
+  background: #626fdf;
+  border-color: #626fdf;
   width: 75%;
   margin: 7.5% auto;
 }
@@ -1755,8 +1754,8 @@ nav .menu li.active {
 .profile_bar.cart .user a {
   margin: 5% 0;
   border: none;
-  background: #6670da;
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.5);
+  background: #626fdf;
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.5);
   color: #ffffff;
   width: 75%;
   margin: 5% auto;
@@ -1770,7 +1769,7 @@ nav .menu li.active {
 .profile_bar.cart .user button:hover,
 .profile_bar.cart .user a:hover {
   background: #6670da;
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.7);
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.7);
   transform: scale(1.02);
 }
 .profile_bar.cart .user .checkoutButtons {
@@ -1809,15 +1808,15 @@ nav .menu li.active {
   transform: scale(1.02);
 }
 .profile_bar.cart .user .checkoutButtons button.wallet {
-  background: #6670da;
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.5);
+  background: #626fdf;
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.5);
 }
 .profile_bar.cart .user .checkoutButtons button.wallet img {
   width: 50%;
 }
 .profile_bar.cart .user .checkoutButtons button.wallet:hover {
   background: #6670da;
-  box-shadow: 5px 5px 15px rgba(102, 112, 218, 0.7);
+  box-shadow: 5px 5px 15px rgba(98, 111, 223, 0.7);
   transform: scale(1.02);
 }
 .profile_bar.cart .user .prices {
@@ -1966,7 +1965,7 @@ nav .menu li.active {
 }
 
 .cm-s-default .CodeMirror-selected {
-  background: rgba(102, 112, 218, 0.1) !important;
+  background: rgba(98, 111, 223, 0.1) !important;
 }
 
 .cm-s-default .cm-comment {
@@ -1983,7 +1982,7 @@ nav .menu li.active {
 }
 
 .cm-s-default .cm-string-2 {
-  color: #6670da !important;
+  color: #626fdf !important;
 }
 
 .cm-s-default .cm-tag {

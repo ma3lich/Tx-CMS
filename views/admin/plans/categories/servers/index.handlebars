@@ -75,43 +75,42 @@
     </script>
     {{/if}}
 
-
     <div class="tables">
         <table>
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Nom de la catégorie</th>
-                    <th>Serveur</th>
-                    <th>Livraison</th>
+                    <th>Nom du Serveur</th>
+                    <th>Nom d'hôte</th>
+                    <th>Module lié</th>
+                    <th>Cout mensuel</th>
+                    <th>État</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                {{#each categories}}
+                {{#each servers}}
                 <tr>
                     <td>{{id}}</td>
                     <td style="text-transform:capitalize;">{{name}}</td>
-                    <td style="text-transform:capitalize;">{{server}}</td>
-                    {{#if auto}}
-                    <td class="state actif"> <label for="">Automatique</label></td>
+                    <td>{{fqdn}}</td>
+                    <td>{{addon}}</td>
+                    <td>{{cost}}€</td>
+                    {{#if state}}
+                    <td class="state actif"> <label for="">Activé</label></td>
                     {{else}}
-                    <td class="state inactif"> <label for="">Manuelle</label></td>
+                    <td class="state inactif"> <label for="">Deactivé</label></td>
                     {{/if}}
-
                     <td>
-                        <button onclick="location.href='/admin/plans/categories/edit/{{id}}';"><ion-icon
+                        <button onclick="location.href='/admin/plans/categories/servers/edit/{{id}}';"><ion-icon
                                 name="brush-outline"></ion-icon></button>
-                        <form action="/admin/plans/categories/delete/{{id}}" method="post">
-                            <button class="danger" type="submit"><ion-icon name="trash-outline"></ion-icon></button>
-                        </form>
                     </td>
                 </tr>
 
                 {{else}}
 
                 <tr>
-                    <td colspan="6">Aucun offre n'a était créé sur votre TxCMS</td>
+                    <td colspan="6">Aucun serveur n'a était relié sur votre TxCMS</td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -119,10 +118,9 @@
     </div>
     </div>
 
+
     <div class="createButtons">
-        <a href="/admin/plans">Gérer les offres</a>
-        <a href="/admin/plans/categories/servers">Gérer les serveurs</a>
-        <a href="/admin/plans/categories/create">Crée une nouvelle catégorie</a>
+        <a href="/admin/plans/categories">Gérer les catégories</a>
     </div>
 
     <footer>

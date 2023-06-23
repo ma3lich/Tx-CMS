@@ -75,9 +75,9 @@ function main() {
 
   /* Gestion des routes */
 
-  const defaultRoutes = require("./routes/defaultRoutes.js");
-  const adminRoutes = require("./routes/adminRoutes.js");
-  const clientRoutes = require("./routes/clientRoutes.js");
+  const defaultRoutes = require("./routes/default.routes.js");
+  const adminRoutes = require("./routes/admin.routes.js");
+  const clientRoutes = require("./routes/client.routes.js");
 
   app.use("/", defaultRoutes);
   app.use("/admin", adminRoutes);

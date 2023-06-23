@@ -15,88 +15,49 @@
 
 <section class="container">
     <div class="info">
-        <a href="/client/profile/wallet" class="card">
+        <a style="width: 100%;" href="/client/profile/wallet" class="card">
             <div class="icon">
                 <ion-icon name="wallet-outline"></ion-icon>
             </div>
             <div class="text">
                 <span class="value">
-                    {{stats.wallet}}€
+                    {{user.wallet}}€
                 </span>
                 <p class="desc">
                     Le montant de votre porte feuille
                 </p>
             </div>
         </a>
-        <a href="" class="card">
-            <div class="icon">
-                <ion-icon name="albums-outline"></ion-icon>
-            </div>
-            <div class="text">
-                <span class="value">
-                    {{stats.services}}
-                </span>
-                <p class="desc">
-                    Le nombre des services actifs
-                </p>
-            </div>
-        </a>
-        <a href="" class="card">
-            <div class="icon">
-                <ion-icon name="receipt-outline"></ion-icon>
-            </div>
-            <div class="text">
-                <span class="value">
-                    {{stats.transactions}}
-                </span>
-                <p class="desc">
-                    Le nombre de toutes vos transactions
-                </p>
-            </div>
-        </a>
-        <a href="" class="card">
-            <div class="icon">
-                <ion-icon name="ticket-outline"></ion-icon>
-            </div>
-            <div class="text">
-                <span class="value">
-                    {{stats.tickets}}
-                </span>
-                <p class="desc">
-                    Le nombre de vos demandes ouvertes
-                </p>
-            </div>
-        </a>
     </div>
     <div class="services">
-        <span class="title">Vos services</span>
+        <span class="title">Vos transactions</span>
         <div class="tables">
             <table>
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Nom du produit</th>
-                        <th>Temps restant</th>
+                        <th>Montant</th>
+                        <th>Date & Heure</th>
                         <th>État</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each services}}
+                    {{#each transactions}}
                     <tr>
                         <td>{{id}}</td>
-                        <td>{{name}}</td>
-                        <td>{{time}} Jours</td>
+                        <td>{{amount}}€</td>
+                        <td>{{time}}</td>
                         <td class="state {{state}}"> <label>{{state}}</label></td>
                         <td style="display: flex;">
-                            <button onclick="location.href='/client/services/{{id}}';"><ion-icon
-                                    name="cog-outline"></ion-icon></button>
+                            <button onclick="location.href='/client/transactions/{{id}}';"><ion-icon
+                                    name="document-outline"></ion-icon></button>
                         </td>
                     </tr>
                     {{else}}
 
                     <tr>
-                        <td colspan="5">Vous avez aucuns service relier a ce
+                        <td colspan="5">Vous avez aucuns transactions relier a ce
                             compte.</td>
                     </tr>
 

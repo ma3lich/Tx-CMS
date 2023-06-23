@@ -38,7 +38,7 @@ module.exports = {
     db.query(
       `SELECT * FROM services WHERE owner = ${userID} AND id = ${serviceID} `,
       function (err, data) {
-        if (data.length > 0) {
+        if (data) {
           let server = [];
 
           Client.getServerDetails(data[0].serverID).then((details) => {

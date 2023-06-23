@@ -32,7 +32,10 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "paypal-rest-sdk": "^1.8.1",
+    "pdfkit": "^0.13.0",
+    "request": "^2.88.2",
     "sass": "^1.56.2",
+    "sharp": "^0.32.1",
     "stripe": "^10.17.0",
     "ws": "^8.11.0"
   }

@@ -18,7 +18,7 @@
     <ul>
         <script>console.log( "{{categories}}" )</script>
         {{#each categories}}
-        <li><a href="/client/shop/categories/{{id}}"> <ion-icon
+        <li><a href="/client/shop/categories/{{name}}"> <ion-icon
                     name="cube-outline"></ion-icon><span> {{name}}</span></a>
         </a><li>
             {{/each}}
@@ -29,6 +29,7 @@
     <section class="container shop">
         <span class="title">Nos offres {{categoriesName}} :</span>
         <div class="plans">
+            
             {{#each plans}}
             <form class="card">
                 <div class="cardHead">

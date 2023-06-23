@@ -1,7 +1,5 @@
 /* Importation des modules nodeJS */
-const bcrypt = require("bcrypt");
-const db = require("../config/database");
-const app = require("../config/app.json");
+
 const system = require("../package.json");
 const { setEnvValue, getEnVvalue } = require("../config/config");
 
@@ -23,21 +21,24 @@ const {
   getCategoryByID,
   updateConfigPlanByID,
   deletePlanByID,
-  getServerById,
+  getServerByID,
   getAllServers,
-  createNewCategory, 
+  createNewCategory,
   updateCategoryByID,
-  deleteCategoryByID} = require("../functions/adminFunctions");
+  deleteCategoryByID,
+  updateServerByID } = require("../functions/adminFunctions");
 
 const {
   sendEmail,
   getHostStats,
   GetConfigVariables,
   getBestSelledProducts,
+  getDirectories,
 } = require("../config/customFunction");
 const { Login } = require("../templates/emails/templates_emails");
 const Nodeactyl = require("nodeactyl");
 const { getPterodactylNodes, getPterodactylEggsByNestID, getPterodactylNests } = require("../addons/servers/pterodactyl/requests");
+const { getUserServices } = require("../functions/clientFunctions");
 
 const application = new Nodeactyl.NodeactylApplication(
   "https://panel.txhost.fr",
@@ -59,6 +60,7 @@ module.exports = {
             system,
             user: req.user[0],
           });
+
         })
       })
     });
@@ -95,7 +97,7 @@ module.exports = {
   },
 
   postEditUser: (req, res) => {
-    editUserByID(req.body, function (response) {
+    editUserByID(req.body,  function (response) {
       if (response.type == "success") {
         req.flash("success-message", response.message)
         res.redirect("/admin/users")
@@ -330,7 +332,7 @@ module.exports = {
     GetConfigVariables(function (config) {
       getAllCategories(function (items) {
         items.forEach(categorie => {
-          getServerById(categorie.server, function (server) {
+          getServerByID(categorie.server, function (server) {
             categories.push({
               id: categorie.id,
               name: categorie.name,
@@ -395,7 +397,7 @@ module.exports = {
     })
   },
 
-  postEditCategories:(req, res) => {
+  postEditCategories: (req, res) => {
     updateCategoryByID(req.body, function (response) {
       if (response.type == "success") {
         req.flash("success-message", response.message)
@@ -426,26 +428,59 @@ module.exports = {
 
   },
 
-  /* Méthode Get pour la page admin/servers/ */
-  getServers: (req, res) => {
-    db.query(`SELECT * FROM servers ORDER BY id`, function (err, data) {
-      if (err) req.flash("error-message", err);
-      else
-        res.render("admin/servers/index", {
+  getServersListPage: (req, res) => {
+    GetConfigVariables(function (config) {
+      getAllServers(function (servers) {
+        res.render("admin/plans/categories/servers/", {
           title: config.host.name + " - Serveurs",
           action: "list",
-          server: data,
+          servers,
           user: req.user[0],
-          app: app,
+          config,
           system,
         });
-    });
+      })
+    })
+  },
+
+  getEditServersPage: (req, res) => {
+    GetConfigVariables(function (config) {
+      getServerByID(req.params.id, function (server) {
+        let addons = [];
+        getDirectories("./addons/servers").forEach(addon => {
+          addons.push({
+            name: addon
+          })
+        });
+        res.render("admin/plans/categories/servers/edit", {
+          title: config.host.name + " Plans Edit",
+          action: "edit",
+          config,
+          server,
+          addons
+        })
+      })
+    })
+  },
+
+  postEditServers: (req, res) => {
+    updateServerByID(req.body, function (response) {
+      if (response.type == "success") {
+        req.flash("success-message", response.message)
+        res.redirect("/admin/plans/categories/servers")
+      }
+
+      if (response.type == "error") {
+        req.flash("error-message", response.message)
+        res.redirect("/admin/plans/categories/servers")
+      }
+    })
   },
 
   getSettings: (req, res) => {
     GetConfigVariables(function (config) {
       res.render("admin/settings/index", {
-        title: config.host.name + " - Paramètres",
+        title: config.host.name + " - Paramètssres",
         action: "config",
         user: req.user[0],
         config,

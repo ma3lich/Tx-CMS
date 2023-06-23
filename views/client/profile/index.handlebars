@@ -1,4 +1,3 @@
-
 <nav class="">
     <div class="logo">
         <img src="{{config.host.logo}}" alt="">
@@ -6,8 +5,7 @@
     <ul class="menu">
         <li><a href="/client"><ion-icon name="home-outline"></ion-icon></a></li>
         <li><a href="/shop"><ion-icon name="cart-outline"></ion-icon></a></li>
-        <li class="active"><a href="/client/profile"><ion-icon
-                    name="person-outline"></ion-icon></a></li>
+        <li class="active"><a href="/client/profile"><ion-icon name="person-outline"></ion-icon></a></li>
 
     </ul>
 
@@ -18,49 +16,74 @@
 
 <section class="container">
 
+    {{#if success_messages}}
+    <div class="notif success">
+        <span class="title">Bravo ! </span>
+        <span class="message">{{success_messages}}</span>
+        <span class="close" id="close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+    </div>
+
+    <script>
+        $('#close').click(() => {
+            $('.notif').fadeTo(300, 0.01, function () {
+                $(this).slideUp(300, function () {
+                    $(this).remove();
+                });
+            });
+        })
+    </script>
+    {{/if}}
+
+    {{#if error_messages}}
+    <div class="notif error">
+        <span class="title">Messages d'erreur ! </span>
+        <span class="message">{{error_messages}}</span>
+        <span class="close" id="close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+    </div>
+
+    <script>
+        $('#close').click(() => {
+            $('.notif').fadeTo(300, 0.01, function () {
+                $(this).slideUp(300, function () {
+                    $(this).remove();
+                });
+            });
+        })
+    </script>
+    {{/if}}
+
     <form class="profile" action="/client/profile" method="post" autocomplete="off">
         <div class="userLogo">
             <img id="pp" src="" alt="">
             <script>
-                    if("{{user.logo}}" == "" || "{{user.logo}}" == null || "{{user.logo}}" == ''){
-                        
-                        if("{{user.sex}}" == "male"){
-                            document.getElementById('pp').src = "/images/male-logo.png"
-                        } 
+                if ("{{user.logo}}" == "" || "{{user.logo}}" == null || "{{user.logo}}" == '') {
 
-                        if("{{user.sex}}" == "female"){
-                            document.getElementById('pp').src = "/images/female-logo.png"
-                        }
-
-                    }else{
-                        document.getElementById('pp').src = "{{user.logo}}"
+                    if ("{{user.sex}}" == "male") {
+                        document.getElementById('pp').src = "/images/male-logo.png"
                     }
-                </script>
+
+                    if ("{{user.sex}}" == "female") {
+                        document.getElementById('pp').src = "/images/female-logo.png"
+                    }
+
+                } else {
+                    document.getElementById('pp').src = "{{user.logo}}"
+                }
+            </script>
             <section class="formInput">
                 <div>
                     <label style="padding: 0 5px;" for="id">Client ID</label>
                     <br>
-                    <input disabled type="text" name="id" id="id"
-                        maxlength="25">
+                    <input disabled type="text" name="id" id="id" maxlength="25">
                     <script>
-                            document.getElementById('id').value = "tx-"+`{{user.id}}` 
-                        </script>
-                </div>
-            </section>
-
-            <section style="margin-top: 20px;" class="formInput">
-                <div>
-                    <label for="id">Bloc-notes</label>
-                    <br>
-                    <textarea placeholder="Vous voullez notez un truc ? (par
-                        example le mot de passe et l'ip de votre vps chez txhost
-                        ?)" name="userNote" id="userNote" cols="50" rows="5"></textarea>
-                    <script>
-                        document.getElementById('userNote').value = `{{user.usernote}}` 
+                        document.getElementById('id').value = "tx-" + `{{user.id}}` 
                     </script>
                 </div>
             </section>
-
             <button type="submit">Sauvegarder</button>
         </div>
 
@@ -69,20 +92,18 @@
                 <div>
                     <label for="lastname">Nom</label>
                     <br>
-                    <input required type="text" name="lastname" id="lastname"
-                        maxlength="25">
+                    <input required type="text" name="lastname" id="lastname" maxlength="25">
                     <script>
-                            document.getElementById('lastname').value = `{{user.lastname}}` 
-                        </script>
+                        document.getElementById('lastname').value = `{{user.lastname}}` 
+                    </script>
                 </div>
                 <div>
                     <label for="name">Prénom</label>
                     <br>
-                    <input required type="text" name="name" id="name"
-                        maxlength="25">
+                    <input required type="text" name="name" id="name" maxlength="25">
                     <script>
-                            document.getElementById('name').value = `{{user.name}}` 
-                        </script>
+                        document.getElementById('name').value = `{{user.name}}` 
+                    </script>
                 </div>
             </section>
 
@@ -90,17 +111,15 @@
                 <div>
                     <label for="name">Email</label>
                     <br>
-                    <input required type="email" name="email" id="email"
-                        maxlength="25" disabled>
+                    <input required type="email" name="email" id="email" maxlength="25" disabled>
                     <script>
-                            document.getElementById('email').value = `{{user.email}}` 
-                        </script>
+                        document.getElementById('email').value = `{{user.email}}` 
+                    </script>
                 </div>
                 <div>
                     <label for="lastname">Nouveau Mot De Passe</label>
                     <br>
-                    <input type="password" name="newPassword"
-                        id="NewPassword" maxlength="25">
+                    <input type="password" name="newPassword" id="NewPassword" maxlength="25">
                 </div>
             </section>
             <section class="formInput">
@@ -112,17 +131,16 @@
                         <option value="female">Femme</option>
                     </select>
                     <script>
-                            document.getElementById('sex').value = `{{user.sex}}` 
-                        </script>
+                        document.getElementById('sex').value = `{{user.sex}}` 
+                    </script>
                 </div>
                 <div>
                     <label for="birthday">Date de naissance</label>
                     <br>
-                    <input type="date" name="birthday" id="birthday"
-                        max="2012-12-31" disabled>
+                    <input type="date" name="birthday" id="birthday" max="2012-12-31" disabled>
                     <script>
-                            document.getElementById('birthday').value = `{{user.birthday}}` 
-                        </script>
+                        document.getElementById('birthday').value = `{{user.birthday}}` 
+                    </script>
                 </div>
             </section>
 
@@ -130,8 +148,7 @@
                 <div>
                     <label for="logo">Photo de profile (URL)</label>
                     <br>
-                    <input type="logo" name="logo" id="logo" maxlength="1000"
-                        value={{user.logo}}>
+                    <input type="logo" name="logo" id="logo" maxlength="1000" value={{user.logo}}>
                 </div>
             </section>
 
@@ -144,18 +161,17 @@
                         <option value="admin">Administrateur</option>
                     </select>
                     <script>
-                            document.getElementById('role').value = `{{user.role}}` 
-                        </script>
+                        document.getElementById('role').value = `{{user.role}}` 
+                    </script>
                 </div>
                 <div>
-                    <label for="wallet">Crédits</label>
+                    <label for="wallet">Crédits (Wallet)</label>
                     <br>
-                    <input type="number" name="wallet" id="wallet" max="999"
-                        min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$"
-                        disabled>
+                    <input type="text" name="wallet" id="wallet" max="999" min="0" step="0.01"
+                        pattern="^\d+(?:\.\d{1,2})?$" disabled>
                     <script>
-                            document.getElementById('wallet').value = `{{user.wallet}}` 
-                        </script>
+                        document.getElementById('wallet').value = `{{user.wallet}}` +"€"
+                    </script>
                 </div>
             </section>
         </div>
@@ -169,20 +185,20 @@
         <a class="logo" href="/client/profile">
             <img id="userlogo" src="" alt="">
             <script>
-                    if("{{user.logo}}" == ""){
-                        
-                        if("{{user.sex}}" == "male"){
-                            document.getElementById('userlogo').src = "/images/male-logo.png"
-                        } 
+                if ("{{user.logo}}" == "") {
 
-                        if("{{user.sex}}" == "female"){
-                            document.getElementById('userlogo').src = "/images/female-logo.png"
-                        }
-
-                    }else{
-                        document.getElementById('userlogo').src = "{{user.logo}}"
+                    if ("{{user.sex}}" == "male") {
+                        document.getElementById('userlogo').src = "/images/male-logo.png"
                     }
-                </script>
+
+                    if ("{{user.sex}}" == "female") {
+                        document.getElementById('userlogo').src = "/images/female-logo.png"
+                    }
+
+                } else {
+                    document.getElementById('userlogo').src = "{{user.logo}}"
+                }
+            </script>
             <span class="username">{{user.lastname}} {{user.name}}</span>
         </a>
         <div>
@@ -241,12 +257,12 @@
                 </a>
             </li>
             <script>
-                    if("{{user.role}}" == "admin"){
-                        document.getElementById("admin").style.display = "block";
-                    }else{
-                        document.getElementById("admin").style.display = "none";
-                    }
-                </script>
+                if ("{{user.role}}" == "admin") {
+                    document.getElementById("admin").style.display = "block";
+                } else {
+                    document.getElementById("admin").style.display = "none";
+                }
+            </script>
         </ul>
     </div>
 </section>

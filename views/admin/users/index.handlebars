@@ -14,13 +14,11 @@
         <li><a href="/admin/plans">
                 <ion-icon name="storefront-outline"></ion-icon>
             </a></li>
-        <li><a href="/admin/categories">
-                <ion-icon name="copy-outline"></ion-icon>
-            </a></li>
-        <li><a href="/admin/servers">
-                <ion-icon name="server-outline"></ion-icon>
-            </a></li>
+
         <hr>
+        <li><a href="/admin/addons">
+                <ion-icon name="grid-outline"></ion-icon>
+            </a></li>
         <li><a href="/admin/settings">
                 <ion-icon name="cog-outline"></ion-icon>
             </a></li>
@@ -35,45 +33,7 @@
 
 <section class="container">
 
-    {{#if success_messages}}
-    <div class="notif success">
-        <span class="title">Bravo ! </span>
-        <span class="message">{{success_messages}}</span>
-        <span class="close" id="close">
-            <ion-icon name="close-outline"></ion-icon>
-        </span>
-    </div>
-
-    <script>
-        $('#close').click(() => {
-            $('.notif').fadeTo(300, 0.01, function () {
-                $(this).slideUp(300, function () {
-                    $(this).remove();
-                });
-            });
-        })
-    </script>
-    {{/if}}
-
-    {{#if error_messages}}
-    <div class="notif error">
-        <span class="title">Messages d'erreur ! </span>
-        <span class="message">{{error_messages}}</span>
-        <span class="close" id="close">
-            <ion-icon name="close-outline"></ion-icon>
-        </span>
-    </div>
-
-    <script>
-        $('#close').click(() => {
-            $('.notif').fadeTo(300, 0.01, function () {
-                $(this).slideUp(300, function () {
-                    $(this).remove();
-                });
-            });
-        })
-    </script>
-    {{/if}}
+    
 
     <span class="title">Liste des utilisateurs : </span>
 

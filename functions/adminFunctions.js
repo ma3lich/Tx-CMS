@@ -1,6 +1,5 @@
 
 const bcrypt = require("bcrypt");
-const fs = require("fs");
 
 const { getEnVvalue } = require("../config/config");
 const db = require("../config/database");
@@ -385,7 +384,7 @@ module.exports = {
     },
 
 
-    getServerById: (id, callback) => {
+    getServerByID: (id, callback) => {
         db.query(`SELECT * FROM servers WHERE id = ${id}`, function (err, data) {
             if (err) {
                 return callback({
@@ -397,6 +396,27 @@ module.exports = {
             }
         })
     },
+
+    updateServerByID: (options, callback) => {
+        db.query(
+            `UPDATE servers SET name = '${options.name}', fqdn = '${options.fqdn}', addon = '${options.addon}', cost = '${options.cost}', state = '${options.state}' WHERE id = ${options.id}`,
+            function (err, success) {
+                if (err) {
+                    console.log(err);
+                    return callback({
+                        type: 'error',
+                        message: "La serveur n'a pas été mis à jour !"
+                    });
+                }
+                if (success) {
+                    return callback({
+                        type: 'success',
+                        message: "La serveur a été mis à jour !"
+                    });
+                }
+            }
+        );
+    }
 
 
 }

@@ -13,7 +13,7 @@
         <hr>
         <li class="active"><a href="/admin/plans">
                 <ion-icon name="storefront-outline"></ion-icon>
-        </a></li>
+            </a></li>
         <hr>
         <li><a href="/admin/addons">
                 <ion-icon name="grid-outline"></ion-icon>
@@ -31,7 +31,6 @@
 </nav>
 
 
-
 <section class="container register">
     <div class="notice">
         <span class="title">Informations : </span>
@@ -46,9 +45,10 @@
 <section class="profile_bar register">
     <div class="logoText">
         <img src="/images/logo-text.png" classe="" alt="">
-        <h2>Crée une offre</h2>
+        <h2>Gérer une offre Proxmox/Pterodactyl</h2>
     </div>
-    <form action="/admin/plans/categories/create" method="post">
+    <form action="/admin/plans/categories/servers/edit/:id" method="post">
+        <input style="display:none" type="text" name="id" id="id">
         <section class="formInput">
             <div>
                 <label for="name">Nom de la catégorie</label>
@@ -56,12 +56,11 @@
                 <input type="text" name="name" id="name" required>
             </div>
             <div>
-                <label for="category">Serveur</label>
+                <label for="addon">Module</label>
                 <br>
-                <select style="text-transform:capitalize;" name="server"
-                    id="server">
-                    {{#each servers}}
-                    <option value={{id}}>{{name}}</option>
+                <select style="text-transform:capitalize;" name="addon" id="addon">
+                    {{#each addons}}
+                    <option value={{name}}>{{name}}</option>
                     {{/each}}
                 </select>
             </div>
@@ -69,15 +68,40 @@
 
         <section class="formInput">
             <div>
-                <label for="auto">Livraison</label>
+                <label for="fqdn">Nom d'hôte</label>
                 <br>
-                <select name="auto" id="auto">
-                    <option value="1">Automatique</option>
-                    <option value="0">Manuelle</option>
+                <input style="text-transform:capitalize;" type="text" name="fqdn" id="fqdn" required>
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="cost">Cout mensuel</label>
+                <br>
+                <input type="number" name="cost" id="cost" value="0" max="9999999" min="0" step="0.01"
+                    pattern="^\d+(?:\.\d{1,2})?$">
+            </div>
+        </section>
+
+        <section class="formInput">
+            <div>
+                <label for="state">État</label>
+                <br>
+                <select name="state" id="state">
+                    <option value="1">Activé</option>
+                    <option value="0">Deactivé</option>
                 </select>
             </div>
         </section>
 
-        <button type="submit">Creé</button>
+        <button type="submit">Sauvegarder</button>
+
+        <script>
+            $('#id').val('{{server.id}}')
+            $('#name').val('{{server.name}}')
+            $('#fqdn').val('{{server.fqdn}}')
+            $('#addon').val('{{server.addon}}')
+            $('#state').val('{{server.state}}')
+        </script>
     </form>
 </section>
