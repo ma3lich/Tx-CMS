@@ -4,7 +4,7 @@ const system = require('../package.json');
 const fs = require('fs');
 const path = require('path');
 
-const { calcDate, config } = require('../config/customFunction');
+const { config } = require('../config/customFunction');
 const {
 	GetPterodactylServerInfo,
 	GetFilesAndDirectorys,
@@ -24,13 +24,13 @@ const {
 	getCatalogue,
 	getCatalogueByType,
 	getUserTransactions,
-	generateInvoce,
 	getUserTransactionById,
 	getProduct,
 	updateCart,
+	checkPromoCode,
+	applyPromoCodeToCart,
 } = require('../functions/clientFunctions');
 const { createInvoice } = require('../addons/invoice/create');
-const { json } = require('express');
 
 var productsInTheCart = [];
 
@@ -184,52 +184,129 @@ module.exports = {
 			const ids = {};
 
 			array.forEach((obj) => {
-				const { id, name, price, fee, stock } = obj;
-				const key = `${id}_${name}_${price}_${fee}_${stock}`;
+				const { id, name, price, fee, stock, category } = obj;
+				const key = `${id}_${name}_${price}_${fee}_${stock}_${category}`;
 
 				if (!ids[key]) {
 					ids[key] = 1;
-					uniqueArray.push({ id, name, price, fee, stock, quantity: 1 });
+					uniqueArray.push({
+						id,
+						name,
+						price,
+						fee,
+						stock,
+						category,
+						quantity: 1,
+					});
 				} else {
 					ids[key]++;
-					const existingObject = uniqueArray.find((item) => item.id === id);
+					const existingObject = uniqueArray.find(
+						(item) => item.id === id && item.category === category,
+					);
 					existingObject.quantity++;
 				}
 			});
 
 			return uniqueArray;
 		};
-		const cart = createUniqueArrayWithQuantity(req.session.cart);
-		const fees = cart.map((item) => item.fee);
-		const quantity = cart.map((item) => item.quantity);
 
-		// Calculate total fees
-		let totalFees = 0;
-		for (let i = 0; i < fees.length; i++) {
-			totalFees += parseFloat(fees[i]) * parseFloat(quantity[i]);
+		// Check for promo code
+		const promoCode = req.query.promo; // Assuming the promo code is passed as a query parameter
+		let promoDiscount = 0;
+
+		if (promoCode) {
+			checkPromoCode(promoCode, (promoCodeDetails) => {
+				if (!promoCodeDetails) {
+					req.flash(
+						'error-message',
+						"Le code promo n'existe pas, ou n'existe plus.",
+					);
+					res.redirect('/client/shop/cart');
+				} else {
+					var cart = createUniqueArrayWithQuantity(req.session.cart);
+					const UpdateCart = applyPromoCodeToCart(promoCodeDetails, cart);
+					cart = UpdateCart.cart;
+					const fees = cart.map((item) => item.fee);
+					const quantity = cart.map((item) => item.quantity);
+
+					// Calculate total fees
+					let totalFees = 0;
+					for (let i = 0; i < fees.length; i++) {
+						totalFees += parseFloat(fees[i]) * parseFloat(quantity[i]);
+					}
+					totalFees = totalFees.toFixed(2);
+
+					// Calculate subtotal
+					let subTotal = 0;
+					for (let i = 0; i < cart.length; i++) {
+						subTotal += parseFloat(cart[i].price) * parseFloat(quantity[i]);
+					}
+					subTotal = subTotal.toFixed(2);
+
+					// Calculate reduction
+					let reduction = 0;
+					for (let i = 0; i < cart.length; i++) {
+						reduction += parseFloat(cart[i].reductionAmount);
+					}
+					reduction = reduction.toFixed(2);
+
+					// Calculate total
+					let total = parseFloat(subTotal) + parseFloat(totalFees) - parseFloat(reduction);
+					total = total.toFixed(2);
+					promoDiscount = reduction;
+					let success_messages = `Le code promo '${promoCode}' a été appliqué pour une réduction de ${promoDiscount} €.`;
+
+					res.render('client/shop/cart/', {
+						title: config.host.name + ' - Panier',
+						user: req.user[0],
+						config,
+						system,
+						cart,
+						promoCode,
+						promoDiscount,
+						totalFees,
+						subTotal,
+						total,
+						success_messages,
+					});
+				}
+			});
+		} else {
+			const cart = createUniqueArrayWithQuantity(req.session.cart);
+			const fees = cart.map((item) => item.fee);
+			const quantity = cart.map((item) => item.quantity);
+
+			// Calculate total fees
+			let totalFees = 0;
+			for (let i = 0; i < fees.length; i++) {
+				totalFees += parseFloat(fees[i]) * parseFloat(quantity[i]);
+			}
+			totalFees = totalFees.toFixed(2);
+
+			// Calculate subtotal
+			let subTotal = 0;
+			for (let i = 0; i < cart.length; i++) {
+				subTotal += parseFloat(cart[i].price) * parseFloat(quantity[i]);
+			}
+			subTotal = subTotal.toFixed(2);
+
+			// Calculate total
+			let total = parseFloat(subTotal) + parseFloat(totalFees);
+			total = total.toFixed(2);
+
+			res.render('client/shop/cart/', {
+				title: config.host.name + ' - Panier',
+				user: req.user[0],
+				config,
+				system,
+				cart,
+				promoCode,
+				promoDiscount,
+				totalFees,
+				subTotal,
+				total,
+			});
 		}
-		totalFees = totalFees.toFixed(2);
-
-		// Calculate subtotal
-		let subTotal = 0;
-		for (let i = 0; i < cart.length; i++) {
-			subTotal += parseFloat(cart[i].price) * parseFloat(quantity[i]);
-		}
-		subTotal = subTotal.toFixed(2);
-
-		// Calculate total
-		const total = (parseFloat(subTotal) + parseFloat(totalFees)).toFixed(2);
-
-		res.render('client/shop/cart/', {
-			title: config.host.name + ' - Panier',
-			user: req.user[0],
-			config,
-			system,
-			cart,
-			totalFees,
-			subTotal,
-			total,
-		});
 	},
 
 	addToCart: (req, res) => {
@@ -331,7 +408,7 @@ module.exports = {
 						},
 						total: req.query.total,
 					},
-					description: app.config.company.name,
+					description: config.host.name,
 				},
 			],
 		};
@@ -392,7 +469,7 @@ module.exports = {
 
 	CancelCheckoutPage: (req, res) => {
 		res.render('client/shop/cart/checkout/cancel', {
-			title: app.config.company.name + ' - success',
+			title: config.host.name + ' - success',
 			user: req.user[0],
 
 			system: package_json,
@@ -415,7 +492,7 @@ module.exports = {
 							function (success, err) {
 								if (err) console.debug(err);
 								res.render('client/shop/cart/checkout/success', {
-									title: app.config.company.name + ' - success',
+									title: config.host.name + ' - success',
 									user: req.user[0],
 
 									system,

@@ -1,5 +1,4 @@
 const ip = require('ip');
-const app = require('./app.json');
 const db = require('./database');
 const bcrypt = require('bcrypt');
 

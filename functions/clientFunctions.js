@@ -300,4 +300,73 @@ module.exports = {
 			}
 		});
 	},
+
+	checkPromoCode: (code, callback) => {
+		db.query(
+			`SELECT * FROM CodesPromo WHERE code = "${code}"`,
+			function (err, codeJson) {
+				if (err) throw err;
+				if (codeJson.length <= 0) {
+					return callback(false);
+				} else {
+					return callback(codeJson[0]);
+				}
+			},
+		);
+	},
+	applyPromoCodeToCart: (code, cart) => {
+		let totalReduction = 0;
+
+		// Calculer le montant total de réduction pour les objets de la même catégorie que le code promo
+		cart.forEach((item) => {
+			if (item.category === code.categorie_id) {
+				const itemTotal = parseFloat(item.price) * item.quantity;
+				totalReduction += itemTotal;
+			} else {
+				item.reductionAmount = 0;
+			}
+		});
+
+		// Appliquer la réduction au total du panier
+		if (code.type === 'percentage') {
+			const discountPercentage = code.reduction / 100;
+			const reductionAmount = totalReduction * discountPercentage;
+
+			// Réduire le prix total des objets de la même catégorie que le code promo
+			cart.forEach((item) => {
+				if (item.category === code.categorie_id) {
+					const itemTotal = parseFloat(item.price) * item.quantity;
+					const itemReduction = (itemTotal / totalReduction) * reductionAmount;
+					item.reductionAmount = itemReduction;
+				}
+			});
+		} else if (code.type === 'fixed') {
+			const reductionAmount = code.reduction;
+			let itemCount = 0;
+
+			// Compter le nombre d'objets de la même catégorie dans le panier
+			cart.forEach((item) => {
+				if (item.category === code.categorie_id) {
+					itemCount++;
+				}
+			});
+
+			// Réduire le prix total des objets de la même catégorie que le code promo
+			cart.forEach((item) => {
+				if (item.category === code.categorie_id) {
+					item.reductionAmount = reductionAmount / itemCount;
+				}
+			});
+		} else if (code.type === 'nofees') {
+			// Mettre les frais à 0 pour les objets de la même catégorie que le code promo
+			cart.forEach((item) => {
+				if (item.category === code.categorie_id) {
+					item.fee = 0;
+				}
+			});
+		}
+
+		console.log(cart);
+		return { cart };
+	},
 };

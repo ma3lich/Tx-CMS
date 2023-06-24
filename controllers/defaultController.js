@@ -3,47 +3,27 @@ const bcrypt = require('bcrypt');
 const db = require('../config/database');
 const nodemailer = require('nodemailer');
 const { MailServer } = require('../config/mailservice');
-const app = require('../config/app.json');
-const social = require('../config/social.json');
 const system = require('../package.json');
 const { getCounts } = require('../functions/defaultFunctions');
-
+const { config } = require('../config/customFunction');
 /* Configuration passport par email */
 
 module.exports = {
 	/* Méthode Get pour la page index */
 	loginGet: (req, res) => {
-
 		getCounts((counts) => {
 			res.render('default/index', {
-				title: app.config.company.name + ' - Connectez vous',
+				title: config.host.name + ' - Connectez vous',
 				action: 'info',
+				config,
 				counts,
-				app,
-				social,
 				system,
 			});
 		});
 	},
 
 	/* Méthode Post pour la page index */
-	loginPost: async function (req, res) {
-		let info = await MailServer.sendMail({
-			from: `"${config.get('TxCMS.company.name')}" ${config.get(
-				'TxCMS.mail.auth.user',
-			)}`,
-			to: req.user[0].email,
-			subject: 'Nouvelle connection',
-			html: `
-            Pour des raisons de sécurité, nous devons vérifier votre identité pour confirmer la vérification de votre adresse email, veuillez cliquer sur le bouton ci-dessous
-            <br>
-            <strong>Adresse E-mail</strong> : ${req.user[0].email}
-            <br>
-            <strong>Date d'inscription</strong> : ${new Date()}`,
-		});
-
-		console.log('Message sent: %s', info.messageId);
-	},
+	loginPost: async function (req, res) {},
 
 	/* Méthode Get pour la page /register */
 	registerGet: (req, res) => {

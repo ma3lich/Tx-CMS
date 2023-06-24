@@ -34,6 +34,7 @@ router.route("/logout").post(logout);
 
 router.route("/profile").get(getProfilePage).post(submitProfile);
 router.route("/profile/wallet").get(getWalletPage)
+router.route("/transactions").get(getWalletPage)
 
 router.route("/shop").get(getShop);
 

@@ -1,4 +1,4 @@
-const app = require('../../config/app.json');
+const { config } = require("../../config/customFunction");
 
 module.exports = {
   Login: `
@@ -68,7 +68,7 @@ module.exports = {
   }
   </style>
   <body>
-  <h1>${app.config.company.name} - Espace client</h1>
+  <h1>${config.host.name} - Espace client</h1>
   <hr />
   <div class="container">
       <span>Bonsoir !</span>
@@ -84,7 +84,7 @@ module.exports = {
                   <table >
                       <tr>
                           <td class="button" bgcolor="#6770da">
-                              <a  class=”link” href="https://${app.config.system.hostname}" target="_blank">
+                              <a  class=”link” href="https://${config.system.hostname}" target="_blank">
                                   C'est bien moi 
                               </a>
                           </td>
@@ -96,11 +96,11 @@ module.exports = {
       <br />
       Si vous n'êtes pas à l'origine de cette connexion nous vous conseillons de
       changer votre mot de passe juste
-      <a href="https://${app.config.company.domaine}/reset/password">ici</a>.
+      <a href="https://${config.host.domaine}/reset/password">ici</a>.
       <br />
       <br />
       Cordialment,<br />
-      ${app.config.company.name}
+      ${config.host.name}
       </p>
   </div>
   <hr />

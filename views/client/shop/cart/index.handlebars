@@ -402,7 +402,7 @@
         </div>
 
         <footer>
-            <span>Copyright © {{app.config.company.name}}</span>
+            <span>Copyright © {{config.host.name}}</span>
             <span>TxCMS - {{system.version}}</span>
         </footer>
     </section>
@@ -451,7 +451,7 @@
 
                 <div>
                     <span>Réduction :</span>
-                    <span>00.00 €</span>
+                    <span>{{promoDiscount}} €</span>
                 </div>
             </div>
 
@@ -471,19 +471,16 @@
             </div>
 
         </div>
-
-        <div class="user">
-
-            <div class="promo">
-                <label for="promo"> Code promo</label>
-                <div>
-                    <input type="text" id="promo" name="promo">
-                    <button><ion-icon name="checkmark-outline"></ion-icon></button>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-
 </form>
+<div class="user">
+    <form action="/client/shop/cart" method="get">
+        <div class="promo">
+            <label for="promo">Code promo</label>
+            <div>
+                <input type="text" id="promo" name="promo" value={{promoCode}} >
+                <button type="submit"><ion-icon name="checkmark-outline"></ion-icon></button>
+            </div>
+        </div>
+    </form>
+</div>
+</section>

@@ -6,7 +6,6 @@ const spinner = ora();
 spinner.start(`${chalk.yellow('Lancement de TxCMS sur le serveur')}`);
 
 const db = require('./config/database.js');
-const txcms = require('./config/app.json');
 const { getEnVvalue } = require('./config/config.js');
 
 main();
