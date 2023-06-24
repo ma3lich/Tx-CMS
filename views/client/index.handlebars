@@ -14,6 +14,47 @@
 
 
 <section class="container">
+
+    {{#if success_messages}}
+    <div class="notif success">
+        <span class="title">Bravo ! </span>
+        <span class="message">{{success_messages}}</span>
+        <span class="close" id="close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+    </div>
+
+    <script>
+        $('#close').click(() => {
+            $('.notif').fadeTo(300, 0.01, function () {
+                $(this).slideUp(300, function () {
+                    $(this).remove();
+                });
+            });
+        })
+    </script>
+    {{/if}}
+
+    {{#if error_messages}}
+    <div class="notif error">
+        <span class="title">Messages d'erreur ! </span>
+        <span class="message">{{error_messages}}</span>
+        <span class="close" id="close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+    </div>
+
+    <script>
+        $('#close').click(() => {
+            $('.notif').fadeTo(300, 0.01, function () {
+                $(this).slideUp(300, function () {
+                    $(this).remove();
+                });
+            });
+        })
+    </script>
+    {{/if}}
+    
     <div class="info">
         <a href="/client/profile/wallet" class="card">
             <div class="icon">

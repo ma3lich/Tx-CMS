@@ -132,20 +132,40 @@ module.exports = {
 
 	getUserTransactionById: (user, transaction, callback) => {
 		db.query(
-			`SELECT service FROM transactions WHERE user_id = ${user} AND id = ${transaction}`,
+			`SELECT id, amount FROM transactions WHERE user_id = ${user} AND id = ${transaction}`,
 			function (err, transactionJson) {
-				if (err) throw err;
+				if (err) {
+					callback(false);
+					return;
+				}
+				if (transactionJson.length === 0) {
+					// No transaction found, return false
+					callback(false);
+					return;
+				}
+				const transactionId = transactionJson[0].id;
 				db.query(
-					`SELECT name FROM services WHERE id = ${transactionJson[0].service}`,
-					function (err, servicesJson) {
+					`SELECT * FROM invoice_items WHERE invoice_id = ${transactionId}`,
+					function (err, itemsJson) {
 						if (err) throw err;
-						const services = servicesJson.map((services) => ({
-							quantity: 1,
-							description: services.name,
-							'tax-rate': 0,
-							price: 9.99,
-						}));
-						callback(services);
+						const itemIds = itemsJson.map((item) => item.plan_id);
+						const query = `SELECT * FROM plans WHERE id IN (${itemIds.join(
+							',',
+						)})`;
+						db.query(query, function (err, plansJson) {
+							if (err) throw err;
+							const articles = itemsJson.map((item) => {
+								const plan = plansJson.find((p) => p.id === item.plan_id);
+								return {
+									item: plan.name,
+									description: '',
+									quantity: item.quantity,
+									amount: Number(plan.price) * 100 * item.quantity,
+								};
+							});
+							console.log(articles);
+							callback(articles);
+						});
 					},
 				);
 			},
@@ -251,5 +271,33 @@ module.exports = {
 				);
 			},
 		);
+	},
+
+	getProduct: (id, callback) => {
+		db.query(
+			`SELECT * FROM plans WHERE id = ${id}`,
+			function (err, productJson) {
+				if (err) throw err;
+				if (productJson.length === 0) {
+					// No transaction found, return false
+					callback(false);
+					return;
+				}
+
+				return callback(productJson[0]);
+			},
+		);
+	},
+
+	updateCart: (user, cart) => {
+		const sql = 'UPDATE users SET cart = ? WHERE id = ?';
+		const params = [JSON.stringify(cart), user];
+
+		db.query(sql, params, (error, results) => {
+			if (error) {
+				console.error('Error updating cart in database:', error);
+				return;
+			}
+		});
 	},
 };

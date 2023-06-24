@@ -13,15 +13,16 @@ const { getCounts } = require('../functions/defaultFunctions');
 module.exports = {
 	/* Méthode Get pour la page index */
 	loginGet: (req, res) => {
+
 		getCounts((counts) => {
 			res.render('default/index', {
 				title: app.config.company.name + ' - Connectez vous',
 				action: 'info',
-        counts,
+				counts,
 				app,
 				social,
 				system,
-			}); 
+			});
 		});
 	},
 

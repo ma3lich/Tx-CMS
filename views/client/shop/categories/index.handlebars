@@ -1,4 +1,3 @@
-
 <nav class="">
     <div class="logo">
         <img src="{{config.host.logo}}" alt="">
@@ -16,62 +15,105 @@
 <section class="navShop">
     <span class="title">Catégories</span>
     <ul>
-        <script>console.log( "{{categories}}" )</script>
+        <script>console.log("{{categories}}")</script>
         {{#each categories}}
-        <li><a href="/client/shop/categories/{{name}}"> <ion-icon
-                    name="cube-outline"></ion-icon><span> {{name}}</span></a>
-        </a><li>
+        <li><a href="/client/shop/categories/{{name}}"> <ion-icon name="cube-outline"></ion-icon><span>
+                    {{name}}</span></a>
+            </a>
+        <li>
             {{/each}}
-        </ul>
+    </ul>
 
-    </section>
+</section>
 
-    <section class="container shop">
-        <span class="title">Nos offres {{categoriesName}} :</span>
-        <div class="plans">
-            
-            {{#each plans}}
-            <form class="card">
-                <div class="cardHead">
-                    <span class="name">{{name}}</span>
-                    <span class="price"> {{price}}€<label for=""> /mois</label></span>
-                    <hr>
-                </div>
-                <div class="cardBoddy">
-                    <ul>
-                        <li><ion-icon name="checkmark-done-outline"></ion-icon>
-                            <span>1vC x5675 @3.46Ghz</span></li>
-                        <li><ion-icon name="checkmark-done-outline"></ion-icon>
-                            <span>4Go DDR3-ECC</span></li>
-                        <li><ion-icon name="checkmark-done-outline"></ion-icon>
-                            <span>32Go SSD SATA</span></li>
-                        <li><ion-icon name="checkmark-done-outline"></ion-icon>
-                            <span>1 Gbit/s Mutualisés</span></li>
-                        <li><ion-icon name="checkmark-done-outline"></ion-icon>
-                            <span>Anti DdoS OVH Game</span></li>
+<section class="container shop">
 
-                    </ul>
-                </div>
-                <div class="cardFotter">
-                    <input type="number" max="9" min="1" value="1" id="amount"
-                        name="amount">
-                    <br>
-                    <button type="submit">Commander</button>
-                </div>
-            </form>
+    {{#if success_messages}}
+    <div class="notif success">
+        <span class="title">Bravo ! </span>
+        <span class="message">{{success_messages}}</span>
+        <span class="close" id="close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+    </div>
 
-            {{else}}
+    <script>
+        $('#close').click(() => {
+            $('.notif').fadeTo(300, 0.01, function () {
+                $(this).slideUp(300, function () {
+                    $(this).remove();
+                });
+            });
+        })
+    </script>
+    {{/if}}
 
-            <span style="font-size: .8rem;" >Aucune offre na n'était liée/créée pour cette catégorie.</span
+    {{#if error_messages}}
+    <div class="notif error">
+        <span class="title">Messages d'erreur ! </span>
+        <span class="message">{{error_messages}}</span>
+        <span class="close" id="close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+    </div>
 
-            {{/each}}
-        </div>
+    <script>
+        $('#close').click(() => {
+            $('.notif').fadeTo(300, 0.01, function () {
+                $(this).slideUp(300, function () {
+                    $(this).remove();
+                });
+            });
+        })
+    </script>
+    {{/if}}
+
+    <span class="title">Nos offres {{categoriesName}} :</span>
+    <div class="plans">
+
+        {{#each plans}}
+        <form class="card">
+            <div class="cardHead">
+                <span class="name">{{name}}</span>
+                <span class="price"> {{price}}€<label for=""> /mois</label></span>
+                <hr>
+            </div>
+            <div class="cardBoddy">
+                <ul>
+                    <li><ion-icon name="checkmark-done-outline"></ion-icon>
+                        <span>1vC x5675 @3.46Ghz</span>
+                    </li>
+                    <li><ion-icon name="checkmark-done-outline"></ion-icon>
+                        <span>4Go DDR3-ECC</span>
+                    </li>
+                    <li><ion-icon name="checkmark-done-outline"></ion-icon>
+                        <span>32Go SSD SATA</span>
+                    </li>
+                    <li><ion-icon name="checkmark-done-outline"></ion-icon>
+                        <span>1 Gbit/s Mutualisés</span>
+                    </li>
+                    <li><ion-icon name="checkmark-done-outline"></ion-icon>
+                        <span>Anti DdoS OVH Game</span>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="cardFotter">
+                <input type="number" max="9" min="1" value="1" id="amount" name="amount">
+                <br>
+                <button type="submit">Commander</button>
+            </div>
+        </form>
+
+        {{else}}
+
+        <span style="font-size: .8rem;">Aucune offre na n'était liée/créée pour cette catégorie.</span {{/each}} </div>
 
         <footer>
             <span>Copyright © {{app.config.company.name}}</span>
             <span>TxCMS - {{system.version}}</span>
         </footer>
-    </section>
+</section>
 
 <section class="profile_bar">
 
@@ -79,20 +121,20 @@
         <a class="logo" href="/client/profile">
             <img id="userlogo" src="" alt="">
             <script>
-                    if("{{user.logo}}" == ""){
-                        
-                        if("{{user.sex}}" == "male"){
-                            document.getElementById('userlogo').src = "/images/male-logo.png"
-                        } 
+                if ("{{user.logo}}" == "") {
 
-                        if("{{user.sex}}" == "female"){
-                            document.getElementById('userlogo').src = "/images/female-logo.png"
-                        }
-
-                    }else{
-                        document.getElementById('userlogo').src = "{{user.logo}}"
+                    if ("{{user.sex}}" == "male") {
+                        document.getElementById('userlogo').src = "/images/male-logo.png"
                     }
-                </script>
+
+                    if ("{{user.sex}}" == "female") {
+                        document.getElementById('userlogo').src = "/images/female-logo.png"
+                    }
+
+                } else {
+                    document.getElementById('userlogo').src = "{{user.logo}}"
+                }
+            </script>
             <span class="username">{{user.lastname}} {{user.name}}</span>
         </a>
         <div>
@@ -150,13 +192,13 @@
                     </div>
                 </a>
             </li>
-                <script>
-                    if("{{user.role}}" == "admin"){
-                        document.getElementById("admin").style.display = "block";
-                    }else{
-                        document.getElementById("admin").style.display = "none";
-                    }
-                </script>
+            <script>
+                if ("{{user.role}}" == "admin") {
+                    document.getElementById("admin").style.display = "block";
+                } else {
+                    document.getElementById("admin").style.display = "none";
+                }
+            </script>
         </ul>
     </div>
 </section>

@@ -1,4 +1,3 @@
-
 <nav class="">
     <div class="logo">
         <img src="{{config.host.logo}}" alt="">
@@ -17,6 +16,47 @@
 
     <section class="container cart">
 
+        {{#if success_messages}}
+        <div class="notif success">
+            <span class="title">Bravo ! </span>
+            <span class="message">{{success_messages}}</span>
+            <span class="close" id="close">
+                <ion-icon name="close-outline"></ion-icon>
+            </span>
+        </div>
+
+        <script>
+            $('#close').click(() => {
+                $('.notif').fadeTo(300, 0.01, function () {
+                    $(this).slideUp(300, function () {
+                        $(this).remove();
+                    });
+                });
+            })
+        </script>
+        {{/if}}
+
+        {{#if error_messages}}
+        <div class="notif error">
+            <span class="title">Messages d'erreur ! </span>
+            <span class="message">{{error_messages}}</span>
+            <span class="close" id="close">
+                <ion-icon name="close-outline"></ion-icon>
+            </span>
+        </div>
+
+        <script>
+            $('#close').click(() => {
+                $('.notif').fadeTo(300, 0.01, function () {
+                    $(this).slideUp(300, function () {
+                        $(this).remove();
+                    });
+                });
+            })
+        </script>
+        {{/if}}
+
+
         <div class="profile">
             <div class="userInfo">
                 <span class="title">Informations personnelles</span>
@@ -24,8 +64,7 @@
                     <div>
                         <label for="lastname">Nom</label>
                         <br>
-                        <input required type="text" name="lastname"
-                            id="lastname" maxlength="25" disabled>
+                        <input required type="text" name="lastname" id="lastname" maxlength="25" disabled>
                         <script>
                             document.getElementById('lastname').value = `{{user.lastname}}` 
                         </script>
@@ -33,8 +72,7 @@
                     <div>
                         <label for="name">Prénom</label>
                         <br>
-                        <input required type="text" name="name" id="name"
-                            maxlength="25" disabled>
+                        <input required type="text" name="name" id="name" maxlength="25" disabled>
                         <script>
                             document.getElementById('name').value = `{{user.name}}` 
                         </script>
@@ -45,8 +83,7 @@
                     <div>
                         <label for="name">Email</label>
                         <br>
-                        <input required type="email" name="email" id="email"
-                            maxlength="25" disabled>
+                        <input required type="email" name="email" id="email" maxlength="25" disabled>
                         <script>
                             document.getElementById('email').value = `{{user.email}}` 
                         </script>
@@ -54,8 +91,7 @@
                     <div>
                         <label for="tel">Numéro de téléphone</label>
                         <br>
-                        <input required type="tel" name="tel" id="tel"
-                            maxlength="25">
+                        <input required type="tel" name="tel" id="tel" maxlength="25">
                     </div>
                 </section>
                 <span class="title">Adresse de facturation</span>
@@ -63,8 +99,7 @@
                     <div>
                         <label for="adresse1">Adresse</label>
                         <br>
-                        <input type="text" name="adresse1" id="adresse1"
-                            required>
+                        <input type="text" name="adresse1" id="adresse1" required>
                     </div>
 
                     <div>
@@ -360,104 +395,95 @@
                             <option value="YE">Yémen</option>
                             <option value="ZM">Zambie</option>
                             <option value="ZW">Zimbabwe​​​​​
-                            </select>
+                        </select>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <footer>
+            <span>Copyright © {{app.config.company.name}}</span>
+            <span>TxCMS - {{system.version}}</span>
+        </footer>
+    </section>
+
+    <section class="profile_bar cart">
+        <div class="user">
+            <div class="items">
+                {{#each cart}}
+                <div class="item">
+                    <div class="logo">
+                        <ion-icon name="cube-outline"></ion-icon>
+                        <div class="badge" id="amount">{{quantity}}</div>
+                    </div>
+                    <div class="text">
+                        <div class="name">
+                            <span>{{name}}</span>
                         </div>
-                    </section>
+                        <div class="price">
+                            <span id="price">{{price}} €</span>
+                            <span style="display: none;" id="fee">{{fee}}</span>
+                        </div>
+                    </div>
+                    <a href="/client/shop/cart/remove/{{id}}" class="badge" id="remove"><ion-icon
+                            name="remove-outline"></ion-icon></a>
+                </div>
+
+                {{else}}
+                <span style="">Aucun produit na été ajouté au panier.</span>
+                {{/each}}
+            </div>
+
+            <hr>
+
+
+
+            <div class="prices">
+                <div>
+                    <span>Frais d'installation :</span>
+                    <span>{{totalFees}} €</span>
+                </div>
+
+                <div>
+                    <span>Sous total :</span>
+                    <span>{{subTotal}} €</span>
+                </div>
+
+                <div>
+                    <span>Réduction :</span>
+                    <span>00.00 €</span>
                 </div>
             </div>
 
-            <footer>
-                <span>Copyright © {{app.config.company.name}}</span>
-                <span>TxCMS - {{system.version}}</span>
-            </footer>
-        </section>
+            <hr>
 
-        <section class="profile_bar cart">
-            <div class="user">
-                <div class="items">
-                    {{#each cartPlans}}
-                    <div class="item">
-                        <div class="logo">
-                            <ion-icon name="cube-outline"></ion-icon>
-                            <div class="badge" id="amount">{{amount}}</div>
-                        </div>
-                        <div class="text">
-                            <div class="name">
-                                <span>{{name}}</span>
-                            </div>
-                            <div class="price">
-                                <span id="price">{{price}} €</span>
-                                <span style="display: none;" id="fee">{{fee}}</span>
-                            </div>
-                        </div>
-                        <a href="/client/shop/cart/remove/{{id}}" class="badge" id="remove"><ion-icon name="close-outline"></ion-icon></a>
-                    </div>
-
-                    {{else}}
-                        <span style="">Aucun produit na été ajouté au panier.</span>
-                    {{/each}}
+            <div class="total">
+                <div>
+                    <span>Total :</span>
+                    <span>{{total}} €</span>
                 </div>
-
-                <hr>
-
-
-
-                <div class="prices">
-                    <div>
-                        <span>Frais d'installation :</span>
-                        <span id="totalfees">0,00 €</span>
-                    </div>
-
-                    <div>
-                        <span>Sous total :</span>
-                        <span id="subtotal">0,00 €</span>
-                    </div>
-
-                    <div>
-                        <span>Réduction :</span>
-                        <span id="totalreduct">0,00 €</span>
-                    </div>
-
-                    <div>
-                        <span>TVA <span id="tva">{{tva}}%</span> :</span>
-                        <span id="totaltva">0,00 €</span>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="total">
-                    <div>
-                        <span>Total :</span>
-                        <span id="total" name="total">0,00 €</span>
-                    </div>
-                </div>
-
-                <div class="checkoutButtons">
-                    <button class="paypal" id="paypal"
-                        type="submit"><img src="/images/paypal.png" alt=""></button>
-                    <button class="bank" id="stripe"
-                        type="submit"><img src="/images/bankcard.png" alt=""></button>
-                    <button class="wallet" id="wallet"
-                        type="submit"><img src="/images/wallet.png" alt=""></button>
-                </div>
-
             </div>
 
-            <div class="user">
-
-                <div class="promo">
-                    <label for="promo"> Code promo</label>
-                    <div>
-                        <input type="text" id="promo" name="promo">
-                        <button><ion-icon name="checkmark-outline"></ion-icon></button>
-                    </div>
-                </div>
-
+            <div class="checkoutButtons">
+                <button class="paypal" id="paypal" type="submit"><img src="/images/paypal.png" alt=""></button>
+                <button class="bank" id="stripe" type="submit"><img src="/images/bankcard.png" alt=""></button>
+                <button class="wallet" id="wallet" type="submit"><img src="/images/wallet.png" alt=""></button>
             </div>
 
-        </section>
+        </div>
 
-    </form>
+        <div class="user">
 
-        <script src="/js/cart.js"></script>
+            <div class="promo">
+                <label for="promo"> Code promo</label>
+                <div>
+                    <input type="text" id="promo" name="promo">
+                    <button><ion-icon name="checkmark-outline"></ion-icon></button>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</form>

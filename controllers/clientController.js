@@ -26,13 +26,20 @@ const {
 	getUserTransactions,
 	generateInvoce,
 	getUserTransactionById,
+	getProduct,
+	updateCart,
 } = require('../functions/clientFunctions');
 const { createInvoice } = require('../addons/invoice/create');
+const { json } = require('express');
 
 var productsInTheCart = [];
 
 module.exports = {
 	index: (req, res) => {
+		const cartData = JSON.parse(req.user[0].cart) || '[]';
+		req.session.cart = [];
+		JSON.parse(cartData).forEach((obj) => req.session.cart.push(obj));
+
 		getUserStats(req.user[0], function (stats) {
 			getUserServices(req.user[0].id, function (services) {
 				res.render('client/index', {
@@ -51,7 +58,6 @@ module.exports = {
 	/* Méthode Post pour la page client/index */
 	logout: (req, res, next) => {
 		console.log('logging out');
-		console.log(req.user[0]);
 		req.logOut((err) => {
 			if (err) return next(err);
 			req.session.destroy();
@@ -101,45 +107,46 @@ module.exports = {
 	},
 
 	generateInvocePage: async (req, res) => {
-		const invoice = {
-			shipping: {
-				name: 'John Doe',
-				address: '1234 Main Street',
-				city: 'San Francisco',
-				state: 'CA',
-				country: 'US',
-				postal_code: 94111,
-			},
-			items: [
-				{
-					item: 'TC 100',
-					description: 'Toner Cartridge',
-					quantity: 2,
-					amount: 6000,
-				},
-				{
-					item: 'USB_EXT',
-					description: 'USB Cable Extender',
-					quantity: 1,
-					amount: 2000,
-				},
-			],
-			subtotal: 8000,
-			paid: 0,
-			invoice_nr: `tx-${new Date().getFullYear()}-1234`,
-		};
-		const invoicePath = `./logs/invoices/${invoice.invoice_nr}.pdf`;
+		getUserTransactionById(req.user[0].id, req.params.id, async (items) => {
+			if (!items) {
+				req.flash(
+					'error-message',
+					"La transaction n'existe pas, ou n'existe plus.",
+				);
+				res.redirect('/client/profile/wallet');
+			} else {
+				const totalAmount = items.reduce((total, items) => {
+					return total + items.amount;
+				}, 0);
+				const invoice = {
+					shipping: {
+						name: req.user[0].name + ' ' + req.user[0].lastname,
+						address: '1234 Main Street',
+						city: 'San Francisco',
+						state: 'CA',
+						country: 'US',
+						postal_code: 94111,
+					},
+					items,
+					subtotal: totalAmount,
+					paidCode: 'dev',
+					paid: 0,
+					invoice_nr: `tx-${new Date().getFullYear()}-${req.params.id}`,
+				};
+				const invoicePath = `./logs/invoices/${invoice.invoice_nr}.pdf`;
 
-		if (fs.existsSync(invoicePath)) {
-			const absolutePath = path.resolve(invoicePath);
-			res.contentType('application/pdf');
-			res.sendFile(absolutePath);
-		} else {
-			await createInvoice(invoice, invoicePath);
-			const absolutePath = path.resolve(invoicePath);
-			await res.contentType('application/pdf');
-			await res.sendFile(absolutePath);
-		}
+				if (fs.existsSync(invoicePath)) {
+					const absolutePath = path.resolve(invoicePath);
+					res.contentType('application/pdf');
+					res.sendFile(absolutePath);
+				} else {
+					await createInvoice(invoice, invoicePath);
+					const absolutePath = path.resolve(invoicePath);
+					await res.contentType('application/pdf');
+					await res.sendFile(absolutePath);
+				}
+			}
+		});
 	},
 
 	/* Méthode Get pour la page client/shop */
@@ -172,90 +179,94 @@ module.exports = {
 	},
 
 	getCart: (req, res) => {
-		let products = [];
+		const createUniqueArrayWithQuantity = (array) => {
+			const uniqueArray = [];
+			const ids = {};
 
-		db.query(
-			`SELECT * FROM carts WHERE owner = ${req.user[0].id}`,
-			function (err, results) {
-				if (err) console.trace(err);
-				else {
-					results.forEach((plans) => {
-						if (plans.amount > 0) {
-							db.query(
-								`SELECT * FROM plans WHERE id = ${plans.planID}`,
-								function (error, data) {
-									if (error) throw error;
-									else {
-										for (let plan of data) {
-											products.push({
-												id: plan.id,
-												name: plan.name,
-												categorie: plan.categorie,
-												price: plan.price,
-												fee: plan.fee,
-												amount: plans.amount,
-												id: plans.id,
-											});
-										}
-									}
-								},
-							);
-						}
-					});
+			array.forEach((obj) => {
+				const { id, name, price, fee, stock } = obj;
+				const key = `${id}_${name}_${price}_${fee}_${stock}`;
 
-					productsInTheCart = products;
-
-					res.render('client/shop/cart/', {
-						title: app.config.company.name + ' - Panier',
-						user: req.user[0],
-
-						system,
-						tva: getEnVvalue('TVA_RATE'),
-						userCart: results,
-						cartPlans: products,
-					});
+				if (!ids[key]) {
+					ids[key] = 1;
+					uniqueArray.push({ id, name, price, fee, stock, quantity: 1 });
+				} else {
+					ids[key]++;
+					const existingObject = uniqueArray.find((item) => item.id === id);
+					existingObject.quantity++;
 				}
-			},
-		);
+			});
+
+			return uniqueArray;
+		};
+		const cart = createUniqueArrayWithQuantity(req.session.cart);
+		const fees = cart.map((item) => item.fee);
+		const quantity = cart.map((item) => item.quantity);
+
+		// Calculate total fees
+		let totalFees = 0;
+		for (let i = 0; i < fees.length; i++) {
+			totalFees += parseFloat(fees[i]) * parseFloat(quantity[i]);
+		}
+		totalFees = totalFees.toFixed(2);
+
+		// Calculate subtotal
+		let subTotal = 0;
+		for (let i = 0; i < cart.length; i++) {
+			subTotal += parseFloat(cart[i].price) * parseFloat(quantity[i]);
+		}
+		subTotal = subTotal.toFixed(2);
+
+		// Calculate total
+		const total = (parseFloat(subTotal) + parseFloat(totalFees)).toFixed(2);
+
+		res.render('client/shop/cart/', {
+			title: config.host.name + ' - Panier',
+			user: req.user[0],
+			config,
+			system,
+			cart,
+			totalFees,
+			subTotal,
+			total,
+		});
 	},
 
 	addToCart: (req, res) => {
-		db.query(
-			`SELECT * FROM carts WHERE planID = ${req.params.id} AND owner = ${req.user[0].id}`,
-			(err, data) => {
-				if (err) console.trace(err);
-				if (data.length > 0) {
-					console.log('update');
+		const productId = req.params.id;
 
-					let newAmount = data[0].amount + Number(req.body.amount);
-					db.query(
-						`UPDATE carts SET amount = ${newAmount} WHERE planID = ${req.params.id}`,
-						function (err) {
-							if (err) console.trace(err);
-							res.redirect('/client/shop/cart');
-						},
-					);
-				} else {
-					console.log('new');
-					db.query(
-						`INSERT INTO carts (owner, planID, amount) VALUES ('${req.user[0].id}', '${req.params.id}', '${req.body.amount}')`,
-						function (err, sucess) {
-							if (err) console.trace(err);
-							res.redirect('/client/shop/cart');
-						},
-					);
-				}
-			},
-		);
+		if (!req.session.cart) {
+			req.session.cart = [];
+		}
+
+		getProduct(productId, (product) => {
+			if (!product) {
+				req.flash('error-message', "L'offre n'existe pas, ou n'existe plus.");
+				return res.redirect('/client/shop/');
+			}
+			for (let i = 0; i < Number(req.body.amount); i++) {
+				req.session.cart.push(product);
+			}
+			req.flash('success-message', 'Produit ajouté au panier.');
+			res.redirect('/client/shop/');
+
+			// Update the cart data in the user table
+			const updatedCart = JSON.stringify(req.session.cart);
+			updateCart(req.user[0].id, updatedCart);
+		});
 	},
 
 	removeFromCart: (req, res) => {
-		db.query(
-			`DELETE FROM carts WHERE owner = ${req.user[0].id} AND id = ${req.params.id}`,
-			(data, err) => {
-				res.redirect('/client/shop/cart');
-			},
-		);
+		const removeItemById = (array, id) => {
+			const index = array.findIndex((obj) => obj.id === id);
+			if (index !== -1) {
+				array.splice(index, 1);
+			}
+		};
+		removeItemById(req.session.cart, Number(req.params.id));
+
+		req.flash('success-message', 'Produit retiré du panier.');
+		res.redirect('/client/shop/cart');
 	},
 
 	checkoutCart: async (req, res) => {

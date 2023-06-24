@@ -121,7 +121,7 @@ function generateInvoiceTable(doc, invoice) {
 		paidToDatePosition,
 		'',
 		'',
-		'Total TVA',
+		`Réduction (${invoice.paidCode})`,
 		'',
 		formatCurrency(invoice.paid),
 	);
