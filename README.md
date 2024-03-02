@@ -1,6 +1,7 @@
-
+![image](https://github.com/ma3lich/Tx-CMS/assets/116606024/eadcd354-91f9-41d4-9a50-391e0c28d448)
 ![Logo](https://txhost.fr/asset/images/txhost/logo.png)
 
+# Not Updated (Not Work Any More Sorry :'( )
 
 # TxCMS
 
@@ -36,9 +37,10 @@ Installer TxCMS manuellement sur Windows, Linux et autres avec NPM :
 
 ## Screenshots
 
-![App Screenshot](https://media.discordapp.net/attachments/1035616855399870524/1035619904646299699/unknown.png?width=1385&height=662)
-![App Screenshot](https://media.discordapp.net/attachments/1035616855399870524/1035619964855533628/unknown.png?width=1385&height=662)
-![App Screenshot](https://media.discordapp.net/attachments/1035616855399870524/1035619957188345876/unknown.png?width=1385&height=662)
+![App Screenshot](https://media.discordapp.net/attachments/1035616855399870524/1035619904646299699/unknown.png?ex=65f49232&is=65e21d32&hm=38b4d45c04497f0d7ee1c9b8a592a0b464b0e30ad21a36aab27c5cfb729d38e0&=&format=webp&quality=lossless&width=1200&height=573)
+![App Screenshot](https://media.discordapp.net/attachments/1035616855399870524/1035619957188345876/unknown.png?ex=65f4923e&is=65e21d3e&hm=fb65839d6909485f2510a130f061e4d3392c3c2055710177f97cf9b3c1b791e6&=&format=webp&quality=lossless&width=687&height=328)
+![App Screenshot](https://media.discordapp.net/attachments/1035616855399870524/1046885617675554906/unknown.png?ex=65ef69b5&is=65dcf4b5&hm=60f848817ceb18181abbe60959b53c0c5ed6ebefe47ddd89deb05de37f5a4b2f&=&format=webp&quality=lossless&width=1180&height=585)
+![App Screenshot](https://media.discordapp.net/attachments/1035616855399870524/1048199557072293899/image.png?ex=65f43169&is=65e1bc69&hm=4bc08f8f8753840886d68ee3f317a6f55d231f49911694d448623dd138cb6b16&=&format=webp&quality=lossless&width=687&height=341)
 
 ## Documentation
 
